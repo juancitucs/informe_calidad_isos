@@ -1,0 +1,169 @@
+\section{Métricas de Calidad}
+\label{sec:metricas}
+
+La guía de trabajo práctico exige proponer un set de métricas cuantitativas pertinentes para la norma ISO/IEC asignada, detallando sus respectivas ecuaciones matemáticas de obtención. A continuación se presentan las métricas definidas para medir la seguridad del proceso de desarrollo de Workcodile-dev.
+
+\subsection{Métrica 1: Densidad de Vulnerabilidades}
+
+Mide la cantidad de vulnerabilidades encontradas por unidad de código.
+
+\begin{equation}
+D_v = \frac{V_{encontradas}}{KLOC} \times 1000
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $D_v$ = Densidad de vulnerabilidades (vuln/KLOC).
+    \item $V_{encontradas}$ = Número total de vulnerabilidades encontradas por SAST + DAST.
+    \item $KLOC$ = Miles de líneas de código fuente.
+\end{itemize}
+
+\textbf{Interpretación:}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|}
+\hline
+\textbf{Rango $D_v$} & \textbf{Nivel de riesgo} \\
+\hline
+$D_v < 1$ & Bajo \\
+$1 \leq D_v < 5$ & Medio \\
+$5 \leq D_v < 10$ & Alto \\
+$D_v \geq 10$ & Crítico \\
+\hline
+\end{tabular}
+\caption{Umbrales de densidad de vulnerabilidades}
+\label{tab:umbral-vuln}
+\end{table}
+
+\textbf{Ejemplo para Workcodile-dev:}
+Si el proyecto tiene 5 KLOC y se encuentran 3 vulnerabilidades:
+\begin{equation}
+D_v = \frac{3}{5} \times 1000 = 600 \text{ vuln/KLOC} \quad \Rightarrow \quad \text{Nivel: Bajo}
+\end{equation}
+
+\subsection{Métrica 2: Cobertura de Análisis SAST}
+
+Mide el porcentaje de archivos del proyecto que fueron analizados por herramientas SAST.
+
+\begin{equation}
+C_{SAST} = \frac{A_{escaneados}}{A_{total}} \times 100
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $C_{SAST}$ = Cobertura de análisis SAST (\%).
+    \item $A_{escaneados}$ = Archivos de código fuente analizados.
+    \item $A_{total}$ = Total de archivos de código fuente.
+\end{itemize}
+
+\textbf{Objetivo mínimo:} $C_{SAST} \geq 80\%$
+
+\textbf{Ejemplo para Workcodile-dev:}
+Si hay 45 archivos .js/.ts y se escanean 40:
+\begin{equation}
+C_{SAST} = \frac{40}{45} \times 100 = 88.9\%
+\end{equation}
+
+\subsection{Métrica 3: Tiempo Medio de Remediación}
+
+Mide el tiempo promedio que tarda el equipo en corregir una vulnerabilidad encontrada.
+
+\begin{equation}
+T_{rem} = \frac{\sum_{i=1}^{n} (t_{corrección_i} - t_{detección_i})}{n}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $T_{rem}$ = Tiempo medio de remediación (días).
+    \item $t_{corrección_i}$ = Fecha de corrección de la vulnerabilidad $i$.
+    \item $t_{detección_i}$ = Fecha de detección de la vulnerabilidad $i$.
+    \item $n$ = Total de vulnerabilidades corregidas.
+\end{itemize}
+
+\textbf{Umbrales:}
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|}
+\hline
+\textbf{Tiempo} & \textbf{Categoría} \\
+\hline
+$T_{rem} \leq 1$ día & Crítica (corrección inmediata) \\
+$1 < T_{rem} \leq 7$ días & Alta prioridad \\
+$7 < T_{rem} \leq 30$ días & Prioridad media \\
+$T_{rem} > 30$ días & Requiere gestión \\
+\hline
+\end{tabular}
+\caption{Umbrales de tiempo de remediación}
+\label{tab:umbral-rem}
+\end{table}
+
+\subsection{Métrica 4: Tasa de Aceptación de Seguridad}
+
+Mide el porcentaje de pruebas de seguridad que cumplen con los criterios de aceptación.
+
+\begin{equation}
+R_{acep} = \frac{P_{aprobadas}}{P_{total}} \times 100
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $R_{acep}$ = Tasa de aceptación de seguridad (\%).
+    \item $P_{aprobadas}$ = Pruebas de seguridad que cumplieron criterios.
+    \item $P_{total}$ = Total de pruebas de seguridad ejecutadas.
+\end{itemize}
+
+\textbf{Objetivo mínimo:} $R_{acep} = 100\%$ (todas las pruebas críticas deben aprobar).
+
+\subsection{Métrica 5: Nivel de Madurez del SSDLC}
+
+Mide el nivel de madurez del proceso de seguridad en el ciclo de vida del desarrollo, basado en la escala de ISO 33000:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|c|l|p{6cm}|}
+\hline
+\textbf{Nivel} & \textbf{Nombre} & \textbf{Criterio para Workcodile-dev} \\
+\hline
+0 & Incompleto & No hay proceso de seguridad definido. \\
+1 & Realizado & Se realizan pruebas de seguridad de forma ad-hoc. \\
+2 & Gestionado & Hay un proceso documentado y se ejecuta de forma controlada. \\
+3 & Establecido & El proceso está definido, documentado y se aplica orgánicamente. \\
+4 & Predecible & Las métricas de seguridad se miden y controlan cuantitativamente. \\
+5 & Optimizado & El proceso se mejora continuamente según métricas y retroalimentación. \\
+\hline
+\end{tabular}
+\caption{Escala de madurez SSDLC}
+\label{tab:madurez}
+\end{table}
+
+\textbf{Ecuación de evaluación de madurez:}
+\begin{equation}
+M_{SSDLC} = \frac{\sum_{i=1}^{5} P_i \times w_i}{\sum_{i=1}^{5} w_i}
+\end{equation}
+
+Donde:
+\begin{itemize}
+    \item $P_i$ = Puntaje obtenido en la práctica $i$ (0 o 1).
+    \item $w_i$ = Peso de la práctica $i$ (según prioridad).
+\end{itemize}
+
+\subsection{Resumen de Métricas}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Métrica} & \textbf{Fórmula} & \textbf{Objetivo} \\
+\hline
+Densidad de vulnerabilidades & $D_v = V / KLOC \times 1000$ & $D_v < 1$ \\
+Cobertura SAST & $C = A_{esc} / A_{tot} \times 100$ & $C \geq 80\%$ \\
+Tiempo de remediación & $T_{rem} = \Sigma \Delta t / n$ & $T_{rem} \leq 7$ días \\
+Tasa de aceptación & $R = P_{apr} / P_{tot} \times 100$ & $R = 100\%$ \\
+Madurez SSDLC & $M = \Sigma P_i w_i / \Sigma w_i$ & Nivel $\geq 2$ \\
+\hline
+\end{tabular}
+\caption{Resumen de métricas de calidad}
+\label{tab:resumen-metricas}
+\end{table}

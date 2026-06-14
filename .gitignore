@@ -1,0 +1,38 @@
+# LaTeX aux
+*.aux
+*.log
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.pdf
+*.out
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.toc
+*.lof
+*.lot
+*.idx
+*.ilg
+*.ind
+*.bcf
+*.run.xml
+*-blx.bib
+
+# Resources 
+resources/
+
+
+# Others
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+*.swp
+*.swo
+*~
+.vscode/
+.idea/

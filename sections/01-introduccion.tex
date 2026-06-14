@@ -1,0 +1,51 @@
+\section{Introducción}
+
+\subsection{Contexto}
+
+La seguridad en el desarrollo de software ya no es opcional. Las vulnerabilidades explotadas en producción generan pérdidas económicas, daño reputacional y exposición de datos sensibles de los usuarios. Según el reporte \textit{OWASP Top 10} de 2021, las vulnerabilidades más críticas siguen siendo aquellas que nacen en la fase de implementación: inyecciones, fallos de control de acceso y configuraciones inseguras \cite{owasp2021}.
+
+La norma \textbf{ISO/IEC 27001:2022} establece los requisitos para un Sistema de Gestión de Seguridad de la Información (SGSI). En particular, el \textbf{Anexo A.14} define controles específicos para la seguridad en el desarrollo de software y sistemas de información \cite{iso27001}.
+
+\subsection{Objetivo}
+
+El presente informe tiene como objetivo aplicar los controles de seguridad de la información del estándar ISO/IEC 27001 al proyecto \textbf{Workcodile-dev}, una plataforma web full-stack para estudiantes de la Universidad Nacional de Moquegua. Se analizarán e implementarán los siguientes controles:
+
+\begin{itemize}
+    \item \textbf{A.14.1} — Requisitos de seguridad en el desarrollo de software y sistemas de información.
+    \item \textbf{A.14.2} — Seguridad en los procesos de desarrollo y mantenimiento de software.
+    \item \textbf{A.14.3} — Pruebas de aceptación para la seguridad.
+\end{itemize}
+
+\subsection{Alcance}
+
+El análisis cubre la arquitectura técnica completa del proyecto Workcodile-dev:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Capa} & \textbf{Tecnología} \\
+\hline
+Frontend & React 18, TypeScript, Vite, Tailwind CSS \\
+Backend & Node.js, Express.js, JWT, bcrypt \\
+Base de datos & MongoDB (NoSQL) \\
+Almacenamiento & MinIO (compatible S3) \\
+Infraestructura & Docker, Docker Compose \\
+\hline
+\end{tabular}
+\caption{Stack tecnológico de Workcodile-dev}
+\label{tab:stack}
+\end{table}
+
+\subsection{Estructura del informe}
+
+Este documento se estructura en las siguientes secciones:
+
+\begin{enumerate}
+    \item \textbf{Introducción} — Contexto, objetivo y alcance.
+    \item \textbf{Aplicación de SSDLC a Workcodile-dev} — Implementación del ciclo de vida seguro del software.
+    \item \textbf{Secure Coding} — Reglas de codificación segura aplicadas al proyecto.
+    \item \textbf{Security Testing} — Pruebas de seguridad: SAST, DAST y revisiones.
+    \item \textbf{Métricas de Calidad} — Métricas cuantitativas para medir la seguridad del proceso.
+    \item \textbf{Conclusiones} — Hallazgos y recomendaciones.
+\end{enumerate}

@@ -1,0 +1,40 @@
+\section{Conclusiones}
+
+\begin{enumerate}
+    \item La aplicación de los controles del Anexo A.14 de ISO/IEC 27001 al proyecto Workcodile-dev permite identificar y documentar las prácticas de seguridad que ya existen en el proyecto, así como las áreas de mejora necesarias.
+
+    \item El análisis del SSDLC (A.14.1) reveló que Workcodile-dev cuenta con controles básicos de seguridad como variables de entorno para secretos (\texttt{.env}), autenticación JWT con expiración y hashing de contraseñas con bcrypt. Sin embargo, faltan procesos formalizados de threat modeling y documentación de requisitos de seguridad.
+
+    \item En el ámbito de Secure Coding (A.14.2), el proyecto utiliza tecnologías modernas que proporcionan protecciones inherentes (React escapa HTML automáticamente, Express permite validación de entrada). No obstante, se recomienda implementar plugins de seguridad en ESLint, definir guías de codificación segura y establecer revisiones de código obligatorias con checklist de seguridad.
+
+    \item Respecto a las pruebas de seguridad (A.14.3), actualmente el proyecto solo ejecuta pruebas funcionales con Jest y Vitest. Se requiere incorporar herramientas SAST (Semgrep, ESLint security), DAST (OWASP ZAP) y escaneo de dependencias (\texttt{npm audit}) como parte del pipeline de CI/CD.
+
+    \item Las métricas propuestas (densidad de vulnerabilidades, cobertura SAST, tiempo de remediación, tasa de aceptación y nivel de madurez SSDLC) proporcionan un marco cuantitativo para evaluar y mejorar continuamente la seguridad del proceso de desarrollo.
+
+    \item La implementación de un pipeline CI/CD seguro con Security Gate es fundamental para materializar los tres controles estudiados: proceso seguro (A.14.1), código seguro (A.14.2) y validación de seguridad (A.14.3).
+\end{enumerate}
+
+\subsection{Recomendaciones}
+
+\begin{enumerate}
+    \item \textbf{Corto plazo:} Configurar ESLint con plugins de seguridad, ejecutar \texttt{npm audit} y corregir vulnerabilidades críticas identificadas.
+
+    \item \textbf{Mediano plazo:} Integrar Semgrep y OWASP ZAP en el pipeline de CI/CD, establecer revisiones de código con checklist de seguridad.
+
+    \item \textbf{Largo plazo:} Implementar un programa completo de Secure SDLC con documentación formal, capacitación del equipo y auditorías periódicas de seguridad.
+\end{enumerate}
+
+\subsection{Lo que busca un auditor en A.14}
+
+Un auditor de ISO 27001 busca evidencias como:
+\begin{itemize}
+    \item Política de Secure SDLC documentada.
+    \item Capacitación del equipo en seguridad.
+    \item Revisiones de código con hallazgos y correcciones.
+    \item Threat modeling realizado.
+    \item Resultados de SAST y DAST.
+    \item Control de cambios y pipeline seguro.
+    \item Registros de mantenimiento de seguridad.
+\end{itemize}
+
+No busca una herramienta específica. Busca un \textbf{proceso definido, aplicado y demostrable}.
