@@ -257,6 +257,27 @@ El mantenimiento de seguridad es continuo e incluye:
     \item Evaluación de nuevas vulnerabilidades publicadas.
 \end{itemize}
 
+\subsection{Ciclo PDCA del SGSI}
+
+El SSDLC se enmarca dentro del ciclo de mejora continua del SGSI según ISO/IEC 27001. El ciclo \textbf{Plan-Do-Check-Act (PDCA)} asegura que los controles de seguridad se mejoren de forma continua \cite{iso27001}:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|p{5.5cm}|}
+\hline
+\textbf{Fase} & \textbf{Actividad} & \textbf{Relación con SSDLC} \\
+\hline
+Plan & Planificar & Definir requisitos de seguridad, threat modeling \\
+Do & Implementar & Codificación segura, pipelines CI/CD \\
+Check & Evaluar & SAST, DAST, auditorías de seguridad \\
+Act & Mejorar & Corregir vulnerabilidades, actualizar procesos \\
+\hline
+\end{tabular}
+\caption{Ciclo PDCA aplicado al SSDLC}
+\label{tab:pdca}
+\end{table}
+
 \subsection{Lo que busca un auditor en 8.25}
 
 Un auditor de ISO/IEC 27001 busca evidencias de:

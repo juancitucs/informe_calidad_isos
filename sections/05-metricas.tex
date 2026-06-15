@@ -8,7 +8,7 @@ La guía de trabajo práctico exige proponer un set de métricas cuantitativas p
 Mide la cantidad de vulnerabilidades encontradas por unidad de código. Es un indicador directo de la calidad de seguridad de la implementación.
 
 \begin{equation}
-D_v = \frac{V_{encontradas}}{KLOC} \times 1000
+D_v = \frac{V_{encontradas}}{KLOC}
 \end{equation}
 
 Donde:
@@ -37,7 +37,7 @@ $D_v \geq 10$ & Crítico \\
 
 \textbf{Ejemplo de cálculo:} Si un proyecto tiene 10 KLOC y se encuentran 4 vulnerabilidades:
 \begin{equation}
-D_v = \frac{4}{10} \times 1000 = 400 \text{ vuln/KLOC} \quad \Rightarrow \quad \text{Nivel: Bajo}
+D_v = \frac{4}{10} = 0.4 \text{ vuln/KLOC} \quad \Rightarrow \quad \text{Nivel: Bajo}
 \end{equation}
 
 \subsection{Métrica 2: Cobertura de Análisis SAST}
