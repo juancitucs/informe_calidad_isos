@@ -5,7 +5,7 @@ Esta sección aplica los controles 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022 al pr
 
 \subsection{Contexto del proyecto}
 
-Workcodile-dev es una plataforma web que permite a los estudiantes crear, compartir y gestionar cursos y publicaciones. Su arquitectura técnica es representativa de aplicaciones web modernas:
+Workcodile-dev es una plataforma web para que estudiantes creen, compartan y gestionen cursos y publicaciones. Usa un stack web estándar:
 
 \begin{table}[h]
 \centering
@@ -67,7 +67,7 @@ Código fuente & Propiedad & Repositorio Git \\
     \item \textbf{Confidencialidad:} Solo usuarios autenticados acceden a sus datos.
     \item \textbf{Integridad:} Los datos de publicaciones no deben ser modificados sin autorización.
     \item \textbf{Disponibilidad:} La aplicación debe estar operativa para los usuarios.
-    \item \textbf{Trazabilidad:} Las acciones relevantes deben poder registrarse y auditarse.
+    \item \textbf{Trazabilidad:} Las acciones del sistema deben poder registrarse y auditarse.
 \end{itemize}
 
 \subsubsection{Threat Modeling con STRIDE}
@@ -250,11 +250,11 @@ $M_{SSDLC}$ (Madurez) & Nivel 2 (Gestionado) \\
 \subsection{Conclusiones}
 
 \begin{enumerate}
-    \item La aplicación de los controles 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022 al proyecto Workcodile-dev permite identificar y documentar las prácticas de seguridad que ya existen en el proyecto, así como las áreas de mejora necesarias.
+    \item La aplicación de los controles 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022 al proyecto Workcodile-dev identifica y documenta las prácticas de seguridad existentes y las áreas de mejora.
 
     \item El análisis del SSDLC (8.25) reveló que Workcodile-dev cuenta con controles básicos de seguridad como variables de entorno para secretos (\texttt{.env}), autenticación JWT con expiración y hashing de contraseñas con bcrypt. Sin embargo, faltan procesos formalizados de threat modeling y documentación de requisitos de seguridad.
 
-    \item En el ámbito de Secure Coding (8.28), el proyecto utiliza tecnologías modernas que proporcionan protecciones inherentes (React escapa HTML automáticamente, Express permite validación de entrada). No obstante, se recomienda implementar plugins de seguridad en ESLint, definir guías de codificación segura y establecer revisiones de código obligatorias con checklist de seguridad.
+    \item En el ámbito de Secure Coding (8.28), el proyecto usa tecnologías que protegen por defecto (React escapa HTML automáticamente, Express permite validación de entrada). No obstante, se recomienda implementar plugins de seguridad en ESLint, definir guías de codificación segura y establecer revisiones de código obligatorias con checklist de seguridad.
 
     \item Respecto a las pruebas de seguridad (8.29), actualmente el proyecto solo ejecuta pruebas funcionales con Jest y Vitest. Se requiere incorporar herramientas SAST (Semgrep, ESLint security), DAST (OWASP ZAP) y escaneo de dependencias (\texttt{npm audit}) como parte del pipeline de CI/CD.
 
