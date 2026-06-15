@@ -52,7 +52,7 @@
 \renewcommand{\cftsubsecpagefont}{\color{black}}
 
 % ── Bibliografía ────────────────────────────
-\usepackage[numbers, sort&compress]{natbib}
+\usepackage[authoryear, round]{natbib}
 
 % ── Encabezado ──────────────────────────────
 \usepackage{fancyhdr}
@@ -259,9 +259,8 @@
 \input{sections/06-conclusiones}
 
 % ── Bibliografía ────────────────────────────
-\twocolumn[]
 \addcontentsline{toc}{section}{Referencias}
-\bibliographystyle{plain}
+\bibliographystyle{apalike}
 \bibliography{references}
 
 \end{document}
