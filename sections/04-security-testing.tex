@@ -1,22 +1,22 @@
 \section{Security Testing}
 \label{sec:security-testing}
 
-El control A.14.3 de ISO 27001 responde una pregunta clave: \textit{¿Cómo sabemos que realmente es seguro?} Decir ``seguimos buenas prácticas'' no es evidencia. Hay que demostrarlo mediante pruebas \cite{iso27001}.
+El control A.14.3 de ISO/IEC 27001 responde una pregunta clave: \textit{¿Cómo sabemos que realmente es seguro?} Decir ``seguimos buenas prácticas'' no es evidencia. Hay que demostrarlo mediante pruebas \cite{iso27001}.
 
 \subsection{Tipos de Pruebas de Seguridad}
 
 \subsubsection{SAST --- Static Application Security Testing}
 
-El análisis estático de seguridad analiza el código sin ejecutarlo:
+El análisis estático de seguridad analiza el código fuente \textit{sin ejecutarlo}. Detecta patrones conocidos de vulnerabilidades directamente en el código.
 
 \begin{center}
 \small
 \begin{tabular}{c}
 \textbf{Código fuente} \\[2pt]
 $\downarrow$ \\[2pt]
-\textbf{Escáner} \\[2pt]
+\textbf{Escáner estático} \\[2pt]
 $\downarrow$ \\[2pt]
-\textbf{Hallazgos}
+\textbf{Hallazgos de seguridad}
 \end{tabular}
 \end{center}
 
@@ -26,27 +26,29 @@ $\downarrow$ \\[2pt]
     \item Hardcoded secrets (credenciales en código).
     \item Cross-Site Scripting (XSS).
     \item Uso inseguro de APIs.
+    \item Errores de configuración en el código.
 \end{itemize}
 
-\textbf{Herramientas para Workcodile-dev:}
+\textbf{Herramientas comunes para SAST:}
 \begin{itemize}
-    \item \textbf{ESLint:} plugins \texttt{eslint-plugin-security}, \texttt{eslint-plugin-node}.
-    \item \textbf{Semgrep:} análisis estático con reglas para Node.js.
-    \item \textbf{SonarQube:} análisis completo de calidad y seguridad.
+    \item \textbf{ESLint con plugins de seguridad:} Análisis estático de JavaScript/TypeScript con reglas específicas de seguridad.
+    \item \textbf{Semgrep:} Análisis estático con reglas personalizables para múltiples lenguajes.
+    \item \textbf{SonarQube:} Análisis completo de calidad y seguridad del código.
+    \item \textbf{Bandit:} Análisis estático específico para código Python.
 \end{itemize}
 
-SAST permite detectar fallos temprano, antes de compilar o desplegar.
+SAST permite detectar fallos temprano, antes de compilar o desplegar. Es ideal para integrar en el pipeline de CI/CD.
 
 \subsubsection{DAST --- Dynamic Application Security Testing}
 
-El análisis dinámico prueba la aplicación mientras está ejecutándose:
+El análisis dinámico prueba la aplicación \textit{mientras está ejecutándose}. Simula ataques reales contra la aplicación en funcionamiento.
 
 \begin{center}
 \small
 \begin{tabular}{c}
-\textbf{Aplicación viva} \\[2pt]
+\textbf{Aplicación en ejecución} \\[2pt]
 $\downarrow$ \\[2pt]
-\textbf{Scanner} \\[2pt]
+\textbf{Scanner dinámico} \\[2pt]
 $\downarrow$ \\[2pt]
 \textbf{Ataques simulados}
 \end{tabular}
@@ -57,42 +59,66 @@ $\downarrow$ \\[2pt]
     \item XSS reflejado y almacenado.
     \item SQL/NoSQL Injection.
     \item Headers de seguridad inseguros.
-    \item Configuraciones débiles y CSRF.
+    \item Configuraciones débiles.
+    \item CSRF.
+    \item Problemas de sesión.
 \end{itemize}
 
-\textbf{Herramientas para Workcodile-dev:}
+\textbf{Herramientas comunes para DAST:}
 \begin{itemize}
-    \item \textbf{OWASP ZAP:} prueba automatizada de la app corriendo.
-    \item \textbf{Burp Suite:} escaneo con proxy interceptador.
+    \item \textbf{OWASP ZAP:} Scanner de seguridad open source para aplicaciones web.
+    \item \textbf{Burp Suite:} Suite de testing de seguridad con proxy interceptador.
 \end{itemize}
 
 \subsubsection{Diferencia clave entre SAST y DAST}
 
-\begin{itemize}
-    \item \textbf{SAST ve el código fuente} --- análisis estático, sin ejecutar.
-    \item \textbf{DAST ve el comportamiento} --- análisis dinámico, con la app corriendo.
-    \item Ambos son complementarios.
-\end{itemize}
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Aspecto} & \textbf{SAST} & \textbf{DAST} \\
+\hline
+Análisis & Código fuente & Comportamiento en ejecución \\
+Ejecución & No necesita la app & Necesita la app corriendo \\
+Cobertura & Todo el código & Superficie de ataque expuesta \\
+Velocidad & Rápido & Más lento \\
+Fase ideal & Desarrollo & Testing/Pre-producción \\
+\hline
+\end{tabular}
+\caption{Comparación SAST vs DAST}
+\label{tab:sast-dast}
+\end{table}
+
+Ambos son complementarios. Un análisis completo de seguridad debe incluir ambos enfoques.
 
 \subsubsection{Code Review --- Revisión de Código}
 
-La revisión humana es fundamental porque hay problemas que ninguna herramienta detecta.
+La revisión humana es fundamental porque hay problemas que ninguna herramienta detecta:
 
-\textbf{Ejemplo:}
+\begin{itemize}
+    \item Errores de lógica de negocio.
+    \item Decisiones de diseño inseguras.
+    \item Patrones que el escáner no reconoce.
+    \item Problemas de arquitectura de seguridad.
+\end{itemize}
+
+\textbf{Ejemplo de error de lógica que no detecta un escáner:}
 
 \begin{lstlisting}[language=Java, caption={Lógica potencialmente incorrecta}]
 if (user.role == "admin") {
-  // Permitir acción
+  // Permitir acción administrativa
 }
 \end{lstlisting}
 
-La lógica podría estar mal aunque el código sea sintácticamente correcto. Se debería usar \texttt{===} en lugar de \texttt{==}.
+La lógica podría estar mal aunque el código sea sintácticamente correcto. Debería usarse comparación estricta (\texttt{===}) y verificación de la existencia del rol.
 
-\textbf{En Workcodile-dev:}
+\textbf{Buenas prácticas de code review:}
 \begin{itemize}
-    \item Revisiones de código obligatorias antes de merge a \texttt{main}.
+    \item Revisiones de código obligatorias antes de cada merge.
     \item Checklist de seguridad en cada Pull Request.
-    \item Mínimo 1 aprobación antes de merge.
+    \item Mínimo una aprobación antes de merge.
+    \item Revisión especializada para cambios en autenticación y autorización.
 \end{itemize}
 
 \subsubsection{Vulnerability Assessment}
@@ -100,18 +126,18 @@ La lógica podría estar mal aunque el código sea sintácticamente correcto. Se
 Escaneo de bibliotecas, dependencias, servidores y contenedores:
 
 \begin{itemize}
-    \item \texttt{npm audit} --- dependencias con vulnerabilidades conocidas.
-    \item \texttt{docker scan} --- vulnerabilidades en imágenes Docker.
-    \item \texttt{trivy} --- escaneo completo de contenedores.
+    \item \textbf{Escaneo de dependencias:} Herramientas como \texttt{npm audit}, \texttt{pip-audit} o \texttt{safety} identifican dependencias con vulnerabilidades conocidas (CVEs).
+    \item \textbf{Escaneo de contenedores:} Herramientas como \texttt{trivy} o \texttt{docker scan} analizan vulnerabilidades en imágenes Docker.
+    \item \textbf{Escaneo de configuraciones:} Verificación de que servidores y servicios estén configurados de forma segura.
 \end{itemize}
 
 \subsubsection{Penetration Testing}
 
-Un especialista intenta comprometer el sistema de forma controlada para demostrar impacto real.
+Un especialista intenta comprometer el sistema de forma controlada para demostrar impacto real. Es la prueba más cercana a un ataque real y permite validar si los controles implementados son efectivos.
 
 \subsection{Acceptance Testing de Seguridad}
 
-Es la parte más importante del control A.14.3. Antes de pasar a producción se definen criterios claros:
+Es la parte más importante del control A.14.3. Antes de pasar a producción se definen criterios claros de aceptación:
 
 \begin{table}[h]
 \centering
@@ -120,32 +146,32 @@ Es la parte más importante del control A.14.3. Antes de pasar a producción se 
 \hline
 \textbf{Criterio} & \textbf{Objetivo} \\
 \hline
-Vuln. críticas & 0 \\
-Vuln. altas & 0 \\
+Vulnerabilidades críticas & 0 \\
+Vulnerabilidades altas & 0 \\
 Cobertura SAST & $\geq$ 80\% \\
-Deps sin CVEs críticos & 100\% \\
-Pruebas ejecutadas & Sí \\
-Config. endurecida & Sí \\
+Dependencias sin CVEs críticos & 100\% \\
+Pruebas ejecutadas & Todas aprobadas \\
+Configuración endurecida & Sí \\
 \hline
 \end{tabular}
 \caption{Criterios de aceptación de seguridad}
 \label{tab:criterios}
 \end{table}
 
-Si no cumple, no se despliega a producción.
+Si el software no cumple con estos criterios, \textbf{no se despliega a producción}. Este es el principio fundamental del control A.14.3.
 
 \subsection{Pipeline CI/CD Seguro}
 
-La materialización de los controles A.14.1, A.14.2 y A.14.3:
+La materialización de los controles A.14.1, A.14.2 y A.14.3 se materializa en un pipeline de integración continua seguro:
 
-\begin{lstlisting}[caption={Pipeline CI/CD seguro}, basicstyle=\ttfamily\tiny, columns=fullflexible]
+\begin{lstlisting}[caption={Pipeline CI/CD seguro (modelo genérico)}, basicstyle=\ttfamily\tiny, columns=fullflexible]
 Git Push
-  -> Build (npm install)
-  -> Unit Tests (Jest / Vitest)
-  -> SAST (ESLint + Semgrep)
-  -> Dependency Scan (npm audit)
-  -> DAST (OWASP ZAP)
-  -> Security Gate
+  -> Build (install dependencias)
+  -> Unit Tests
+  -> SAST (linter + análisis estático)
+  -> Dependency Scan (escaneo CVEs)
+  -> DAST (análisis dinámico)
+  -> Security Gate (criterios de aceptación)
   -> Deploy Staging
   -> Acceptance Security Test
   -> Production
@@ -156,4 +182,18 @@ Este pipeline es la materialización práctica de:
     \item \textbf{A.14.1} $\rightarrow$ proceso seguro de desarrollo.
     \item \textbf{A.14.2} $\rightarrow$ código seguro.
     \item \textbf{A.14.3} $\rightarrow$ validación de seguridad.
+\end{itemize}
+
+\subsection{Qué busca un auditor en A.14.3}
+
+Un auditor busca evidencias de:
+
+\begin{itemize}
+    \item Herramientas SAST configuradas y ejecutándose.
+    \item Herramientas DAST configuradas y ejecutándose.
+    \item Registros de análisis de código estático.
+    \item Registros de escaneo de dependencias.
+    \item Criterios de aceptación documentados.
+    \item Evidencia de que el software no se despliega si no cumple criterios.
+    \item Pipeline de CI/CD con Security Gate configurado.
 \end{itemize}

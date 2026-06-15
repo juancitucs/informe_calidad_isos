@@ -1,51 +1,64 @@
 \section{Secure Coding}
 \label{sec:secure-coding}
 
-El control A.14.2 de ISO 27001 establece que la organización debe establecer procesos de codificación segura para garantizar que el software sea desarrollado utilizando principios que reduzcan la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
+El control A.14.2 de ISO/IEC 27001 establece que la organización debe establecer procesos de codificación segura para garantizar que el software sea desarrollado utilizando principios que reduzcan la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
 
 \subsection{Filosofía}
 
 Muchos ataques exitosos no son sofisticados. Son errores simples como SQL Injection, XSS, Path Traversal, Command Injection o CSRF. Todos nacen del código. Por eso ISO 27001 crea un control exclusivo para la programación segura.
 
-\subsection{Principios Fundamentales Aplicados a Workcodile-dev}
+El objetivo de A.14.2 no es que cada programador sea un experto en seguridad, sino que existan \textbf{reglas claras, documentadas y aplicables} que reduzcan la superficie de ataque desde la fase de implementación.
+
+\subsection{Principios Fundamentales de Codificación Segura}
+
+La organización debe establecer principios de codificación segura aprobados. A continuación se describen los principios más relevantes:
 
 \subsubsection{1. Nunca confiar en la entrada}
 
-La entrada del usuario siempre debe considerarse no confiable hasta que sea validada.
+La entrada del usuario siempre debe considerarse no confiable hasta que sea validada. Esto aplica a:
 
-\textbf{Ejemplo en Workcodile-dev (backend -- Express):}
+\begin{itemize}
+    \item Parámetros de URL y query strings.
+    \item Cuerpos de peticiones HTTP (JSON, form-data).
+    \item Headers y cookies.
+    \item Archivos subidos por el usuario.
+    \item Datos de bases de datos externas.
+\end{itemize}
 
-\begin{lstlisting}[language=Java, caption={Código inseguro -- sin validación}]
+\textbf{Ejemplo genérico de código inseguro:}
+
+\begin{lstlisting}[language=Java, caption={Código inseguro: sin validación de entrada}]
 // INSEGURO - No validación de entrada
-app.get('/api/posts/:id', (req, res) => {
-  const post = Post.findById(req.params.id);
-  res.json(post);
+app.get('/api/items/:id', (req, res) => {
+  const item = db.query('SELECT * FROM items WHERE id = '
+    + req.params.id);
+  res.json(item);
 });
 \end{lstlisting}
 
-\textbf{Solución implementada:}
+\textbf{Solución genérica:}
 
-\begin{lstlisting}[language=Java, caption={Código seguro -- con validación de ObjectId}]
-// SEGURO - Con validación de ObjectId
-app.get('/api/posts/:id', (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+\begin{lstlisting}[language=Java, caption={Código seguro: con validación de entrada}]
+// SEGURO - Con validación y consulta parametrizada
+app.get('/api/items/:id', (req, res) => {
+  if (!isValidId(req.params.id)) {
     return res.status(400).json({ error: 'ID invalido' });
   }
-  const post = Post.findById(req.params.id);
-  res.json(post);
+  const item = db.query(
+    'SELECT * FROM items WHERE id = ?', [req.params.id]
+  );
+  res.json(item);
 });
 \end{lstlisting}
 
 \subsubsection{2. Validar siempre}
 
-Validar significa comprobar que el dato cumple lo esperado antes de procesarlo. Se validan: tipo, longitud, formato, rango y conjunto permitido de valores.
+Validar significa comprobar que el dato cumple lo esperado antes de procesarlo. Se deben validar: tipo, longitud, formato, rango y conjunto permitido de valores.
 
-\textbf{Ejemplo en Workcodile-dev (registro de usuario):}
-
-\begin{lstlisting}[language=Java, caption={Middleware de validación con express-validator}]
+\begin{lstlisting}[language=Java, caption={Ejemplo genérico de validación de entrada}]
 const { body, validationResult } = require('express-validator');
 
-app.post('/api/auth/register', [
+app.post('/api/register', [
   body('email').isEmail().normalizeEmail(),
   body('password').isLength({ min: 8 })
     .matches(/^(?=.*[A-Z])/),
@@ -58,6 +71,7 @@ app.post('/api/auth/register', [
       errors: errors.array()
     });
   }
+  // Procesar registro...
 });
 \end{lstlisting}
 
@@ -65,48 +79,48 @@ app.post('/api/auth/register', [
 
 Sanitizar significa preparar los datos para su uso seguro. Un input como \texttt{<script>alert(1)</script>} puede producir Stored XSS si se almacena sin control.
 
-\textbf{En Workcodile-dev (frontend -- React):}
+En frameworks modernos como React, la salida se escapa automáticamente. Sin embargo, hay funciones que deben evitarse:
 
-\begin{lstlisting}[language=Java, caption={Sanitización en React}]
-// SEGURO - React escapa automáticamente
-const UserBio = ({ bio }) => {
-  return <div>{bio}</div>;
-};
-
+\begin{lstlisting}[language=Java, caption={Uso inseguro de dangerouslySetInnerHTML}]
 // INSEGURO - Nunca usar sin sanitizar
 const UserBio = ({ bio }) => {
   return <div
     dangerouslySetInnerHTML={{__html: bio}}
   />;
 };
+
+// SEGURO - React escapa automáticamente
+const UserBio = ({ bio }) => {
+  return <div>{bio}</div>;
+};
 \end{lstlisting}
 
 \subsubsection{4. Principio de mínimo privilegio}
 
-El software debe usar únicamente los permisos que necesita para operar.
+El software debe usar únicamente los permisos que necesita para operar. Esto aplica a:
 
-\textbf{En Workcodile-dev:}
 \begin{itemize}
-    \item MongoDB: usuario con permisos solo sobre la BD de la aplicación.
-    \item MinIO: credenciales con acceso limitado al bucket de uploads.
-    \item Docker: usuario no root, puertos mínimos expuestos.
+    \item \textbf{Bases de datos:} El usuario de la aplicación debe tener permisos solo sobre la base de datos de la aplicación, no sobre administración del servidor.
+    \item \textbf{Almacenamiento:} Las credenciales de acceso a almacenamiento deben limitarse al bucket o directorio necesario.
+    \item \textbf{Contenedores:} Los contenedores deben ejecutarse con usuarios no root y exponer solo los puertos estrictamente necesarios.
+    \item \textbf{Archivos de configuración:} Los permisos de archivos \texttt{.env} deben ser restringidos al proceso de la aplicación.
 \end{itemize}
 
 \subsubsection{5. Gestión de secretos}
 
-Nunca almacenar secretos en código fuente ni en repositorios.
+Nunca almacenar secretos en código fuente ni en repositorios:
 
-\textbf{En Workcodile-dev:}
 \begin{itemize}
-    \item Archivo \texttt{.env} con credenciales (excluido de Git).
-    \item Archivo \texttt{.env.example} como plantilla versionada.
-    \item Variables de entorno cargadas con \texttt{dotenv}.
+    \item Usar archivos de variables de entorno (ej: \texttt{.env}) excluidos del control de versiones.
+    \item Crear archivos plantilla versionados (ej: \texttt{.env.example}) como referencia.
+    \item Cargar variables de entorno con librerías dedicadas (ej: \texttt{dotenv}).
     \item Nunca: \texttt{const PW = "admin123"} en código.
+    \item En producción: usar gestores de secretos como HashiCorp Vault, AWS Secrets Manager o Azure Key Vault.
 \end{itemize}
 
 \subsubsection{6. Manejo seguro de errores}
 
-Los mensajes de error no deben exponer información sensible del sistema.
+Los mensajes de error no deben exponer información sensible del sistema:
 
 \begin{lstlisting}[language=Java, caption={Manejo seguro de errores}]
 // INSEGURO - Expone detalles del error
@@ -117,7 +131,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// SEGURO - Mensaje generico, log interno
+// SEGURO - Mensaje genérico, log interno
 app.use((err, req, res, next) => {
   console.error(`[${new Date()}] ${err.message}`);
   res.status(500).json({
@@ -128,37 +142,51 @@ app.use((err, req, res, next) => {
 
 \subsubsection{7. Dependencias seguras}
 
-Gran parte de los ataques actuales no vienen del código propio, sino de dependencias externas.
+Gran parte de los ataques actuales no vienen del código propio, sino de dependencias externas. La organización debe establecer procesos para:
 
-\textbf{En Workcodile-dev:}
 \begin{itemize}
-    \item Ejecutar \texttt{npm audit} periódicamente.
-    \item Actualizar paquetes con vulnerabilidades conocidas.
-    \item Eliminar dependencias abandonadas.
-    \item Usar \texttt{npm audit fix} para correcciones automáticas.
+    \item Escanear dependencias periódicamente para vulnerabilidades conocidas.
+    \item Actualizar paquetes con vulnerabilidades identificadas.
+    \item Eliminar dependencias abandonadas o innecesarias.
+    \item Usar herramientas automáticas de escaneo (ej: \texttt{npm audit}, \texttt{pip-audit}, \texttt{safety}).
+    \item Definir una política de actualización de dependencias.
 \end{itemize}
 
-\subsection{OWASP Top 10 y Workcodile-dev}
+\subsection{OWASP Top 10 y el control A.14.2}
 
-El control A.14.2 gira alrededor de prevenir las vulnerabilidades del OWASP Top 10 \cite{owasp2021}:
+El control A.14.2 gira alrededor de prevenir las vulnerabilidades del OWASP Top 10 \cite{owasp2021}. Estas son las categorías más relevantes:
 
 \begin{table}[h]
 \centering
 \small
 \resizebox{\columnwidth}{!}{%
-\begin{tabular}{|l|l|p{5cm}|}
+\begin{tabular}{|l|l|p{5.5cm}|}
 \hline
-\textbf{OWASP} & \textbf{¿Aplica?} & \textbf{Controles} \\
+\textbf{OWASP} & \textbf{Nivel} & \textbf{Principio de prevención} \\
 \hline
-Injection & Sí & Validación ObjectId, consultas parametrizadas \\
-Broken Access Control & Sí & Middleware JWT por roles \\
-Cryptographic Failures & Sí & bcrypt, JWT con expiración \\
-Security Misconfiguration & Sí & .env, Docker hardening \\
-Vulnerable Components & Sí & npm audit, actualización deps \\
-Authentication Failures & Sí & JWT expiración, bcrypt cost \\
+Injection & Crítica & Validación y sanitización de entradas, consultas parametrizadas \\
+Broken Access Control & Crítica & Control de acceso por roles, principio de mínimo privilegio \\
+Cryptographic Failures & Alta & Cifrado en reposo y tránsito, hashing con bcrypt/argon2 \\
+Security Misconfiguration & Alta & Hardening de servidores, contenedores y servicios \\
+Vulnerable Components & Alta & Escaneo de dependencias, actualización periódica \\
+Authentication Failures & Alta & Tokens con expiración, contraseñas hasheadas \\
 \hline
 \end{tabular}%
 }
-\caption{Mapeo OWASP Top 10 a Workcodile-dev}
-\label{tab:owasp}
+\caption{Principios de prevención para las categorías OWASP Top 10}
+\label{tab:owasp-prevencion}
 \end{table}
+
+\subsection{Qué busca un auditor en A.14.2}
+
+Un auditor de ISO/IEC 27001 busca evidencias de:
+
+\begin{itemize}
+    \item Documentación de principios de codificación segura aprobados.
+    \item Guías de codificación segura disponibles para los desarrolladores.
+    \item Plugins de seguridad en herramientas de desarrollo (linters, SAST).
+    \item Revisiones de código con checklist de seguridad.
+    \item Ausencia de secretos hardcodeados en el código fuente.
+    \item Uso de librerías y dependencias actualizadas.
+    \item Registros de escaneo de dependencias.
+\end{itemize}

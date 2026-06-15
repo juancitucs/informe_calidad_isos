@@ -1,96 +1,193 @@
-\section{Aplicación de SSDLC a Workcodile-dev}
+\section{Secure Software Development Life Cycle (SSDLC)}
+\label{sec:ssdlc}
 
-Un \textbf{Secure Software Development Life Cycle (SSDLC)} es un SDLC tradicional con actividades de seguridad integradas en cada fase. La seguridad no se revisa al final, sino que es un criterio transversal que acompaña todo el proceso de construcción del software \cite{nist800218}.
+El control A.14.1 de ISO/IEC 27001 establece que la organización debe definir requisitos de seguridad en el desarrollo de software y sistemas de información. Este control se materializa a través del \textbf{Secure Software Development Life Cycle (SSDLC)}, que integra actividades de seguridad en cada fase del ciclo de vida del desarrollo.
 
-\subsection{Fase 1: Requisitos de Seguridad}
+\subsection{Qué intenta resolver}
 
-Aquí se responde la pregunta: \textit{¿Qué debemos proteger?}
+En el modelo tradicional de desarrollo de software, la seguridad solía revisarse al final del proyecto:
 
-\subsubsection{Activos de información de Workcodile-dev}
+\begin{center}
+\small
+\begin{tabular}{c}
+\textbf{Análisis} $\rightarrow$ \textbf{Diseño} $\rightarrow$ \textbf{Desarrollo} $\rightarrow$ \textbf{Testing funcional} $\rightarrow$ \textbf{Producción} \\[4pt]
+$\downarrow$ \\[2pt]
+\textit{``Ahora revisemos seguridad''}
+\end{tabular}
+\end{center}
+
+Este enfoque provoca que los problemas de seguridad se detecten tarde, cuando ya existen más componentes afectados, más usuarios impactados y un costo de corrección mucho mayor. Las consecuencias típicas incluyen:
+
+\begin{itemize}
+    \item Vulnerabilidades que aparecen en producción.
+    \item Información sensible expuesta.
+    \item Controles de acceso débiles o inconsistentes.
+    \item Errores de implementación costosos de corregir.
+\end{itemize}
+
+Por eso, ISO 27001 exige que la seguridad esté presente desde el inicio del ciclo de vida del software, no como una verificación posterior.
+
+\subsection{Qué es realmente un SSDLC}
+
+Un SSDLC es un SDLC tradicional con actividades de seguridad integradas en cada fase. La idea principal es que la seguridad no se trate como una revisión final, sino como un criterio transversal que acompaña todo el proceso de construcción del software \cite{nist800218}.
 
 \begin{table}[h]
 \centering
 \small
-\resizebox{\columnwidth}{!}{%
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{Activo} & \textbf{Tipo} & \textbf{Ubicación} \\
+\textbf{Fase} & \textbf{Pregunta clave} & \textbf{Control ISO/IEC 27001} \\
 \hline
-Base de datos MongoDB & Datos & Backend (contenedor) \\
-Credenciales de usuario & Sensibles & MongoDB (bcrypt hash) \\
-Sesiones JWT & Tokens & Memoria del servidor \\
-Archivos subidos & Datos & MinIO (contenedor) \\
-Variables .env & Secretos & Servidor host \\
-Código fuente & Propiedad & Repositorio Git \\
+Requisitos & ¿Qué debemos proteger? & A.14.1 \\
+Diseño & ¿Cómo podrían atacarnos? & A.14.1 \\
+Desarrollo & ¿Cómo codificamos de forma segura? & A.14.2 \\
+Pruebas & ¿Cómo sabemos que es seguro? & A.14.3 \\
+Despliegue & ¿Cómo nos protegemos en producción? & A.14.1 \\
+Mantenimiento & ¿Cómo nos mantenemos seguros? & A.14.2 \\
 \hline
-\end{tabular}%
-}
-\caption{Activos de información del proyecto}
-\label{tab:activos}
+\end{tabular}
+\caption{Relación de fases SSDLC con controles ISO/IEC 27001}
+\label{tab:ssdlc-fases}
 \end{table}
+
+\subsection{Fase 1: Requisitos de Seguridad}
+
+En esta fase se responde la pregunta: \textit{¿Qué debemos proteger?}
+
+\subsubsection{Activos de información}
+
+Se deben identificar todos los activos de información del sistema que requieren protección. Los activos incluyen:
+
+\begin{itemize}
+    \item Bases de datos y repositorios de información.
+    \item Archivos y documentos del sistema.
+    \item Servicios y APIs expuestas.
+    \item Interfaces de programación.
+    \item Credenciales y claves criptográficas.
+    \item Registros de auditoría.
+    \item Variables de entorno con secretos.
+    \item Código fuente y configuraciones.
+\end{itemize}
 
 \subsubsection{Clasificación de la información}
 
+Una vez identificados los activos, se clasifican según su nivel de sensibilidad:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|p{6cm}|}
+\hline
+\textbf{Categoría} & \textbf{Acceso} & \textbf{Ejemplo típico} \\
+\hline
+Pública & Sin restricción & Información institucional, catálogos \\
+Interna & Empleados & Código fuente, configuraciones internas \\
+Confidencial & Autorizados & Datos de usuarios, credenciales hasheadas \\
+Restringida & Mínimo necesario & Claves maestras, secretos de producción \\
+\hline
+\end{tabular}
+\caption{Clasificación de información según ISO/IEC 27001}
+\label{tab:clasificacion}
+\end{table}
+
+\subsubsection{Requisitos de seguridad}
+
+Los requisitos de seguridad se basan en el triángulo \textbf{CIA + Trazabilidad}:
+
 \begin{itemize}
-    \item \textbf{Pública:} Cursos disponibles, perfil público de usuarios.
-    \item \textbf{Interna:} Código fuente, configuraciones de Docker, estructura de la base de datos.
-    \item \textbf{Confidencial:} Correos electrónicos de usuarios, contraseñas hasheadas, tokens JWT.
-    \item \textbf{Restringida:} Variables de entorno con contraseñas de servicios (Gmail, MongoDB, MinIO).
+    \item \textbf{Confidencialidad:} Solo usuarios autorizados acceden a la información.
+    \item \textbf{Integridad:} Los datos no son modificados sin autorización.
+    \item \textbf{Disponibilidad:} El servicio permanece operativo cuando sea necesario.
+    \item \textbf{Trazabilidad:} Las acciones relevantes se registran y pueden auditarse.
 \end{itemize}
 
-\subsubsection{Requisitos de seguridad (CIA + T)}
+\subsubsection{Requisitos regulatorios}
+
+Dependiendo del proyecto, pueden existir exigencias asociadas a marcos normativos, políticas internas o leyes de protección de datos. En el caso de software educativo, pueden aplicar regulaciones de protección de datos personales.
+
+\subsubsection{Requisitos de autenticación y acceso}
+
+Se definen los mecanismos de:
 
 \begin{itemize}
-    \item \textbf{Confidencialidad:} Solo usuarios autenticados acceden a sus datos.
-    \item \textbf{Integridad:} Los datos de publicaciones no deben ser modificados sin autorización.
-    \item \textbf{Disponibilidad:} La aplicación debe estar operativa para los usuarios.
-    \item \textbf{Trazabilidad:} Las acciones relevantes deben poder registrarse y auditarse.
+    \item Autenticación: verificación de identidad del usuario.
+    \item Autorización: control de acceso por roles o privilegios.
+    \item Sesiones seguras: gestión de tokens y expiración.
+    \item Control de acceso basado en contexto.
 \end{itemize}
 
 \subsection{Fase 2: Diseño Seguro}
 
-Aquí se responde la pregunta: \textit{¿Cómo podrían atacarnos?}
+En esta fase se responde la pregunta: \textit{¿Cómo podrían atacarnos?}
 
 \subsubsection{Threat Modeling con STRIDE}
 
-Aplicando la metodología STRIDE a la arquitectura de Workcodile-dev:
+La metodología \textbf{STRIDE} es una de las más utilizadas para identificar amenazas. Fue desarrollada por Microsoft y categoriza las amenazas en 6 tipos \cite{owasp2021}:
 
 \begin{table}[h]
 \centering
 \small
-\resizebox{\columnwidth}{!}{%
-\begin{tabular}{|l|p{4.5cm}|p{4.5cm}|}
+\begin{tabular}{|l|l|p{5cm}|}
 \hline
-\textbf{Amenaza} & \textbf{Ejemplo} & \textbf{Control} \\
+\textbf{Amenaza} & \textbf{Significado} & \textbf{Pregunta clave} \\
 \hline
-Spoofing & Suplantación con JWT falso & Validación firma JWT \\
-Tampering & Modificación datos en tránsito & HTTPS, validación ObjectId \\
-Repudiation & Usuario niega publicación & Logging con timestamp \\
-Info Disclosure & Exposición de .env & .gitignore excluye .env \\
-DoS & Inundación a la API & Rate limiting \\
-Elevation of Priv. & Acceso a rutas admin & Middleware por roles \\
+Spoofing & Suplantación & ¿Quién es realmente el usuario? \\
+Tampering & Manipulación & ¿Pueden alterarse los datos en tránsito? \\
+Repudiation & Negación & ¿Se puede demostrar quién hizo qué? \\
+Info Disclosure & Exposición & ¿Se puede leer información confidencial? \\
+DoS & Indisponibilidad & ¿Se puede interrumpir el servicio? \\
+Elevation of Privilege & Escalada & ¿Se pueden obtener permisos extra? \\
 \hline
-\end{tabular}%
-}
-\caption{Análisis STRIDE de Workcodile-dev}
+\end{tabular}
+\caption{Metodología STRIDE para threat modeling}
 \label{tab:stride}
 \end{table}
 
 \subsubsection{Diagrama de Flujo de Datos (DFD)}
 
-La arquitectura de Workcodile-dev presenta los siguientes flujos principales de datos:
+Se identifican los componentes del sistema:
 
-\begin{enumerate}
-    \item \textbf{Flujo de autenticación:} Usuario → Frontend (React) → Backend (Express) → MongoDB → JWT token.
-    \item \textbf{Flujo de publicaciones:} Usuario → Frontend → Backend → MinIO (archivo) + MongoDB (metadatos).
-    \item \textbf{Flujo de correo:} Backend → Nodemailer → Gmail SMTP.
-\end{enumerate}
+\begin{itemize}
+    \item \textbf{Procesos:} Componentes que transforman datos.
+    \item \textbf{Flujos:} Movimiento de datos entre componentes.
+    \item \textbf{Almacenes de datos:} Bases de datos, archivos.
+    \item \textbf{Entidades externas:} Sistemas o usuarios externos.
+\end{itemize}
 
-Cada frontera entre componentes representa un límite de confianza que requiere controles adicionales de validación y sanitización.
+\subsubsection{Límites de confianza}
+
+Los límites de confianza permiten distinguir qué componentes requieren controles adicionales:
+
+\begin{center}
+\small
+\begin{tabular}{c}
+\textbf{Entorno externo (internet)} \\[3pt]
+$\downarrow$ \textit{Firewall, WAF, autenticación} \\[3pt]
+\textbf{Aplicación (servidor web)} \\[3pt]
+$\downarrow$ \textit{Validación, autorización} \\[3pt]
+\textbf{Servicios internos (lógica de negocio)} \\[3pt]
+$\downarrow$ \textit{Cifrado, acceso restringido} \\[3pt]
+\textbf{Almacenamiento (base de datos)}
+\end{tabular}
+\end{center}
+
+\subsubsection{Controles de diseño}
+
+Basado en el threat modeling, se definen controles como:
+
+\begin{itemize}
+    \item Validación de autenticidad en cada punto de entrada.
+    \item Autorización adecuada por componente.
+    \item Registro de eventos relevantes (logging).
+    \item Protección de sesiones y tokens.
+    \item Segregación de componentes.
+\end{itemize}
 
 \subsection{Fase 3: Desarrollo Seguro}
 
-En esta fase se establecen las reglas de codificación segura para el proyecto. El control A.14.2 de ISO 27001 exige que la organización defina procesos de codificación segura que incluyan \cite{iso27001}:
+Esta fase corresponde directamente al control \textbf{A.14.2} de ISO/IEC 27001. El objetivo es garantizar que el software sea desarrollado utilizando principios de codificación segura para reducir la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
+
+La organización debe establecer procesos de codificación segura que incluyan:
 
 \begin{itemize}
     \item Principios de codificación segura aprobados.
@@ -100,11 +197,13 @@ En esta fase se establecen las reglas de codificación segura para el proyecto. 
     \item Entornos de desarrollo controlados y protegidos.
 \end{itemize}
 
-Estas prácticas se detallan en la Sección~\ref{sec:secure-coding} del presente informe.
+Los detalles de estos principios se desarrollan en la Sección~\ref{sec:secure-coding} del presente informe.
 
 \subsection{Fase 4: Pruebas de Seguridad}
 
-El control A.14.3 de ISO 27001 exige que las pruebas de seguridad formen parte del proceso normal de pruebas del sistema \cite{iso27001}. Las verificaciones deben incluir:
+Esta fase corresponde al control \textbf{A.14.3} de ISO/IEC 27001. El control exige que las pruebas de seguridad formen parte del proceso normal de pruebas del sistema \cite{iso27001}.
+
+Las verificaciones deben incluir:
 
 \begin{itemize}
     \item Funciones de autenticación y autorización.
@@ -118,21 +217,22 @@ Las actividades de verificación incluyen SAST, DAST, revisiones de código y es
 
 \subsection{Fase 5: Despliegue Seguro}
 
-Para Workcodile-dev, el despliegue se realiza mediante Docker Compose. Los controles de seguridad incluyen:
+El despliegue seguro es la materialización del control A.14.1. Los controles típicos incluyen:
 
-\subsubsection{Hardening de contenedores}
+\subsubsection{Hardening de servidores y contenedores}
 \begin{itemize}
-    \item Imágenes mínimas (node:alpine en lugar de node:full).
-    \item Usuarios no root en contenedores de producción.
+    \item Uso de imágenes mínimas (ejemplo: \texttt{node:alpine} en lugar de \texttt{node:full}).
+    \item Usuarios no root en entornos de producción.
     \item Configuración restrictiva de puertos.
     \item Eliminación de servicios innecesarios.
 \end{itemize}
 
 \subsubsection{Gestión de secretos}
 \begin{itemize}
-    \item Variables de entorno en archivo \texttt{.env} (excluido de Git).
-    \item Archivo \texttt{.env.example} como plantilla versionada.
+    \item Variables de entorno en archivos \texttt{.env} (excluidos del control de versiones).
+    \item Archivos \texttt{.env.example} como plantillas versionadas.
     \item Nunca secretos hardcodeados en código fuente.
+    \item Uso de gestores de secretos para producción.
 \end{itemize}
 
 \subsubsection{Seguridad CI/CD}
@@ -146,13 +246,50 @@ Para Workcodile-dev, el despliegue se realiza mediante Docker Compose. Los contr
 
 \subsection{Fase 6: Mantenimiento}
 
-Las actividades de mantenimiento de seguridad para Workcodile-dev incluyen:
+El mantenimiento de seguridad es continuo e incluye:
 
 \begin{itemize}
-    \item Actualización periódica de dependencias (\texttt{npm audit}).
+    \item Actualización periódica de dependencias.
     \item Corrección de vulnerabilidades identificadas.
     \item Monitoreo continuo de riesgos y amenazas.
     \item Revisión de configuraciones de seguridad.
     \item Revisión de permisos y controles de acceso.
     \item Evaluación de nuevas vulnerabilidades publicadas.
 \end{itemize}
+
+\subsection{Ciclo PDCA del SGSI}
+
+El SSDLC se enmarca dentro del ciclo de mejora continua del SGSI según ISO/IEC 27001. El ciclo \textbf{Plan-Do-Check-Act (PDCA)} asegura que los controles de seguridad se mejoren de forma continua \cite{iso27001}:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|l|p{5.5cm}|}
+\hline
+\textbf{Fase} & \textbf{Actividad} & \textbf{Relación con SSDLC} \\
+\hline
+Plan & Planificar & Definir requisitos de seguridad, threat modeling \\
+Do & Implementar & Codificación segura, pipelines CI/CD \\
+Check & Evaluar & SAST, DAST, auditorías de seguridad \\
+Act & Mejorar & Corregir vulnerabilidades, actualizar procesos \\
+\hline
+\end{tabular}
+\caption{Ciclo PDCA aplicado al SSDLC}
+\label{tab:pdca}
+\end{table}
+
+\subsection{Lo que busca un auditor en A.14.1}
+
+Un auditor de ISO/IEC 27001 busca evidencias de:
+
+\begin{itemize}
+    \item Política de Secure SDLC documentada.
+    \item Capacitación del equipo en seguridad.
+    \item Requisitos de seguridad definidos antes del desarrollo.
+    \item Threat modeling realizado y documentado.
+    \item Resultados de pruebas de seguridad.
+    \item Control de cambios y pipeline seguro.
+    \item Registros de mantenimiento de seguridad.
+\end{itemize}
+
+No busca una herramienta específica. Busca un \textbf{proceso definido, aplicado y demostrable}.

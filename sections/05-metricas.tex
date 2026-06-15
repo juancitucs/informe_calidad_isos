@@ -1,11 +1,11 @@
 \section{Métricas de Calidad}
 \label{sec:metricas}
 
-La guía de trabajo práctico exige proponer un set de métricas cuantitativas pertinentes para la norma ISO/IEC asignada, detallando sus respectivas ecuaciones matemáticas de obtención. A continuación se presentan las métricas definidas para medir la seguridad del proceso de desarrollo de Workcodile-dev.
+La guía de trabajo práctico exige proponer un set de métricas cuantitativas pertinentes para la norma ISO/IEC asignada, detallando sus respectivas ecuaciones matemáticas de obtención \cite{iso33000}. A continuación se presentan las métricas definidas para evaluar el cumplimiento de los controles A.14 de ISO/IEC 27001.
 
 \subsection{Métrica 1: Densidad de Vulnerabilidades}
 
-Mide la cantidad de vulnerabilidades encontradas por unidad de código.
+Mide la cantidad de vulnerabilidades encontradas por unidad de código. Es un indicador directo de la calidad de seguridad de la implementación.
 
 \begin{equation}
 D_v = \frac{V_{encontradas}}{KLOC} \times 1000
@@ -35,10 +35,9 @@ $D_v \geq 10$ & Crítico \\
 \label{tab:umbral-vuln}
 \end{table}
 
-\textbf{Ejemplo para Workcodile-dev:}
-Si el proyecto tiene 5 KLOC y se encuentran 3 vulnerabilidades:
+\textbf{Ejemplo de cálculo:} Si un proyecto tiene 10 KLOC y se encuentran 4 vulnerabilidades:
 \begin{equation}
-D_v = \frac{3}{5} \times 1000 = 600 \text{ vuln/KLOC} \quad \Rightarrow \quad \text{Nivel: Bajo}
+D_v = \frac{4}{10} \times 1000 = 400 \text{ vuln/KLOC} \quad \Rightarrow \quad \text{Nivel: Bajo}
 \end{equation}
 
 \subsection{Métrica 2: Cobertura de Análisis SAST}
@@ -58,10 +57,9 @@ Donde:
 
 \textbf{Objetivo mínimo:} $C_{SAST} \geq 80\%$
 
-\textbf{Ejemplo para Workcodile-dev:}
-Si hay 45 archivos .js/.ts y se escanean 40:
+\textbf{Ejemplo de cálculo:} Si hay 60 archivos de código fuente y se escanean 52:
 \begin{equation}
-C_{SAST} = \frac{40}{45} \times 100 = 88.9\%
+C_{SAST} = \frac{52}{60} \times 100 = 86.7\% \quad \Rightarrow \quad \text{Cumple el objetivo}
 \end{equation}
 
 \subsection{Métrica 3: Tiempo Medio de Remediación}
@@ -112,18 +110,18 @@ Donde:
     \item $P_{total}$ = Total de pruebas de seguridad ejecutadas.
 \end{itemize}
 
-\textbf{Objetivo mínimo:} $R_{acep} = 100\%$ (todas las pruebas críticas deben aprobar).
+\textbf{Objetivo mínimo:} $R_{acep} = 100\%$ (todas las pruebas críticas deben aprobar antes de producción).
 
 \subsection{Métrica 5: Nivel de Madurez del SSDLC}
 
-Mide el nivel de madurez del proceso de seguridad en el ciclo de vida del desarrollo, basado en la escala de ISO 33000:
+Mide el nivel de madurez del proceso de seguridad en el ciclo de vida del desarrollo, basado en la escala de ISO/IEC 33000 \cite{iso33000}:
 
 \begin{table}[h]
 \centering
 \small
 \begin{tabular}{|c|l|p{6cm}|}
 \hline
-\textbf{Nivel} & \textbf{Nombre} & \textbf{Criterio para Workcodile-dev} \\
+\textbf{Nivel} & \textbf{Nombre} & \textbf{Criterio general} \\
 \hline
 0 & Incompleto & No hay proceso de seguridad definido. \\
 1 & Realizado & Se realizan pruebas de seguridad de forma ad-hoc. \\
@@ -133,7 +131,7 @@ Mide el nivel de madurez del proceso de seguridad en el ciclo de vida del desarr
 5 & Optimizado & El proceso se mejora continuamente según métricas y retroalimentación. \\
 \hline
 \end{tabular}
-\caption{Escala de madurez SSDLC}
+\caption{Escala de madurez SSDLC según ISO/IEC 33000}
 \label{tab:madurez}
 \end{table}
 
@@ -164,6 +162,6 @@ Tasa de aceptación & $R = P_{apr} / P_{tot} \times 100$ & $R = 100\%$ \\
 Madurez SSDLC & $M = \Sigma P_i w_i / \Sigma w_i$ & Nivel $\geq 2$ \\
 \hline
 \end{tabular}
-\caption{Resumen de métricas de calidad}
+\caption{Resumen de métricas de calidad para A.14}
 \label{tab:resumen-metricas}
 \end{table}

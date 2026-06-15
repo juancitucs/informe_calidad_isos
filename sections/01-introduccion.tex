@@ -1,24 +1,62 @@
 \section{Introducción}
 
-\subsection{Contexto}
+\subsection{La necesidad de seguridad en el desarrollo de software}
 
-La seguridad en el desarrollo de software ya no es opcional. Las vulnerabilidades explotadas en producción generan pérdidas económicas, daño reputacional y exposición de datos sensibles de los usuarios. Según el reporte \textit{OWASP Top 10} de 2021, las vulnerabilidades más críticas siguen siendo aquellas que nacen en la fase de implementación: inyecciones, fallos de control de acceso y configuraciones inseguras \cite{owasp2021}.
+La industria del software enfrenta un panorama de amenazas creciente. Cada año, las vulnerabilidades explotadas en producción generan pérdidas económicas multimillonarias, daño reputacional y exposición de datos sensibles de millones de usuarios. Según el reporte \textit{OWASP Top 10} de 2021, las vulnerabilidades más críticas siguen siendo aquellas que nacen en la fase de implementación del software: inyecciones de código, fallos de control de acceso y configuraciones inseguras \cite{owasp2021}.
 
-La norma \textbf{ISO/IEC 27001:2022} establece los requisitos para un Sistema de Gestión de Seguridad de la Información (SGSI). En particular, el \textbf{Anexo A.14} define controles específicos para la seguridad en el desarrollo de software y sistemas de información \cite{iso27001}.
+Frente a esta realidad, los organismos internacionales de estandarización han desarrollado normas que proporcionan un marco sistemático para gestionar la seguridad de la información a lo largo del ciclo de vida del desarrollo de software. Una de las más relevantes a nivel mundial es la norma \textbf{ISO/IEC 27001:2022}.
 
-\subsection{Objetivo}
+\subsection{ISO/IEC 27001:2022 --- Visión general}
 
-El presente informe tiene como objetivo aplicar los controles de seguridad de la información del estándar ISO/IEC 27001 al proyecto \textbf{Workcodile-dev}, una plataforma web full-stack para estudiantes de la Universidad Nacional de Moquegua. Se analizarán e implementarán los siguientes controles:
+La norma \textbf{ISO/IEC 27001:2022} establece los requisitos para establecer, implementar, mantener y mejorar continuamente un \textbf{Sistema de Gestión de Seguridad de la Información (SGSI)}. Es la norma internacional de referencia para la gestión de seguridad de la información y es aplicable a cualquier organización, independientemente de su tamaño, sector o complejidad \cite{iso27001}.
 
-\begin{itemize}
-    \item \textbf{A.14.1} — Requisitos de seguridad en el desarrollo de software y sistemas de información.
-    \item \textbf{A.14.2} — Seguridad en los procesos de desarrollo y mantenimiento de software.
-    \item \textbf{A.14.3} — Pruebas de aceptación para la seguridad.
-\end{itemize}
+La norma se estructura en dos partes principales:
 
-\subsection{Alcance}
+\begin{enumerate}
+    \item \textbf{Cláusulas 4 a 10:} Requisitos del sistema de gestión. Definen el marco de trabajo que la organización debe establecer, incluyendo contexto organizacional, liderazgo, planificación, apoyo, operación, evaluación del desempeño y mejora continua.
 
-El análisis cubre la arquitectura técnica completa del proyecto Workcodile-dev:
+    \item \textbf{Anexo A:} Controles de referencia. Lista de 93 controles de seguridad organizados en 4 temas:
+    \begin{itemize}
+        \item \textbf{A.5:} Controles organizacionales (37 controles).
+        \item \textbf{A.6:} Controles de personas (8 controles).
+        \item \textbf{A.7:} Controles físicos (14 controles).
+        \item \textbf{A.8:} Controles tecnológicos (34 controles).
+    \end{itemize}
+\end{enumerate}
+
+Es importante aclarar que ISO/IEC 27001 no es un conjunto de ``recetas'' o herramientas específicas. Es un \textbf{estándar basado en procesos} que define \textit{qué} se debe lograr, dejando a cada organización la libertad de decidir \textit{cómo} implementar los controles según su contexto y necesidades específicas.
+
+\subsection{Anexo A.14 --- Seguridad en el desarrollo de software}
+
+El Anexo A.14 es el grupo de controles más directamente relacionado con el desarrollo de software. Establece requisitos específicos para garantizar que la seguridad sea parte integral del proceso de desarrollo, no una verificación posterior. Los tres controles principales son:
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{|l|p{5.5cm}|}
+\hline
+\textbf{Control} & \textbf{Descripción} \\
+\hline
+A.14.1 & Requisitos de seguridad en el desarrollo de software y sistemas de información \\
+\hline
+A.14.2 & Seguridad en los procesos de desarrollo y mantenimiento de software \\
+\hline
+A.14.3 & Pruebas de aceptación para la seguridad \\
+\hline
+\end{tabular}
+\caption{Controles del Anexo A.14 de ISO/IEC 27001}
+\label{tab:controles-a14}
+\end{table}
+
+El control \textbf{A.14.1} exige que los requisitos de seguridad se definan \textit{antes} de comenzar el desarrollo, estableciendo qué se debe proteger y qué nivel de seguridad se espera. El control \textbf{A.14.2} se enfoca en los procesos de codificación segura, revisión y mantenimiento durante el desarrollo. El control \textbf{A.14.3} requiere que existan pruebas de seguridad formales antes de cada despliegue a producción \cite{iso27001}.
+
+\subsection{Objetivo del informe}
+
+El presente informe tiene como objetivo \textbf{explicar detalladamente los controles de seguridad del Anexo A.14 de ISO/IEC 27001} y su aplicación práctica en el desarrollo de software. Para ello, se utilizará el proyecto \textbf{Workcodile-dev} como ejemplo ilustrativo que permite visualizar cómo se materializan estos controles en un sistema real.
+
+\subsection{Alcance --- Caso de estudio: Workcodile-dev}
+
+Workcodile-dev es una plataforma web full-stack para estudiantes de la Universidad Nacional de Moquegua, cuya arquitectura técnica representa un caso representativo para analizar la aplicación de los controles de seguridad:
 
 \begin{table}[h]
 \centering
@@ -39,13 +77,11 @@ Infraestructura & Docker, Docker Compose \\
 
 \subsection{Estructura del informe}
 
-Este documento se estructura en las siguientes secciones:
-
 \begin{enumerate}
-    \item \textbf{Introducción} — Contexto, objetivo y alcance.
-    \item \textbf{Aplicación de SSDLC a Workcodile-dev} — Implementación del ciclo de vida seguro del software.
-    \item \textbf{Secure Coding} — Reglas de codificación segura aplicadas al proyecto.
-    \item \textbf{Security Testing} — Pruebas de seguridad: SAST, DAST y revisiones.
-    \item \textbf{Métricas de Calidad} — Métricas cuantitativas para medir la seguridad del proceso.
-    \item \textbf{Conclusiones} — Hallazgos y recomendaciones.
+    \item \textbf{Introducción} --- Contexto, visión general de ISO/IEC 27001 y los controles A.14.
+    \item \textbf{Secure Software Development Life Cycle (SSDLC)} --- Explicación del ciclo de vida seguro y cómo se aplican los controles A.14.1, A.14.2 y A.14.3.
+    \item \textbf{Secure Coding} --- Principios de codificación segura según A.14.2, con ejemplos prácticos.
+    \item \textbf{Security Testing} --- Metodologías de prueba de seguridad según A.14.3.
+    \item \textbf{Métricas de Calidad} --- Métricas cuantitativas para medir el cumplimiento de la norma.
+    \item \textbf{Conclusiones} --- Hallazgos del análisis y recomendaciones.
 \end{enumerate}
