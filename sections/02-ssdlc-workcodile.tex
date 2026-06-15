@@ -1,7 +1,7 @@
 \section{Secure Software Development Life Cycle (SSDLC)}
 \label{sec:ssdlc}
 
-El control A.14.1 de ISO/IEC 27001 establece que la organización debe definir requisitos de seguridad en el desarrollo de software y sistemas de información. Este control se materializa a través del \textbf{Secure Software Development Life Cycle (SSDLC)}, que integra actividades de seguridad en cada fase del ciclo de vida del desarrollo.
+El control 8.25 de ISO/IEC 27001:2022 establece que la organización debe establecer reglas para el desarrollo seguro de software y sistemas, aplicándolas durante todo el ciclo de vida del desarrollo. Este control se materializa a través del \textbf{Secure Software Development Life Cycle (SSDLC)}, que integra actividades de seguridad en cada fase del ciclo de vida del desarrollo.
 
 \subsection{Qué intenta resolver}
 
@@ -36,17 +36,17 @@ Un SSDLC es un SDLC tradicional con actividades de seguridad integradas en cada 
 \small
 \begin{tabular}{|l|l|l|}
 \hline
-\textbf{Fase} & \textbf{Pregunta clave} & \textbf{Control ISO/IEC 27001} \\
+\textbf{Fase} & \textbf{Pregunta clave} & \textbf{Control ISO/IEC 27001:2022} \\
 \hline
-Requisitos & ¿Qué debemos proteger? & A.14.1 \\
-Diseño & ¿Cómo podrían atacarnos? & A.14.1 \\
-Desarrollo & ¿Cómo codificamos de forma segura? & A.14.2 \\
-Pruebas & ¿Cómo sabemos que es seguro? & A.14.3 \\
-Despliegue & ¿Cómo nos protegemos en producción? & A.14.1 \\
-Mantenimiento & ¿Cómo nos mantenemos seguros? & A.14.2 \\
+Requisitos & ¿Qué debemos proteger? & 8.25 \\
+Diseño & ¿Cómo podrían atacarnos? & 8.25 \\
+Desarrollo & ¿Cómo codificamos de forma segura? & 8.28 \\
+Pruebas & ¿Cómo sabemos que es seguro? & 8.29 \\
+Despliegue & ¿Cómo nos protegemos en producción? & 8.25 \\
+Mantenimiento & ¿Cómo nos mantenemos seguros? & 8.25 \\
 \hline
 \end{tabular}
-\caption{Relación de fases SSDLC con controles ISO/IEC 27001}
+\caption{Relación de fases SSDLC con controles ISO/IEC 27001:2022}
 \label{tab:ssdlc-fases}
 \end{table}
 
@@ -185,7 +185,7 @@ Basado en el threat modeling, se definen controles como:
 
 \subsection{Fase 3: Desarrollo Seguro}
 
-Esta fase corresponde directamente al control \textbf{A.14.2} de ISO/IEC 27001. El objetivo es garantizar que el software sea desarrollado utilizando principios de codificación segura para reducir la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
+Esta fase corresponde directamente al control \textbf{8.28} de ISO/IEC 27001:2022 (Secure Coding). El objetivo es garantizar que el software sea desarrollado utilizando principios de codificación segura para reducir la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
 
 La organización debe establecer procesos de codificación segura que incluyan:
 
@@ -201,7 +201,7 @@ Los detalles de estos principios se desarrollan en la Sección~\ref{sec:secure-c
 
 \subsection{Fase 4: Pruebas de Seguridad}
 
-Esta fase corresponde al control \textbf{A.14.3} de ISO/IEC 27001. El control exige que las pruebas de seguridad formen parte del proceso normal de pruebas del sistema \cite{iso27001}.
+Esta fase corresponde al control \textbf{8.29} de ISO/IEC 27001:2022 (Security Testing in Development and Acceptance). El control exige que las pruebas de seguridad formen parte del proceso normal de pruebas del sistema \cite{iso27001}.
 
 Las verificaciones deben incluir:
 
@@ -217,7 +217,7 @@ Las actividades de verificación incluyen SAST, DAST, revisiones de código y es
 
 \subsection{Fase 5: Despliegue Seguro}
 
-El despliegue seguro es la materialización del control A.14.1. Los controles típicos incluyen:
+El despliegue seguro complementa el control 8.25. Los controles típicos incluyen:
 
 \subsubsection{Hardening de servidores y contenedores}
 \begin{itemize}
@@ -257,28 +257,7 @@ El mantenimiento de seguridad es continuo e incluye:
     \item Evaluación de nuevas vulnerabilidades publicadas.
 \end{itemize}
 
-\subsection{Ciclo PDCA del SGSI}
-
-El SSDLC se enmarca dentro del ciclo de mejora continua del SGSI según ISO/IEC 27001. El ciclo \textbf{Plan-Do-Check-Act (PDCA)} asegura que los controles de seguridad se mejoren de forma continua \cite{iso27001}:
-
-\begin{table}[h]
-\centering
-\small
-\begin{tabular}{|l|l|p{5.5cm}|}
-\hline
-\textbf{Fase} & \textbf{Actividad} & \textbf{Relación con SSDLC} \\
-\hline
-Plan & Planificar & Definir requisitos de seguridad, threat modeling \\
-Do & Implementar & Codificación segura, pipelines CI/CD \\
-Check & Evaluar & SAST, DAST, auditorías de seguridad \\
-Act & Mejorar & Corregir vulnerabilidades, actualizar procesos \\
-\hline
-\end{tabular}
-\caption{Ciclo PDCA aplicado al SSDLC}
-\label{tab:pdca}
-\end{table}
-
-\subsection{Lo que busca un auditor en A.14.1}
+\subsection{Lo que busca un auditor en 8.25}
 
 Un auditor de ISO/IEC 27001 busca evidencias de:
 

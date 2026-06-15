@@ -26,9 +26,9 @@ La norma se estructura en dos partes principales:
 
 Es importante aclarar que ISO/IEC 27001 no es un conjunto de ``recetas'' o herramientas específicas. Es un \textbf{estándar basado en procesos} que define \textit{qué} se debe lograr, dejando a cada organización la libertad de decidir \textit{cómo} implementar los controles según su contexto y necesidades específicas.
 
-\subsection{Anexo A.14 --- Seguridad en el desarrollo de software}
+\subsection{Controles tecnológicos --- 8.25, 8.28 y 8.29}
 
-El Anexo A.14 es el grupo de controles más directamente relacionado con el desarrollo de software. Establece requisitos específicos para garantizar que la seguridad sea parte integral del proceso de desarrollo, no una verificación posterior. Los tres controles principales son:
+Los controles más directamente relacionados con el desarrollo de software en ISO/IEC 27001:2022 pertenecen a la categoría de controles tecnológicos (A.8). Establecen requisitos específicos para garantizar que la seguridad sea parte integral del proceso de desarrollo, no una verificación posterior. Los tres controles principales son:
 
 \begin{table}[h]
 \centering
@@ -37,22 +37,22 @@ El Anexo A.14 es el grupo de controles más directamente relacionado con el desa
 \hline
 \textbf{Control} & \textbf{Descripción} \\
 \hline
-A.14.1 & Requisitos de seguridad en el desarrollo de software y sistemas de información \\
+8.25 & Secure Development Life Cycle --- Reglas para el desarrollo seguro \\
 \hline
-A.14.2 & Seguridad en los procesos de desarrollo y mantenimiento de software \\
+8.28 & Secure Coding --- Principios de codificación segura \\
 \hline
-A.14.3 & Pruebas de aceptación para la seguridad \\
+8.29 & Security Testing in Development and Acceptance --- Pruebas de seguridad \\
 \hline
 \end{tabular}
-\caption{Controles del Anexo A.14 de ISO/IEC 27001}
-\label{tab:controles-a14}
+\caption{Controles tecnológicos de ISO/IEC 27001:2022}
+\label{tab:controles-8}
 \end{table}
 
-El control \textbf{A.14.1} exige que los requisitos de seguridad se definan \textit{antes} de comenzar el desarrollo, estableciendo qué se debe proteger y qué nivel de seguridad se espera. El control \textbf{A.14.2} se enfoca en los procesos de codificación segura, revisión y mantenimiento durante el desarrollo. El control \textbf{A.14.3} requiere que existan pruebas de seguridad formales antes de cada despliegue a producción \cite{iso27001}.
+El control \textbf{8.25} exige que la organización establezca reglas para el desarrollo seguro de software y sistemas, aplicándolas durante todo el ciclo de vida. El control \textbf{8.28} se enfoca en los principios de codificación segura para reducir la introducción de vulnerabilidades durante la implementación. El control \textbf{8.29} requiere que existan procesos de prueba de seguridad definidos e implementados en el ciclo de vida del desarrollo \cite{iso27001}.
 
 \subsection{Objetivo del informe}
 
-El presente informe tiene como objetivo \textbf{explicar detalladamente los controles de seguridad del Anexo A.14 de ISO/IEC 27001} y su aplicación práctica en el desarrollo de software. Para ello, se utilizará el proyecto \textbf{Workcodile-dev} como ejemplo ilustrativo que permite visualizar cómo se materializan estos controles en un sistema real.
+El presente informe tiene como objetivo \textbf{explicar detalladamente los controles de seguridad 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022} y su aplicación práctica en el desarrollo de software. Para ello, se utilizará el proyecto \textbf{Workcodile-dev} como ejemplo ilustrativo que permite visualizar cómo se materializan estos controles en un sistema real.
 
 \subsection{Alcance --- Caso de estudio: Workcodile-dev}
 
@@ -78,10 +78,10 @@ Infraestructura & Docker, Docker Compose \\
 \subsection{Estructura del informe}
 
 \begin{enumerate}
-    \item \textbf{Introducción} --- Contexto, visión general de ISO/IEC 27001 y los controles A.14.
-    \item \textbf{Secure Software Development Life Cycle (SSDLC)} --- Explicación del ciclo de vida seguro y cómo se aplican los controles A.14.1, A.14.2 y A.14.3.
-    \item \textbf{Secure Coding} --- Principios de codificación segura según A.14.2, con ejemplos prácticos.
-    \item \textbf{Security Testing} --- Metodologías de prueba de seguridad según A.14.3.
+    \item \textbf{Introducción} --- Contexto, visión general de ISO/IEC 27001:2022 y los controles 8.25, 8.28 y 8.29.
+    \item \textbf{Secure Software Development Life Cycle (SSDLC)} --- Explicación del ciclo de vida seguro y el control 8.25, con relación a 8.28 y 8.29.
+    \item \textbf{Secure Coding} --- Principios de codificación segura según el control 8.28, con ejemplos prácticos.
+    \item \textbf{Security Testing} --- Metodologías de prueba de seguridad según el control 8.29.
     \item \textbf{Métricas de Calidad} --- Métricas cuantitativas para medir el cumplimiento de la norma.
     \item \textbf{Conclusiones} --- Hallazgos del análisis y recomendaciones.
 \end{enumerate}

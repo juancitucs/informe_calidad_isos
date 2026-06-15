@@ -1,7 +1,7 @@
 \section{Caso de Estudio: Aplicación a Workcodile-dev}
 \label{sec:caso-workcodile}
 
-A continuación se presenta la aplicación práctica de los controles A.14 de ISO/IEC 27001 al proyecto \textbf{Workcodile-dev}, una plataforma web full-stack para estudiantes de la Universidad Nacional de Moquegua. Este caso permite visualizar cómo se materializan los conceptos explicados en las secciones anteriores.
+A continuación se presenta la aplicación práctica de los controles 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022 al proyecto \textbf{Workcodile-dev}, una plataforma web full-stack para estudiantes de la Universidad Nacional de Moquegua. Este caso permite visualizar cómo se materializan los conceptos explicados en las secciones anteriores.
 
 \subsection{Contexto del proyecto}
 
@@ -27,7 +27,7 @@ Infraestructura & Docker, Docker Compose \\
 \label{tab:stack}
 \end{table}
 
-\subsection{Aplicación de SSDLC (A.14.1)}
+\subsection{Aplicación de SSDLC (8.25)}
 
 \subsubsection{Activos de información}
 
@@ -105,7 +105,7 @@ La arquitectura de Workcodile-dev presenta los siguientes flujos principales de 
 
 Cada frontera entre componentes representa un límite de confianza que requiere controles adicionales de validación y sanitización.
 
-\subsection{Aplicación de Secure Coding (A.14.2)}
+\subsection{Aplicación de Secure Coding (8.28)}
 
 \subsubsection{Principios aplicados}
 
@@ -188,7 +188,7 @@ Authentication Failures & Sí & JWT expiración, bcrypt cost \\
 \label{tab:owasp-workcodile}
 \end{table}
 
-\subsection{Aplicación de Security Testing (A.14.3)}
+\subsection{Aplicación de Security Testing (8.29)}
 
 \subsubsection{Herramientas SAST}
 \begin{itemize}
@@ -250,17 +250,17 @@ $M_{SSDLC}$ (Madurez) & Nivel 2 (Gestionado) \\
 \subsection{Conclusiones}
 
 \begin{enumerate}
-    \item La aplicación de los controles del Anexo A.14 de ISO/IEC 27001 al proyecto Workcodile-dev permite identificar y documentar las prácticas de seguridad que ya existen en el proyecto, así como las áreas de mejora necesarias.
+    \item La aplicación de los controles 8.25, 8.28 y 8.29 de ISO/IEC 27001:2022 al proyecto Workcodile-dev permite identificar y documentar las prácticas de seguridad que ya existen en el proyecto, así como las áreas de mejora necesarias.
 
-    \item El análisis del SSDLC (A.14.1) reveló que Workcodile-dev cuenta con controles básicos de seguridad como variables de entorno para secretos (\texttt{.env}), autenticación JWT con expiración y hashing de contraseñas con bcrypt. Sin embargo, faltan procesos formalizados de threat modeling y documentación de requisitos de seguridad.
+    \item El análisis del SSDLC (8.25) reveló que Workcodile-dev cuenta con controles básicos de seguridad como variables de entorno para secretos (\texttt{.env}), autenticación JWT con expiración y hashing de contraseñas con bcrypt. Sin embargo, faltan procesos formalizados de threat modeling y documentación de requisitos de seguridad.
 
-    \item En el ámbito de Secure Coding (A.14.2), el proyecto utiliza tecnologías modernas que proporcionan protecciones inherentes (React escapa HTML automáticamente, Express permite validación de entrada). No obstante, se recomienda implementar plugins de seguridad en ESLint, definir guías de codificación segura y establecer revisiones de código obligatorias con checklist de seguridad.
+    \item En el ámbito de Secure Coding (8.28), el proyecto utiliza tecnologías modernas que proporcionan protecciones inherentes (React escapa HTML automáticamente, Express permite validación de entrada). No obstante, se recomienda implementar plugins de seguridad en ESLint, definir guías de codificación segura y establecer revisiones de código obligatorias con checklist de seguridad.
 
-    \item Respecto a las pruebas de seguridad (A.14.3), actualmente el proyecto solo ejecuta pruebas funcionales con Jest y Vitest. Se requiere incorporar herramientas SAST (Semgrep, ESLint security), DAST (OWASP ZAP) y escaneo de dependencias (\texttt{npm audit}) como parte del pipeline de CI/CD.
+    \item Respecto a las pruebas de seguridad (8.29), actualmente el proyecto solo ejecuta pruebas funcionales con Jest y Vitest. Se requiere incorporar herramientas SAST (Semgrep, ESLint security), DAST (OWASP ZAP) y escaneo de dependencias (\texttt{npm audit}) como parte del pipeline de CI/CD.
 
     \item Las métricas propuestas (densidad de vulnerabilidades, cobertura SAST, tiempo de remediación, tasa de aceptación y nivel de madurez SSDLC) proporcionan un marco cuantitativo para evaluar y mejorar continuamente la seguridad del proceso de desarrollo.
 
-    \item La implementación de un pipeline CI/CD seguro con Security Gate es fundamental para materializar los tres controles estudiados: proceso seguro (A.14.1), código seguro (A.14.2) y validación de seguridad (A.14.3).
+    \item La implementación de un pipeline CI/CD seguro con Security Gate es fundamental para materializar los tres controles estudiados: proceso seguro (8.25), código seguro (8.28) y validación de seguridad (8.29).
 \end{enumerate}
 
 \subsection{Recomendaciones}
@@ -273,7 +273,7 @@ $M_{SSDLC}$ (Madurez) & Nivel 2 (Gestionado) \\
     \item \textbf{Largo plazo:} Implementar un programa completo de Secure SDLC con documentación formal, capacitación del equipo y auditorías periódicas de seguridad.
 \end{enumerate}
 
-\subsection{Lo que busca un auditor en A.14 --- Resumen}
+\subsection{Lo que busca un auditor en 8.25, 8.28 y 8.29 --- Resumen}
 
 Un auditor de ISO/IEC 27001 busca evidencias de:
 

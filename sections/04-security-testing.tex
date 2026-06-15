@@ -1,7 +1,7 @@
 \section{Security Testing}
 \label{sec:security-testing}
 
-El control A.14.3 de ISO/IEC 27001 responde una pregunta clave: \textit{¿Cómo sabemos que realmente es seguro?} Decir ``seguimos buenas prácticas'' no es evidencia. Hay que demostrarlo mediante pruebas \cite{iso27001}.
+El control 8.29 de ISO/IEC 27001:2022 (Security Testing in Development and Acceptance) responde una pregunta clave: \textit{¿Cómo sabemos que realmente es seguro?} Decir ``seguimos buenas prácticas'' no es evidencia. Hay que demostrarlo mediante pruebas \cite{iso27001}.
 
 \subsection{Tipos de Pruebas de Seguridad}
 
@@ -137,7 +137,7 @@ Un especialista intenta comprometer el sistema de forma controlada para demostra
 
 \subsection{Acceptance Testing de Seguridad}
 
-Es la parte más importante del control A.14.3. Antes de pasar a producción se definen criterios claros de aceptación:
+Es la parte más importante del control 8.29. Antes de pasar a producción se definen criterios claros de aceptación:
 
 \begin{table}[h]
 \centering
@@ -158,11 +158,11 @@ Configuración endurecida & Sí \\
 \label{tab:criterios}
 \end{table}
 
-Si el software no cumple con estos criterios, \textbf{no se despliega a producción}. Este es el principio fundamental del control A.14.3.
+Si el software no cumple con estos criterios, \textbf{no se despliega a producción}. Este es el principio fundamental del control 8.29.
 
 \subsection{Pipeline CI/CD Seguro}
 
-La materialización de los controles A.14.1, A.14.2 y A.14.3 se materializa en un pipeline de integración continua seguro:
+La materialización de los controles 8.25, 8.28 y 8.29 se concreta en un pipeline de integración continua seguro:
 
 \begin{lstlisting}[caption={Pipeline CI/CD seguro (modelo genérico)}, basicstyle=\ttfamily\tiny, columns=fullflexible]
 Git Push
@@ -179,12 +179,12 @@ Git Push
 
 Este pipeline es la materialización práctica de:
 \begin{itemize}
-    \item \textbf{A.14.1} $\rightarrow$ proceso seguro de desarrollo.
-    \item \textbf{A.14.2} $\rightarrow$ código seguro.
-    \item \textbf{A.14.3} $\rightarrow$ validación de seguridad.
+    \item \textbf{8.25} $\rightarrow$ proceso seguro de desarrollo.
+    \item \textbf{8.28} $\rightarrow$ código seguro.
+    \item \textbf{8.29} $\rightarrow$ validación de seguridad.
 \end{itemize}
 
-\subsection{Qué busca un auditor en A.14.3}
+\subsection{Qué busca un auditor en 8.29}
 
 Un auditor busca evidencias de:
 

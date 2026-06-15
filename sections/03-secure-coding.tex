@@ -1,13 +1,13 @@
 \section{Secure Coding}
 \label{sec:secure-coding}
 
-El control A.14.2 de ISO/IEC 27001 establece que la organización debe establecer procesos de codificación segura para garantizar que el software sea desarrollado utilizando principios que reduzcan la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
+El control 8.28 de ISO/IEC 27001:2022 establece que la organización debe establecer principios de codificación segura y aplicarlos al desarrollo de software para reducir la introducción de vulnerabilidades durante la implementación \cite{iso27001}.
 
 \subsection{Filosofía}
 
 Muchos ataques exitosos no son sofisticados. Son errores simples como SQL Injection, XSS, Path Traversal, Command Injection o CSRF. Todos nacen del código. Por eso ISO 27001 crea un control exclusivo para la programación segura.
 
-El objetivo de A.14.2 no es que cada programador sea un experto en seguridad, sino que existan \textbf{reglas claras, documentadas y aplicables} que reduzcan la superficie de ataque desde la fase de implementación.
+El objetivo de 8.28 no es que cada programador sea un experto en seguridad, sino que existan \textbf{reglas claras, documentadas y aplicables} que reduzcan la superficie de ataque desde la fase de implementación.
 
 \subsection{Principios Fundamentales de Codificación Segura}
 
@@ -152,9 +152,9 @@ Gran parte de los ataques actuales no vienen del código propio, sino de depende
     \item Definir una política de actualización de dependencias.
 \end{itemize}
 
-\subsection{OWASP Top 10 y el control A.14.2}
+\subsection{OWASP Top 10 y el control 8.28}
 
-El control A.14.2 gira alrededor de prevenir las vulnerabilidades del OWASP Top 10 \cite{owasp2021}. Estas son las categorías más relevantes:
+El control 8.28 gira alrededor de prevenir las vulnerabilidades del OWASP Top 10 \cite{owasp2021}. Estas son las categorías más relevantes:
 
 \begin{table}[h]
 \centering
@@ -177,7 +177,7 @@ Authentication Failures & Alta & Tokens con expiración, contraseñas hasheadas 
 \label{tab:owasp-prevencion}
 \end{table}
 
-\subsection{Qué busca un auditor en A.14.2}
+\subsection{Qué busca un auditor en 8.28}
 
 Un auditor de ISO/IEC 27001 busca evidencias de:
 
