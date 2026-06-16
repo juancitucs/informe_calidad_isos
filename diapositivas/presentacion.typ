@@ -3,166 +3,151 @@
 
 #let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
 
-#set text(font: "Fira Sans", size: 14pt, fill: rgb("#1e293b"))
-#show raw: set text(font: "Fira Code", size: 12pt)
+#set text(font: "Fira Sans", size: 13pt, fill: rgb("#f0f0f0"))
+#show raw: set text(font: "Fira Code", size: 11pt)
 
 #show: touying-slides.with(
-  config-page(
-    fill: gradient.radial(rgb("#0f172a"), rgb("#1e3a5f"), center: (25%, 15%), radius: 95%),
-  ),
+  config-page(fill: rgb("#0f0f14")),
   config-info(
-    title: [ISO/IEC 27001:2022 --- Controles 8.25, 8.28 y 8.29],
-    subtitle: [Equipo 5 --- Calidad de Software],
-    author: [IS-722 2026-I],
+    title: [ISO/IEC 27001:2022],
+    subtitle: [Controles 8.25, 8.28 y 8.29],
+    author: [Equipo 5 --- IS-722],
   ),
 )
 
-// Paleta de colores
-#let c-azul = rgb("#2563eb")
-#let c-verde = rgb("#059669")
-#let c-amarillo = rgb("#d97706")
-#let c-rojo = rgb("#dc2626")
-#let c-blanco = rgb("#f8fafc")
-#let c-azul-osc = rgb("#1e40af")
-#let c-verde-osc = rgb("#065f46")
-#let c-amarillo-osc = rgb("#92400e")
-#let c-rojo-osc = rgb("#991b1b")
+#let accent = rgb("#e94560")
+#let accent2 = rgb("#0f3460")
+#let accent3 = rgb("#533483")
+#let warm = rgb("#e8a87c")
+#let cool = rgb("#41aea9")
+#let light = rgb("#f0f0f0")
+#let muted = rgb("#9ca3af")
+#let card-dark = rgb("#1e1e2e")
+#let card-darker = rgb("#14141f")
 
-// Portada
 = Portada
 
 == ISO/IEC 27001:2022
 
 #align(center + horizon)[
-  #block(inset: 2.5em, fill: rgb("#ffffff10"), radius: 16pt, stroke: 2pt + c-azul)[
-    #text(36pt, weight: "bold", fill: c-blanco)[ISO/IEC 27001:2022]
-    #v(0.5cm)
-    #text(22pt, fill: rgb("#93c5fd"))[Controles 8.25, 8.28 y 8.29]
-    #v(1cm)
-    #text(16pt, fill: rgb("#cbd5e1"))[Equipo 5 --- IS-722 Calidad de Software]
+  #block(inset: (x: 3em, y: 2em), fill: card-dark, radius: 4pt, stroke: (left: 4pt + accent))[
+    #text(42pt, weight: "bold", fill: light)[ISO/IEC 27001:2022]
+    #v(0.4cm)
+    #text(18pt, fill: muted)[Controles 8.25, 8.28 y 8.29]
+    #v(1.2cm)
+    #text(14pt, fill: accent)[Equipo 5]
+    #text(14pt, fill: muted)[ --- IS-722 Calidad de Software]
     #v(0.3cm)
-    #text(14pt, fill: rgb("#94a3b8"))[Universidad Nacional de Moquegua --- 2026-I]
+    #text(12pt, fill: rgb("#6b7280"))[Universidad Nacional de Moquegua --- 2026-I]
   ]
 ]
 
-// Visión General
 = ISO/IEC 27001:2022
 
 == Visión General
 
-#align(center + horizon)[
-  #grid(
-    columns: (1.5fr, 1fr),
-    column-gutter: 1cm,
-  )[
-    #block(width: 100%, inset: 0.8em, fill: rgb("#1e3a5f"), radius: 8pt, stroke: 1pt + rgb("#334155"))[
-      #text(11pt, fill: c-blanco)[La norma *ISO/IEC 27001:2022* establece los requisitos para un *Sistema de Gestión de Seguridad de la Información (SGSI)*. Es la referencia mundial para proteger confidencialidad, integridad y disponibilidad.]
+#grid(
+  columns: (1.6fr, 1fr),
+  column-gutter: 1.2cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(11pt, fill: light)[La norma *ISO/IEC 27001:2022* establece los requisitos para un *Sistema de Gestión de Seguridad de la Información (SGSI)*. Referencia mundial para proteger confidencialidad, integridad y disponibilidad.]
+    #v(0.4cm)
+    #text(11pt, fill: accent)[Anexo A --- Controles tecnológicos]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[- 93 controles en 4 temas
+      - *A.8:* 34 controles tecnológicos
+      - Los más relevantes: *8.25, 8.28 y 8.29*
+      - Cluster que cubre todo el ciclo de vida del desarrollo seguro]
+  ]
+][
+  #align(center + horizon)[
+    #block(inset: 1.5em, fill: accent2, radius: 4pt, width: 100%)[
+      #text(28pt, weight: "bold", fill: light)[SGSI]
       #v(0.3cm)
-      #text(11pt, fill: rgb("#93c5fd"))[*Anexo A --- Controles tecnológicos:*
-        - 93 controles en 4 temas: organizacionales, personas, físicos y tecnológicos
-        - *A.8:* Controles tecnológicos (34 controles)
-        - Los más relevantes para desarrollo: *8.25, 8.28 y 8.29*
-        - Forman un cluster que cubre todo el ciclo de vida del desarrollo seguro]
-    ]
-  ][
-    #align(center + horizon)[
-      #block(inset: 1.2em, fill: c-verde, radius: 12pt, width: 100%)[
-        #text(24pt, weight: "bold", fill: c-blanco)[SGSI]
-        #v(0.3cm)
-        #text(13pt, fill: rgb("#d1fae5"))[Sistema de Gestión de Seguridad de la Información]
-      ]
+      #text(12pt, fill: rgb("#93c5fd"))[Sistema de Gestión de Seguridad de la Información]
     ]
   ]
 ]
 
-// Los 3 Controles
 = Los 3 Controles
 
 == Los 3 Controles Tecnológicos
 
-#align(center + horizon)[
-  #block(width: 90%, inset: 0.8em, fill: rgb("#1e3a5f"), radius: 8pt, stroke: 1pt + rgb("#334155"))[
-    #text(12pt, fill: c-blanco)[El control *8.25* establece las reglas generales. El *8.28* se enfoca en el código. El *8.29* verifica antes de producción. Juntos cubren desde planificación hasta mantenimiento.]
+#block(width: 100%, inset: 1em, fill: card-darker, radius: 4pt, stroke: (left: 3pt + accent))[
+  #text(11pt, fill: muted)[El control *8.25* establece las reglas generales. El *8.28* se enfoca en el código. El *8.29* verifica antes de producción.]
+]
+
+#v(0.5cm)
+
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + accent))[
+    #text(30pt, weight: "bold", fill: accent)[8.25]
+    #v(0.1cm)
+    #text(12pt, weight: "bold", fill: light)[Secure Development Life Cycle]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[Reglas para desarrollo seguro durante todo el ciclo de vida. Separación de entornos, control de versiones y competencia del equipo.]
   ]
-
-  #v(0.4cm)
-
-  #grid(
-    columns: (1fr, 1fr, 1fr),
-    column-gutter: 0.8cm,
-  )[
-    #block(width: 100%, inset: 0.8em, fill: c-azul-osc, radius: 8pt)[
-      #text(28pt, weight: "bold", fill: c-blanco)[8.25]
-      #v(0.1cm)
-      #text(13pt, weight: "bold", fill: rgb("#93c5fd"))[Secure Development Life Cycle]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#cbd5e1"))[Reglas para desarrollo seguro durante todo el ciclo de vida: requisitos, diseño, desarrollo, pruebas, despliegue y mantenimiento. Separación de entornos y competencia del equipo.]
-    ]
-  ][
-    #block(width: 100%, inset: 0.8em, fill: c-verde-osc, radius: 8pt)[
-      #text(28pt, weight: "bold", fill: c-blanco)[8.28]
-      #v(0.1cm)
-      #text(13pt, weight: "bold", fill: rgb("#a7f3d0"))[Secure Coding]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#d1fae5"))[Principios de codificación segura: validación de entradas, manejo de secretos, mínimo privilegio, dependencias seguras y manejo de errores. Aplica a código interno y externo.]
-    ]
-  ][
-    #block(width: 100%, inset: 0.8em, fill: c-amarillo-osc, radius: 8pt)[
-      #text(28pt, weight: "bold", fill: c-blanco)[8.29]
-      #v(0.1cm)
-      #text(13pt, weight: "bold", fill: rgb("#fde68a"))[Security Testing]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#fef3c7"))[Pruebas de seguridad durante desarrollo y antes de producción. SAST, DAST, revisiones de código, escaneo de vulnerabilidades y acceptance testing con criterios claros.]
-    ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + cool))[
+    #text(30pt, weight: "bold", fill: cool)[8.28]
+    #v(0.1cm)
+    #text(12pt, weight: "bold", fill: light)[Secure Coding]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[Principios de codificación segura. Validación, secretos, mínimo privilegio, dependencias, errores.]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + warm))[
+    #text(30pt, weight: "bold", fill: warm)[8.29]
+    #v(0.1cm)
+    #text(12pt, weight: "bold", fill: light)[Security Testing]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[Pruebas durante desarrollo y antes de producción. SAST, DAST, revisiones, acceptance testing.]
   ]
 ]
 
-// SSDLC
 = SSDLC (8.25)
 
 == Qué es un SSDLC
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.6em, fill: c-azul-osc, radius: 8pt, stroke: 1pt + c-azul)[
-    #text(13pt, weight: "bold", fill: c-blanco)[Un *Secure SDLC* integra seguridad en cada fase del desarrollo. Concepto clave: *Shift Left* --- mover seguridad hacia fases iniciales, donde es más barato corregir.]
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent3))[
+  #text(13pt, fill: light)[Un *Secure SDLC* integra seguridad en cada fase. Concepto clave: *Shift Left* --- mover seguridad hacia fases iniciales.]
+]
+
+#v(0.4cm)
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-darker, radius: 4pt, stroke: (left: 3pt + rgb("#ef4444")))[
+    #text(12pt, weight: "bold", fill: rgb("#fca5a5"))[Modelo tradicional]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[- Seguridad al *final* del proyecto
+      - Vulnerabilidades detectadas tarde
+      - Costo alto
+      - Más componentes afectados]
   ]
-
-  #v(0.4cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 1cm,
-  )[
-    #block(width: 100%, inset: 0.8em, fill: c-rojo-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: c-blanco)[Modelo tradicional]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#fecaca"))[
-        - La seguridad se revisaba *al final* del proyecto
-        - Vulnerabilidades detectadas tarde
-        - Costo de corrección alto
-        - Más componentes afectados
-      ]
-    ]
-  ][
-    #block(width: 100%, inset: 0.8em, fill: c-verde-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: c-blanco)[SSDLC --- Shift Left]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#d1fae5"))[
-        - Seguridad desde *Requisitos*, no al final
-        - Threat modeling en diseño
-        - Codificación segura en desarrollo
-        - Pruebas automáticas en CI/CD
-        - Hardening en despliegue
-      ]
-    ]
+][
+  #block(width: 100%, inset: 1em, fill: card-darker, radius: 4pt, stroke: (left: 3pt + rgb("#22c55e")))[
+    #text(12pt, weight: "bold", fill: rgb("#86efac"))[SSDLC --- Shift Left]
+    #v(0.2cm)
+    #text(10pt, fill: muted)[- Seguridad desde *Requisitos*
+      - Threat modeling en diseño
+      - Codificación segura
+      - Pruebas en CI/CD
+      - Hardening en despliegue]
   ]
 ]
 
 == Diagrama SSDLC
 
 #align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-azul-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[El SSDLC integra seguridad en 6 fases. Las fases 3 y 4 se vinculan con los controles *8.28* y *8.29*.]
+  #block(width: 85%, inset: 0.8em, fill: card-darker, radius: 4pt)[
+    #text(11pt, fill: muted)[El SSDLC integra seguridad en 6 fases. Las fases 3 y 4 se vinculan con *8.28* y *8.29*.]
   ]
 
   #v(0.5cm)
@@ -172,445 +157,362 @@
     node-stroke: 1.5pt,
     node-inset: 0.8em,
     edge-stroke: 1.5pt,
-    node-fill: rgb("#334155"),
-    node((0, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Requisitos]], shape: "circle", radius: 2em),
+    node-fill: card-dark,
+    node((0, 0), [#text(10pt, weight: "bold", fill: light)[Requisitos]], shape: "circle", radius: 2em),
     edge((0, 0), (1, 0), "->"),
-    node((1, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Diseño]], shape: "circle", radius: 2em),
+    node((1, 0), [#text(10pt, weight: "bold", fill: light)[Diseño]], shape: "circle", radius: 2em),
     edge((1, 0), (2, 0), "->"),
-    node((2, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Desarrollo] \ #text(9pt, fill: rgb("#a7f3d0"))[8.28]], shape: "circle", radius: 2em, fill: c-verde-osc),
+    node((2, 0), [#text(10pt, weight: "bold", fill: light)[Desarrollo] \ #text(8pt, fill: cool)[8.28]], shape: "circle", radius: 2em, fill: accent2),
     edge((2, 0), (3, 0), "->"),
-    node((3, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Pruebas] \ #text(9pt, fill: rgb("#fde68a"))[8.29]], shape: "circle", radius: 2em, fill: c-amarillo-osc),
+    node((3, 0), [#text(10pt, weight: "bold", fill: light)[Pruebas] \ #text(8pt, fill: warm)[8.29]], shape: "circle", radius: 2em, fill: accent3),
     edge((3, 0), (4, 0), "->"),
-    node((4, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Despliegue]], shape: "circle", radius: 2em),
+    node((4, 0), [#text(10pt, weight: "bold", fill: light)[Despliegue]], shape: "circle", radius: 2em),
     edge((4, 0), (5, 0), "->"),
-    node((5, 0), [#text(11pt, weight: "bold", fill: c-blanco)[Mant.]], shape: "circle", radius: 2em),
+    node((5, 0), [#text(10pt, weight: "bold", fill: light)[Mant.]], shape: "circle", radius: 2em),
   )
 
   #v(0.3cm)
 
-  #text(10pt, fill: rgb("#94a3b8"))[Todos bajo el control *8.25* --- Reglas del ciclo de vida seguro.]
+  #text(9pt, fill: rgb("#6b7280"))[Todos bajo el control *8.25*.]
 ]
 
-== Fases 1 y 2: Requisitos y Diseño
+== Fases 1-2: Requisitos y Diseño
 
-#align(center + horizon)[
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 0.8cm,
-  )[
-    #block(width: 100%, inset: 0.8em, fill: c-azul-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: rgb("#93c5fd"))[Fase 1 --- Requisitos de Seguridad]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#cbd5e1"))[
-        *Activos:* Bases de datos, credenciales, código fuente, registros de auditoría.
-        
-        *Clasificación:* Pública, Interna, Confidencial, Restringida.
-        
-        #text(fill: c-blanco)[*Requisitos CIA + Trazabilidad:*]
-        - *Confidencialidad:* solo autorizados acceden
-        - *Integridad:* datos no modificados sin autorización
-        - *Disponibilidad:* servicio operativo
-        - *Trazabilidad:* acciones auditables
-      ]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[Fase 1 --- Requisitos]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      *Activos:* BD, credenciales, código, registros.
+      *Clasificación:* Pública, Interna, Confidencial, Restringida.
+      *CIA + Trazabilidad:*
+      - *Confidencialidad:*
+      - *Integridad:*
+      - *Disponibilidad:*
+      - *Trazabilidad:*
     ]
-  ][
-    #block(width: 100%, inset: 0.8em, fill: c-verde-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: rgb("#a7f3d0"))[Fase 2 --- Diseño Seguro]
-      #v(0.2cm)
-      #text(10pt, fill: rgb("#d1fae5"))[
-        *Threat Modeling (STRIDE):* Identificar amenazas en cada componente.
-        
-        #text(fill: c-blanco)[*Diagrama de Flujo de Datos:*]
-        - Procesos que transforman datos
-        - Flujos entre componentes
-        - Almacenes de datos
-        - Entidades externas
-        
-        *Límites de confianza:* Cada frontera requiere controles adicionales.
-      ]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
+    #text(12pt, weight: "bold", fill: cool)[Fase 2 --- Diseño Seguro]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      *Threat Modeling (STRIDE):* Identificar amenazas.
+      *DFD:* Procesos, flujos, almacenes, entidades.
+      *Límites de confianza:* Cada frontera requiere controles.
+      *Controles:* Validación, autorización, logging, sesiones.
     ]
   ]
 ]
 
-== Fases 3-5: Desarrollo, Pruebas y Despliegue
+== Fases 3-5
 
 #align(center + horizon)[
-  #block(width: 88%, inset: 0.5em, fill: rgb("#1e293b"), radius: 8pt)[
-    #grid(
-      columns: (1fr, 1fr, 1fr),
-      column-gutter: 0.6cm,
-    )[
-      #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-        #text(12pt, weight: "bold", fill: rgb("#a7f3d0"))[Fase 3 --- Desarrollo (8.28)]
+  #block(width: 90%, inset: 0.8em, fill: card-darker, radius: 4pt)[
+    #grid(columns: (1fr, 1fr, 1fr), column-gutter: 0.6cm)[
+      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + cool))[
+        #text(11pt, weight: "bold", fill: cool)[Fase 3 --- Desarrollo (8.28)]
         #v(0.1cm)
-        #text(9pt, fill: rgb("#d1fae5"))[Codificación siguiendo los 7 principios. Revisiones por pares. Herramientas SAST integradas en el IDE.]
+        #text(9pt, fill: muted)[Codificación con 7 principios. Revisiones por pares. SAST en IDE.]
       ]
     ][
-      #block(width: 100%, inset: 0.6em, fill: c-amarillo-osc, radius: 8pt)[
-        #text(12pt, weight: "bold", fill: rgb("#fde68a"))[Fase 4 --- Pruebas (8.29)]
+      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + warm))[
+        #text(11pt, weight: "bold", fill: warm)[Fase 4 --- Pruebas (8.29)]
         #v(0.1cm)
-        #text(9pt, fill: rgb("#fef3c7"))[Pruebas SAST y DAST. Penetration tests. Criterios: 0 vuln. críticas, cobertura SAST ≥ 80%. Si no cumple, no se despliega.]
+        #text(9pt, fill: muted)[SAST, DAST, pentests. 0 vuln. críticas, SAST ≥ 80%.]
       ]
     ][
-      #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-        #text(12pt, weight: "bold", fill: rgb("#93c5fd"))[Fase 5 --- Despliegue]
+      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + accent))[
+        #text(11pt, weight: "bold", fill: accent)[Fase 5 --- Despliegue]
         #v(0.1cm)
-        #text(9pt, fill: rgb("#cbd5e1"))[Hardening: imágenes mínimas, usuarios no root, puertos restringidos. Secretos con variables de entorno. CI/CD con Security Gate.]
+        #text(9pt, fill: muted)[Hardening, secretos, CI/CD con Security Gate.]
       ]
     ]
   ]
 ]
 
-== STRIDE para Threat Modeling
+== STRIDE
 
-#align(center + horizon)[
-  #block(width: 85%)[
-    #text(11pt, fill: rgb("#cbd5e1"))[La metodología *STRIDE* identifica amenazas en cada fase de diseño. Para cada componente se preguntan 6 categorías de amenazas:]
-    #v(0.3cm)
-    
-    #table(
-      columns: (1fr, 1fr, 1.5fr),
-      stroke: 0.5pt + rgb("#334155"),
-      fill: (_, y) => if y == 0 { c-azul } else { rgb("#1e293b") },
-      text(fill: c-blanco, weight: "bold", size: 11pt)[*Amenaza*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Significado*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Pregunta clave*],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Spoofing], text(fill: rgb("#cbd5e1"), size: 11pt)[Suplantación de identidad], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Quién es realmente el usuario?],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Tampering], text(fill: rgb("#cbd5e1"), size: 11pt)[Manipulación de datos], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Pueden alterarse los datos en tránsito?],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Repudiation], text(fill: rgb("#cbd5e1"), size: 11pt)[Negación de acciones], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Se puede demostrar quién hizo qué?],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Info Disclosure], text(fill: rgb("#cbd5e1"), size: 11pt)[Exposición de información], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Se puede leer información confidencial?],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[DoS], text(fill: rgb("#cbd5e1"), size: 11pt)[Denegación de servicio], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Se puede interrumpir el servicio?],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[EoP], text(fill: rgb("#cbd5e1"), size: 11pt)[Escalada de privilegios], text(fill: rgb("#cbd5e1"), size: 11pt)[¿Se pueden obtener permisos extra?],
-    )
-  ]
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt)[
+  #text(11pt, fill: muted)[STRIDE identifica amenazas en cada fase de diseño:]
+  #v(0.3cm)
+
+  #table(
+    columns: (1fr, 1fr, 1.5fr),
+    stroke: 0.5pt + rgb("#2d2d3d"),
+    fill: (_, y) => if y == 0 { accent } else { card-darker },
+    text(fill: white, weight: "bold", size: 10pt)[Amenaza], text(fill: white, weight: "bold", size: 10pt)[Significado], text(fill: white, weight: "bold", size: 10pt)[Pregunta],
+    text(fill: light, size: 10pt)[Spoofing], text(fill: light, size: 10pt)[Suplantación], text(fill: light, size: 10pt)[¿Quién es el usuario?],
+    text(fill: light, size: 10pt)[Tampering], text(fill: light, size: 10pt)[Manipulación], text(fill: light, size: 10pt)[¿Se alteran los datos?],
+    text(fill: light, size: 10pt)[Repudiation], text(fill: light, size: 10pt)[Negación], text(fill: light, size: 10pt)[¿Quién hizo qué?],
+    text(fill: light, size: 10pt)[Info Disclosure], text(fill: light, size: 10pt)[Exposición], text(fill: light, size: 10pt)[¿Se lee info confidencial?],
+    text(fill: light, size: 10pt)[DoS], text(fill: light, size: 10pt)[Indisponibilidad], text(fill: light, size: 10pt)[¿Se interrumpe el servicio?],
+    text(fill: light, size: 10pt)[EoP], text(fill: light, size: 10pt)[Escalada], text(fill: light, size: 10pt)[¿Se obtienen permisos extra?],
+  )
 ]
 
-// Secure Coding
 = Secure Coding (8.28)
 
-== 7 Principios de Codificación Segura
+== 7 Principios
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-verde-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[El control 8.28 establece principios de codificación segura aprobados. Deben aplicarse a todo el código: desarrollo interno, externo, bibliotecas y dependencias.]
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
+  #text(11pt, fill: muted)[Principios de codificación segura aprobados. Aplican a todo el código.]
+]
+
+#v(0.3cm)
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.6cm,
+)[
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + accent))[
+    #text(10pt, weight: "bold", fill: accent)[1. Nunca confiar en la entrada]
+    #text(9pt, fill: muted)[ Toda entrada es no confiable hasta que se valide.]
   ]
-
-  #v(0.3cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 0.6cm,
-  )[
-    #block(width: 100%, inset: 0.5em, fill: c-azul-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[1. Nunca confiar en la entrada]
-      #text(9pt, fill: rgb("#cbd5e1"))[ Toda entrada es no confiable hasta que se valide. Consultas parametrizadas.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: c-azul-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[2. Validar siempre]
-      #text(9pt, fill: rgb("#cbd5e1"))[ Tipo, longitud, formato, rango antes de procesar.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: c-azul-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[3. Sanitizar]
-      #text(9pt, fill: rgb("#cbd5e1"))[ Preparar datos para uso seguro. Escape HTML para XSS.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: c-azul-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[4. Mínimo privilegio]
-      #text(9pt, fill: rgb("#cbd5e1"))[ Solo permisos necesarios. MongoDB usuario solo para la BD.]
-    ]
-  ][
-    #block(width: 100%, inset: 0.5em, fill: c-verde-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#a7f3d0"))[5. Secretos]
-      #text(9pt, fill: rgb("#d1fae5"))[ Nunca hardcodear. Usar .env y gestores de secretos.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: c-verde-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#a7f3d0"))[6. Errores seguros]
-      #text(9pt, fill: rgb("#d1fae5"))[ No exponer stack traces. Mensajes genéricos, logs internos.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: c-verde-osc, radius: 6pt)[
-      #text(11pt, weight: "bold", fill: rgb("#a7f3d0"))[7. Dependencias]
-      #text(9pt, fill: rgb("#d1fae5"))[ Escanear, actualizar, eliminar abandonadas.]
-    ]
-    #block(width: 100%, inset: 0.5em, fill: rgb("#1e293b"), radius: 6pt, stroke: 1pt + rgb("#475569"))[
-      #text(11pt, weight: "bold", fill: rgb("#94a3b8"))[Refuerzo]
-      #text(9pt, fill: rgb("#64748b"))[ Revisión por pares + SAST en CI/CD = defensa en profundidad.]
-    ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + accent))[
+    #text(10pt, weight: "bold", fill: accent)[2. Validar siempre]
+    #text(9pt, fill: muted)[ Tipo, longitud, formato, rango.]
+  ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + accent))[
+    #text(10pt, weight: "bold", fill: accent)[3. Sanitizar]
+    #text(9pt, fill: muted)[ Escape HTML, prevenir XSS.]
+  ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + accent))[
+    #text(10pt, weight: "bold", fill: accent)[4. Mínimo privilegio]
+    #text(9pt, fill: muted)[ Solo permisos necesarios.]
+  ]
+][
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + cool))[
+    #text(10pt, weight: "bold", fill: cool)[5. Secretos]
+    #text(9pt, fill: muted)[ Nunca hardcodear. Usar .env.]
+  ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + cool))[
+    #text(10pt, weight: "bold", fill: cool)[6. Errores seguros]
+    #text(9pt, fill: muted)[ No exponer stack traces.]
+  ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + cool))[
+    #text(10pt, weight: "bold", fill: cool)[7. Dependencias]
+    #text(9pt, fill: muted)[ Escanear, actualizar.]
+  ]
+  #block(width: 100%, inset: 0.6em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + warm))[
+    #text(10pt, weight: "bold", fill: warm)[+ Code Review]
+    #text(9pt, fill: muted)[ Revisión por pares antes de merge.]
   ]
 ]
 
-== OWASP Top 10 y el control 8.28
+== OWASP Top 10
 
-#align(center + horizon)[
-  #block(width: 85%)[
-    #text(11pt, fill: rgb("#cbd5e1"))[El control 8.28 previene las vulnerabilidades del *OWASP Top 10*. Cada categoría se mapea a principios de codificación segura.]
-    #v(0.3cm)
-
-    #table(
-      columns: (1fr, auto, 1.8fr),
-      stroke: 0.5pt + rgb("#334155"),
-      fill: (_, y) => if y == 0 { c-azul } else { rgb("#1e293b") },
-      text(fill: c-blanco, weight: "bold", size: 11pt)[*Vulnerabilidad*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Nivel*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Principio de prevención*],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Injection], text(fill: rgb("#fca5a5"), size: 11pt)[Crítica], text(fill: rgb("#cbd5e1"), size: 11pt)[Validación y sanitización de entradas, consultas parametrizadas],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Broken Access Control], text(fill: rgb("#fca5a5"), size: 11pt)[Crítica], text(fill: rgb("#cbd5e1"), size: 11pt)[Control de acceso por roles, mínimo privilegio],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Cryptographic Failures], text(fill: rgb("#fcd34d"), size: 11pt)[Alta], text(fill: rgb("#cbd5e1"), size: 11pt)[Cifrado en reposo y tránsito, hashing con bcrypt/argon2],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Security Misconfiguration], text(fill: rgb("#fcd34d"), size: 11pt)[Alta], text(fill: rgb("#cbd5e1"), size: 11pt)[Hardening de servidores, contenedores y servicios],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Vulnerable Components], text(fill: rgb("#fcd34d"), size: 11pt)[Alta], text(fill: rgb("#cbd5e1"), size: 11pt)[Escaneo de dependencias, actualización periódica],
-      text(fill: rgb("#cbd5e1"), size: 11pt)[Authentication Failures], text(fill: rgb("#fcd34d"), size: 11pt)[Alta], text(fill: rgb("#cbd5e1"), size: 11pt)[Tokens con expiración, contraseñas hasheadas],
-    )
-  ]
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt)[
+  #table(
+    columns: (1fr, auto, 1.8fr),
+    stroke: 0.5pt + rgb("#2d2d3d"),
+    fill: (_, y) => if y == 0 { accent } else { card-darker },
+    text(fill: white, weight: "bold", size: 10pt)[Vulnerabilidad], text(fill: white, weight: "bold", size: 10pt)[Nivel], text(fill: white, weight: "bold", size: 10pt)[Prevención],
+    text(fill: light, size: 10pt)[Injection], text(fill: rgb("#fca5a5"), size: 10pt)[Crítica], text(fill: light, size: 10pt)[Consultas parametrizadas, sanitización],
+    text(fill: light, size: 10pt)[Broken Access Control], text(fill: rgb("#fca5a5"), size: 10pt)[Crítica], text(fill: light, size: 10pt)[Mínimo privilegio, roles],
+    text(fill: light, size: 10pt)[Cryptographic Failures], text(fill: rgb("#fcd34d"), size: 10pt)[Alta], text(fill: light, size: 10pt)[Cifrado, bcrypt/argon2],
+    text(fill: light, size: 10pt)[Security Misconfiguration], text(fill: rgb("#fcd34d"), size: 10pt)[Alta], text(fill: light, size: 10pt)[Hardening servidores/contenedores],
+    text(fill: light, size: 10pt)[Vulnerable Components], text(fill: rgb("#fcd34d"), size: 10pt)[Alta], text(fill: light, size: 10pt)[Escaneo de dependencias],
+    text(fill: light, size: 10pt)[Authentication Failures], text(fill: rgb("#fcd34d"), size: 10pt)[Alta], text(fill: light, size: 10pt)[Tokens con expiración],
+  )
 ]
 
-// Security Testing
 = Security Testing (8.29)
 
-== Tipos de Pruebas de Seguridad
+== Tipos de Pruebas
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-amarillo-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[El control 8.29 exige pruebas de seguridad durante el desarrollo y antes de producción. Los hallazgos se registran, evalúan, corrigen y re-verifican.]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
+    #text(12pt, weight: "bold", fill: cool)[SAST --- Análisis Estático]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[Analiza código sin ejecutarlo. Detecta fallos temprano. CI/CD y IDE.]
+    #v(0.1cm)
+    #text(9pt, fill: rgb("#6b7280"))[ESLint, Semgrep, SonarQube, Bandit]
   ]
-
-  #v(0.3cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 0.6cm,
-  )[
-    #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*SAST --- Análisis Estático*]
-      #v(0.1cm)
-      #text(10pt, fill: rgb("#cbd5e1"))[Analiza código sin ejecutarlo. Escáner busca patrones de vulnerabilidades. Detecta fallos temprano. Se integra en CI/CD y en el IDE.]
-      #v(0.1cm)
-      #text(9pt, fill: rgb("#94a3b8"))[ESLint, Semgrep, SonarQube, Bandit]
-    ]
-    #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*DAST --- Análisis Dinámico*]
-      #v(0.1cm)
-      #text(10pt, fill: rgb("#d1fae5"))[Prueba la app ejecutándose. Scanner envía ataques simulados. Cubre superficie de ataque expuesta.]
-      #v(0.1cm)
-      #text(9pt, fill: rgb("#a7f3d0"))[OWASP ZAP, Burp Suite]
-    ]
-  ][
-    #block(width: 100%, inset: 0.6em, fill: c-amarillo-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*Code Review*]
-      #v(0.1cm)
-      #text(10pt, fill: rgb("#fef3c7"))[Revisión humana. Encuentra errores de lógica, decisiones de diseño inseguras y patrones que el escáner no reconoce. Obligatoria antes de cada merge.]
-    ]
-    #block(width: 100%, inset: 0.6em, fill: c-rojo-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*Penetration Testing*]
-      #v(0.1cm)
-      #text(10pt, fill: rgb("#fecaca"))[Especialista compromete el sistema de forma controlada. Demuestra impacto real. Prueba más cercana a un ataque real.]
-    ]
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + warm))[
+    #text(12pt, weight: "bold", fill: warm)[DAST --- Análisis Dinámico]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[Prueba app ejecutándose. Ataques simulados.]
+    #v(0.1cm)
+    #text(9pt, fill: rgb("#6b7280"))[OWASP ZAP, Burp Suite]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent3))[
+    #text(12pt, weight: "bold", fill: accent3)[Code Review]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[Revisión humana. Errores de lógica. Obligatoria antes de merge.]
+  ]
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[Penetration Testing]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[Especialista compromete el sistema. Impacto real.]
   ]
 ]
 
-== Pipeline CI/CD Seguro
+== Pipeline CI/CD
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-azul-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[Los controles 8.25, 8.28 y 8.29 se concretan en un pipeline de integración continua seguro. Cada paso aplica un control específico.]
-  ]
+#block(width: 100%, inset: 1em, fill: card-darker, radius: 4pt)[
+  #text(11pt, fill: muted)[Los controles 8.25, 8.28 y 8.29 se concretan en un pipeline de integración continua seguro.]
+]
 
-  #v(0.4cm)
+#v(0.4cm)
 
+#align(center)[
   #fletcher-diagram(
     spacing: (2em, 1.2em),
     node-stroke: 1.5pt,
     node-inset: 0.5em,
     edge-stroke: 1.5pt,
-    node((0, 0), [#text(9pt, weight: "bold", fill: c-blanco)[Git Push]], shape: "circle", radius: 1.6em, fill: rgb("#334155")),
+    node((0, 0), [#text(9pt, weight: "bold", fill: light)[Git Push]], shape: "circle", radius: 1.6em, fill: card-dark),
     edge((0, 0), (1, 0), "->"),
-    node((1, 0), [#text(9pt, weight: "bold", fill: c-blanco)[Build]], shape: "circle", radius: 1.6em, fill: rgb("#334155")),
+    node((1, 0), [#text(9pt, weight: "bold", fill: light)[Build]], shape: "circle", radius: 1.6em, fill: card-dark),
     edge((1, 0), (2, 0), "->"),
-    node((2, 0), [#text(9pt, weight: "bold", fill: c-blanco)[SAST]], shape: "circle", radius: 1.6em, fill: c-verde-osc),
+    node((2, 0), [#text(9pt, weight: "bold", fill: light)[SAST]], shape: "circle", radius: 1.6em, fill: accent2),
     edge((2, 0), (3, 0), "->"),
-    node((3, 0), [#text(9pt, weight: "bold", fill: c-blanco)[DAST]], shape: "circle", radius: 1.6em, fill: c-verde-osc),
+    node((3, 0), [#text(9pt, weight: "bold", fill: light)[DAST]], shape: "circle", radius: 1.6em, fill: accent2),
     edge((3, 0), (4, 0), "->"),
-    node((4, 0), [#text(9pt, weight: "bold", fill: c-blanco)[Security] \ #text(8pt, fill: rgb("#fca5a5"))[Gate]], shape: "circle", radius: 1.6em, fill: c-rojo-osc),
+    node((4, 0), [#text(9pt, weight: "bold", fill: light)[Security] \ #text(8pt, fill: rgb("#fca5a5"))[Gate]], shape: "circle", radius: 1.6em, fill: accent),
     edge((4, 0), (5, 0), "->"),
-    node((5, 0), [#text(9pt, weight: "bold", fill: c-blanco)[Staging]], shape: "circle", radius: 1.6em, fill: c-amarillo-osc),
+    node((5, 0), [#text(9pt, weight: "bold", fill: light)[Staging]], shape: "circle", radius: 1.6em, fill: accent3),
     edge((5, 0), (6, 0), "->"),
-    node((6, 0), [#text(9pt, weight: "bold", fill: c-blanco)[Production]], shape: "circle", radius: 1.6em, fill: c-verde-osc),
+    node((6, 0), [#text(9pt, weight: "bold", fill: light)[Production]], shape: "circle", radius: 1.6em, fill: accent2),
   )
-
-  #v(0.3cm)
-
-  #text(10pt, fill: rgb("#cbd5e1"))[El *Security Gate* verifica: 0 vuln. críticas, 0 altas, cobertura SAST ≥ 80%, dependencias sin CVEs críticos. Si no se cumplen, el pipeline se detiene.]
 ]
+
+#v(0.3cm)
+
+#text(10pt, fill: muted)[El *Security Gate* verifica: 0 vuln. críticas, SAST ≥ 80%, dependencias sin CVEs.]
 
 == Acceptance Testing
 
-#align(center + horizon)[
-  #block(width: 80%, inset: 0.5em, fill: c-amarillo-osc, radius: 8pt)[
-    #text(13pt, weight: "bold", fill: c-blanco)[El acceptance testing es la verificación final antes de producción.]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + rgb("#22c55e")))[
+    #text(12pt, weight: "bold", fill: rgb("#86efac"))[Criterios de aceptación]
+    #v(0.2cm)
+    #text(10pt, fill: light)[- *0* vuln. críticas
+      - *0* vuln. altas
+      - Cobertura SAST ≥ 80%
+      - Dependencias sin CVEs críticos
+      - Pruebas aprobadas]
   ]
-
-  #v(0.3cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 1cm,
-  )[
-    #block(width: 100%, inset: 0.8em, fill: c-verde-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: c-blanco)[Criterios de aceptación:]
-      #v(0.2cm)
-      #text(11pt, fill: rgb("#d1fae5"))[
-        - *0* vulnerabilidades críticas
-        - *0* vulnerabilidades altas
-        - Cobertura SAST ≥ 80%
-        - Dependencias sin CVEs críticos
-        - Pruebas ejecutadas y aprobadas
-        - Configuración endurecida
-      ]
-    ]
-  ][
-    #block(width: 100%, inset: 0.8em, fill: c-rojo-osc, radius: 8pt)[
-      #text(13pt, weight: "bold", fill: c-blanco)[Si no cumple, no se despliega.]
-      #v(0.2cm)
-      #text(11pt, fill: rgb("#fecaca"))[
-        Los hallazgos deben:
-        + *Registrarse* en seguimiento
-        + *Evaluarse* por severidad
-        + *Corregirse* antes de avanzar
-        + *Re-verificarse* tras corrección
-      ]
-    ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + rgb("#ef4444")))[
+    #text(12pt, weight: "bold", fill: rgb("#fca5a5"))[Si no cumple, no se despliega.]
+    #v(0.2cm)
+    #text(10pt, fill: light)[+ Registrarse
+      + Evaluarse por severidad
+      + Corregirse
+      + Re-verificarse]
   ]
 ]
 
-// Métricas
 = Métricas
 
 == Métricas Cuantitativas
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-azul-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[Métricas para evaluar el cumplimiento de los controles 8.25, 8.28 y 8.29 con sus ecuaciones matemáticas.]
-  ]
-
-  #v(0.3cm)
-
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt)[
   #table(
     columns: (1fr, 1.8fr, 1fr),
-    stroke: 0.5pt + rgb("#334155"),
-    fill: (_, y) => if y == 0 { c-azul } else { rgb("#1e293b") },
-    text(fill: c-blanco, weight: "bold", size: 11pt)[*Métrica*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Fórmula*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Objetivo*],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Densidad de vulnerabilidades], text(fill: rgb("#cbd5e1"), size: 11pt)[$D_v = V / "KLOC"$], text(fill: rgb("#a7f3d0"), size: 11pt)[$D_v < 1$],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Cobertura de análisis SAST], text(fill: rgb("#cbd5e1"), size: 11pt)[$C = A_("esc") / A_("tot") times 100$], text(fill: rgb("#a7f3d0"), size: 11pt)[$C >= 80%$],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Tiempo medio de remediación], text(fill: rgb("#cbd5e1"), size: 11pt)[$T_("rem") = (sum Delta t) / n$], text(fill: rgb("#a7f3d0"), size: 11pt)[$T_("rem") <= 7$ días],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Tasa de aceptación], text(fill: rgb("#cbd5e1"), size: 11pt)[$R = P_("apr") / P_("tot") times 100$], text(fill: rgb("#a7f3d0"), size: 11pt)[$R = 100%$],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Madurez SSDLC], text(fill: rgb("#cbd5e1"), size: 11pt)[$M = (sum P_i w_i) / (sum w_i)$], text(fill: rgb("#a7f3d0"), size: 11pt)[Nivel $>= 2$],
+    stroke: 0.5pt + rgb("#2d2d3d"),
+    fill: (_, y) => if y == 0 { accent } else { card-darker },
+    text(fill: white, weight: "bold", size: 10pt)[Métrica], text(fill: white, weight: "bold", size: 10pt)[Fórmula], text(fill: white, weight: "bold", size: 10pt)[Objetivo],
+    text(fill: light, size: 10pt)[Densidad vuln.], text(fill: light, size: 10pt)[$D_v = V / "KLOC"$], text(fill: rgb("#86efac"), size: 10pt)[$D_v < 1$],
+    text(fill: light, size: 10pt)[Cobertura SAST], text(fill: light, size: 10pt)[$C = A_("esc") / A_("tot") times 100$], text(fill: rgb("#86efac"), size: 10pt)[$C >= 80%$],
+    text(fill: light, size: 10pt)[Tiempo remediación], text(fill: light, size: 10pt)[$T_("rem") = (sum Delta t) / n$], text(fill: rgb("#86efac"), size: 10pt)[$T_("rem") <= 7$ días],
+    text(fill: light, size: 10pt)[Tasa aceptación], text(fill: light, size: 10pt)[$R = P_("apr") / P_("tot") times 100$], text(fill: rgb("#86efac"), size: 10pt)[$R = 100%$],
+    text(fill: light, size: 10pt)[Madurez SSDLC], text(fill: light, size: 10pt)[$M = (sum P_i w_i) / (sum w_i)$], text(fill: rgb("#86efac"), size: 10pt)[Nivel $>= 2$],
   )
 ]
 
-// Caso de Estudio
 = Caso de Estudio
 
-== Workcodile-dev: Contexto
+== Workcodile-dev
 
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-verde-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[Plataforma web full-stack para estudiantes de la UNAM. Foro académico con stack tecnológico estándar.]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
+    #text(12pt, weight: "bold", fill: cool)[Contexto]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      *Stack:* React, Node.js, MongoDB, MinIO, Docker
+      *Auth:* JWT, bcrypt, roles student/mod/admin
+      *Métricas:*
+      - $D_v = 0.6$ (Bajo)
+      - $C_("SAST") = 88.9%$
+      - $T_("rem") = 5$ días
+      - Madurez: Nivel 2
+    ]
   ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[Hallazgos de seguridad]
+    #v(0.2cm)
 
-  #v(0.3cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 1cm,
-  )[
-    #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-      #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[Stack tecnológico]
-      #v(0.1cm)
-      #text(9pt, fill: rgb("#cbd5e1"))[
-        - *Frontend:* React 18, TypeScript, Vite, Tailwind CSS
-        - *Backend:* Node.js, Express.js, Mongoose
-        - *Base de datos:* MongoDB 7
-        - *Almacenamiento:* MinIO (compatible S3)
-        - *Infraestructura:* Docker, Docker Compose, Nginx
-        - *Autenticación:* JWT, bcrypt, roles: student/moderator/admin
-      ]
-    ]
-  ][
-    #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-      #text(11pt, weight: "bold", fill: rgb("#a7f3d0"))[Métricas del proyecto]
-      #v(0.1cm)
-      #text(9pt, fill: rgb("#d1fae5"))[
-        - Densidad vuln.: $D_v = 0.6$ *Bajo*
-        - Cobertura SAST: $C_("SAST") = 88.9%$
-        - Tiempo remediación: $T_("rem") = 5$ días
-        - Tasa aceptación: $R = 100%$
-        - Madurez SSDLC: Nivel 2 (Gestionado)
-      ]
-    ]
+    #table(
+      columns: (1fr, 1fr),
+      stroke: 0.5pt + rgb("#2d2d3d"),
+      fill: (_, y) => if y == 0 { accent } else { card-darker },
+      text(fill: white, weight: "bold", size: 9pt)[Hallazgo], text(fill: white, weight: "bold", size: 9pt)[Riesgo],
+      text(fill: light, size: 9pt)[JWT_SECRET hardcodeado], text(fill: light, size: 9pt)[Firma tokens válidos],
+      text(fill: light, size: 9pt)[Credenciales MinIO defecto], text(fill: light, size: 9pt)[Acceso no autorizado],
+      text(fill: light, size: 9pt)[MongoDB puerto expuesto], text(fill: light, size: 9pt)[Acceso directo a BD],
+    )
   ]
 ]
 
-== Workcodile-dev: Hallazgos de Seguridad
-
-#align(center + horizon)[
-  #block(width: 85%, inset: 0.5em, fill: c-rojo-osc, radius: 8pt)[
-    #text(12pt, fill: c-blanco)[Hallazgos reales de seguridad en la configuración del proyecto. Demuestran por qué el control 8.25 es necesario.]
-  ]
-
-  #v(0.3cm)
-
-  #table(
-    columns: (1fr, 1.2fr, 1.5fr),
-    stroke: 0.5pt + rgb("#334155"),
-    fill: (_, y) => if y == 0 { c-rojo } else { rgb("#1e293b") },
-    text(fill: c-blanco, weight: "bold", size: 11pt)[*Hallazgo*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Ubicación*], text(fill: c-blanco, weight: "bold", size: 11pt)[*Riesgo*],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[JWT_SECRET hardcodeado], text(fill: rgb("#cbd5e1"), size: 11pt)[docker-compose.yml:67], text(fill: rgb("#fca5a5"), size: 11pt)[Firma de tokens válidos],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[Credenciales MinIO por defecto], text(fill: rgb("#cbd5e1"), size: 11pt)[docker-compose.yml:23-24], text(fill: rgb("#fca5a5"), size: 11pt)[Acceso no autorizado a archivos],
-    text(fill: rgb("#cbd5e1"), size: 11pt)[MongoDB puerto expuesto], text(fill: rgb("#cbd5e1"), size: 11pt)[docker-compose.yml:7], text(fill: rgb("#fca5a5"), size: 11pt)[Acceso directo a la BD],
-  )
-]
-
-// Cierre
 = Cierre
 
 == Lo que busca un auditor
 
-#align(center + horizon)[
-  #block(width: 80%, inset: 0.5em, fill: c-azul-osc, radius: 8pt)[
-    #text(13pt, weight: "bold", fill: c-blanco)[Un auditor no busca una herramienta. Busca un *proceso definido, aplicado y demostrable*.]
+#block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent3))[
+  #text(12pt, fill: light)[Un auditor no busca una herramienta. Busca un *proceso definido, aplicado y demostrable*.]
+]
+
+#v(0.3cm)
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1cm,
+)[
+  #block(width: 100%, inset: 0.8em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + cool))[
+    #text(11pt, weight: "bold", fill: cool)[Evidencias 8.25]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[- Política Secure SDLC
+      - Capacitación equipo
+      - Requisitos antes del desarrollo
+      - Threat modeling documentado
+      - Pipeline seguro]
   ]
-
-  #v(0.3cm)
-
-  #grid(
-    columns: (1fr, 1fr),
-    column-gutter: 0.8cm,
-  )[
-    #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*Evidencias de 8.25:*]
-      #text(10pt, fill: rgb("#d1fae5"))[
-        - Política de Secure SDLC documentada
-        - Capacitación del equipo en seguridad
-        - Requisitos definidos antes del desarrollo
-        - Threat modeling realizado y documentado
-        - Control de cambios y pipeline seguro
-      ]
-    ]
-  ][
-    #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-      #text(fill: c-blanco)[*Evidencias de 8.28 y 8.29:*]
-      #text(10pt, fill: rgb("#cbd5e1"))[
-        - Principios de codificación aprobados
-        - Revisiones de código con hallazgos
-        - Resultados de SAST y DAST
-        - Criterios de aceptación documentados
-        - Pipeline CI/CD con Security Gate
-      ]
-    ]
+  #block(width: 100%, inset: 0.8em, fill: card-darker, radius: 4pt, stroke: (left: 2pt + accent))[
+    #text(11pt, weight: "bold", fill: accent)[Evidencias 8.28 y 8.29]
+    #v(0.1cm)
+    #text(10pt, fill: muted)[- Principios codificación aprobados
+      - Revisiones con hallazgos
+      - Resultados SAST/DAST
+      - Criterios aceptación
+      - Pipeline con Security Gate]
   ]
 ]
 
 == ¿Preguntas?
 
 #align(center + horizon)[
-  #block(inset: 2.5em, fill: rgb("#ffffff10"), radius: 16pt, stroke: 2pt + c-azul)[
-    #text(36pt, weight: "bold", fill: c-blanco)[¿Preguntas?]
+  #block(inset: 3em, fill: card-dark, radius: 4pt, stroke: (left: 4pt + accent))[
+    #text(36pt, weight: "bold", fill: light)[¿Preguntas?]
     #v(0.8cm)
-    #text(16pt, fill: rgb("#93c5fd"))[Equipo 5 --- IS-722 Calidad de Software]
+    #text(16pt, fill: accent)[Equipo 5 --- IS-722 Calidad de Software]
     #v(0.3cm)
-    #text(14pt, fill: rgb("#94a3b8"))[Universidad Nacional de Moquegua --- 2026-I]
+    #text(13pt, fill: rgb("#6b7280"))[Universidad Nacional de Moquegua --- 2026-I]
   ]
 ]
