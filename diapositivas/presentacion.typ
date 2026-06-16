@@ -210,12 +210,16 @@
 
 == Fase 3: Desarrollo Seguro (8.28)
 
+#block(width: 100%, inset: 0.8em, fill: accent2, radius: 4pt)[
+  #text(16pt, weight: "bold", fill: light)[Fase 3 --- Desarrollo Seguro (Control 8.28)]
+]
+
 #grid(
   columns: (1fr, 1fr),
   column-gutter: 0.8cm,
 )[
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
-    #text(12pt, weight: "bold", fill: cool)[Control 8.28 --- Secure Coding]
+    #text(11pt, weight: "bold", fill: cool)[¿Qué se hace?]
     #v(0.2cm)
     #text(10pt, fill: light)[
       Los desarrolladores aplican los *7 principios de codificación segura* en cada línea de código. Se realizan revisiones de código por pares antes de cada merge. Se integran herramientas SAST en el IDE para detectar fallos mientras se programa.
@@ -225,7 +229,7 @@
   ]
 ][
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
-    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #text(11pt, weight: "bold", fill: accent)[¿Qué se produce?]
     #v(0.2cm)
     #text(10pt, fill: light)[- Código fuente con principios de seguridad aplicados
       - Revisiones de código documentadas con hallazgos
@@ -239,12 +243,16 @@
 
 == Fase 4: Pruebas de Seguridad (8.29)
 
+#block(width: 100%, inset: 0.8em, fill: accent2, radius: 4pt)[
+  #text(16pt, weight: "bold", fill: light)[Fase 4 --- Pruebas de Seguridad (Control 8.29)]
+]
+
 #grid(
   columns: (1fr, 1fr),
   column-gutter: 0.8cm,
 )[
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + warm))[
-    #text(12pt, weight: "bold", fill: warm)[Control 8.29 --- Security Testing]
+    #text(11pt, weight: "bold", fill: warm)[¿Qué se hace?]
     #v(0.2cm)
     #text(10pt, fill: light)[
       Las pruebas de seguridad forman parte del proceso normal de pruebas. Los hallazgos se *registran*, *evalúan*, *corrigen* y *re-verifican*. Se definen criterios de aceptación claros: 0 vulnerabilidades críticas, 0 altas, cobertura SAST ≥ 80%, dependencias sin CVEs críticos.
@@ -254,7 +262,7 @@
   ]
 ][
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
-    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #text(11pt, weight: "bold", fill: accent)[¿Qué se produce?]
     #v(0.2cm)
     #text(10pt, fill: light)[- Reportes de SAST y DAST con hallazgos
       - Registros de escaneo de dependencias
@@ -268,24 +276,28 @@
 
 == Fase 5: Despliegue Seguro
 
+#block(width: 100%, inset: 0.8em, fill: accent2, radius: 4pt)[
+  #text(16pt, weight: "bold", fill: light)[Fase 5 --- Despliegue Seguro (Control 8.25)]
+]
+
 #grid(
   columns: (1fr, 1fr),
   column-gutter: 0.8cm,
 )[
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent2))[
-    #text(12pt, weight: "bold", fill: rgb("#93c5fd"))[Despliegue dentro del control 8.25]
+    #text(11pt, weight: "bold", fill: rgb("#93c5fd"))[¿Qué se hace?]
     #v(0.2cm)
     #text(10pt, fill: light)[
-      *Hardening:* Reducir la superficie de ataque. Imágenes mínimas (node:alpine), usuarios no root, puertos restringidos, servicios innecesarios eliminados.
+      *Hardening:* Reducir superficie de ataque. Imágenes mínimas, usuarios no root, puertos restringidos.
       #v(0.1cm)
-      *Gestión de secretos:* Variables de entorno en archivos .env excluidos del repositorio. Gestores centralizados (Vault, AWS Secrets Manager). Nunca secretos en código fuente.
+      *Gestión de secretos:* Variables de entorno en .env excluidos del repositorio. Gestores centralizados.
       #v(0.1cm)
-      *Seguridad CI/CD:* Control de acceso a repositorios, revisiones obligatorias, segregación de entornos (dev/test/prod), Security Gate.
+      *Seguridad CI/CD:* Control de acceso a repositorios, revisiones obligatorias, segregación de entornos, Security Gate.
     ]
   ]
 ][
   #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
-    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #text(11pt, weight: "bold", fill: accent)[¿Qué se produce?]
     #v(0.2cm)
     #text(10pt, fill: light)[- Imágenes Docker endurecidas y verificadas
       - Variables de entorno configuradas correctamente
