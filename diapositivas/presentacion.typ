@@ -145,32 +145,36 @@ El control *8.25* actúa como paraguas que establece las reglas generales. El *8
 
 == Diagrama SSDLC
 
-El siguiente diagrama muestra las seis fases del SSDLC y cómo el control 8.25 las cubre. Las fases 3 y 4 están directamente vinculadas a los controles 8.28 y 8.29 respectivamente.
+#align(center + horizon)[
+  #block(width: 100%, inset: 0.5em, fill: rgb("#ffffffaa"), radius: 8pt, stroke: 1pt + rgb("#e5e7eb"))[
+    #text(12pt)[El SSDLC integra seguridad en 6 fases. Las fases 3 y 4 se vinculan directamente con los controles *8.28* y *8.29*.]
+  ]
 
-#v(0.2cm)
+  #v(0.5cm)
 
-#fletcher-diagram(
-  spacing: (2.5em, 1.5em),
-  node-stroke: 1.5pt,
-  node-inset: 0.8em,
-  edge-stroke: 1.5pt,
-  node-fill: rgb("#eff6ff"),
-  node((0, 0), [#text(11pt, weight: "bold")[Requisitos]], shape: "circle", radius: 2em),
-  edge((0, 0), (1, 0), "->"),
-  node((1, 0), [#text(11pt, weight: "bold")[Diseño]], shape: "circle", radius: 2em),
-  edge((1, 0), (2, 0), "->"),
-  node((2, 0), [#text(11pt, weight: "bold")[Desarrollo] \ #text(9pt)[8.28]], shape: "circle", radius: 2em, fill: rgb("#f0fdf4")),
-  edge((2, 0), (3, 0), "->"),
-  node((3, 0), [#text(11pt, weight: "bold")[Pruebas] \ #text(9pt)[8.29]], shape: "circle", radius: 2em, fill: rgb("#fef3c7")),
-  edge((3, 0), (4, 0), "->"),
-  node((4, 0), [#text(11pt, weight: "bold")[Despliegue]], shape: "circle", radius: 2em),
-  edge((4, 0), (5, 0), "->"),
-  node((5, 0), [#text(11pt, weight: "bold")[Mant.]], shape: "circle", radius: 2em),
-)
+  #fletcher-diagram(
+    spacing: (2.5em, 1.5em),
+    node-stroke: 1.5pt,
+    node-inset: 0.8em,
+    edge-stroke: 1.5pt,
+    node-fill: rgb("#eff6ff"),
+    node((0, 0), [#text(11pt, weight: "bold")[Requisitos]], shape: "circle", radius: 2em),
+    edge((0, 0), (1, 0), "->"),
+    node((1, 0), [#text(11pt, weight: "bold")[Diseño]], shape: "circle", radius: 2em),
+    edge((1, 0), (2, 0), "->"),
+    node((2, 0), [#text(11pt, weight: "bold")[Desarrollo] \ #text(9pt)[8.28]], shape: "circle", radius: 2em, fill: rgb("#f0fdf4")),
+    edge((2, 0), (3, 0), "->"),
+    node((3, 0), [#text(11pt, weight: "bold")[Pruebas] \ #text(9pt)[8.29]], shape: "circle", radius: 2em, fill: rgb("#fef3c7")),
+    edge((3, 0), (4, 0), "->"),
+    node((4, 0), [#text(11pt, weight: "bold")[Despliegue]], shape: "circle", radius: 2em),
+    edge((4, 0), (5, 0), "->"),
+    node((5, 0), [#text(11pt, weight: "bold")[Mant.]], shape: "circle", radius: 2em),
+  )
 
-#v(0.2cm)
+  #v(0.3cm)
 
-#text(10pt, fill: luma(100))[Todos bajo el control *8.25* --- Reglas generales del ciclo de vida seguro.]
+  #text(10pt, fill: luma(100))[Todos bajo el control *8.25* --- Reglas del ciclo de vida seguro.]
+]
 
 == Fases del SSDLC: Requisitos y Diseño
 
