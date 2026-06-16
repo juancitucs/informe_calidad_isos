@@ -107,35 +107,38 @@ El control *8.25* actúa como paraguas que establece las reglas generales. El *8
 
 == Qué es un SSDLC
 
-Un *Secure SDLC* es un ciclo de vida de desarrollo de software con seguridad integrada en cada fase. El concepto clave es *Shift Left*: mover las actividades de seguridad hacia las fases iniciales del desarrollo, donde es más barato corregir problemas.
-
-#v(0.2cm)
-
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 1cm,
-)[
-  #block(width: 100%, inset: 0.8em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
-    #text(13pt, weight: "bold", fill: rgb("#991b1b"))[Modelo tradicional]
-    #v(0.2cm)
-    #text(10pt)[
-      - La seguridad se revisaba *al final* del proyecto
-      - Vulnerabilidades detectadas tarde
-      - Costo de corrección alto
-      - Más componentes afectados
-      - Usuarios impactados
-    ]
+#align(center + horizon)[
+  #block(width: 100%, inset: 0.5em, fill: rgb("#ffffffaa"), radius: 8pt, stroke: 1pt + rgb("#e5e7eb"))[
+    #text(14pt)[Un *Secure SDLC* es un ciclo de vida de desarrollo con seguridad integrada en cada fase. Concepto clave: *Shift Left* --- mover seguridad hacia fases iniciales.]
   ]
-][
-  #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
-    #text(13pt, weight: "bold", fill: rgb("#166534"))[SSDLC --- Shift Left]
-    #v(0.2cm)
-    #text(10pt)[
-      - Seguridad desde *Requisitos*, no al final
-      - Threat modeling en diseño
-      - Codificación segura en desarrollo
-      - Pruebas automáticas en CI/CD
-      - Hardening en despliegue
+
+  #v(0.3cm)
+
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 1cm,
+  )[
+    #block(width: 100%, inset: 0.8em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
+      #text(13pt, weight: "bold", fill: rgb("#991b1b"))[Modelo tradicional]
+      #v(0.2cm)
+      #text(10pt)[
+        - La seguridad se revisaba *al final* del proyecto
+        - Vulnerabilidades detectadas tarde
+        - Costo de corrección alto
+        - Más componentes afectados
+      ]
+    ]
+  ][
+    #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+      #text(13pt, weight: "bold", fill: rgb("#166534"))[SSDLC --- Shift Left]
+      #v(0.2cm)
+      #text(10pt)[
+        - Seguridad desde *Requisitos*, no al final
+        - Threat modeling en diseño
+        - Codificación segura en desarrollo
+        - Pruebas automáticas en CI/CD
+        - Hardening en despliegue
+      ]
     ]
   ]
 ]
@@ -171,65 +174,69 @@ El siguiente diagrama muestra las seis fases del SSDLC y cómo el control 8.25 l
 
 == Fases del SSDLC: Requisitos y Diseño
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 0.8cm,
-)[
-  #block(width: 100%, inset: 0.8em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
-    #text(13pt, weight: "bold", fill: rgb("#1a56db"))[Fase 1 --- Requisitos de Seguridad]
-    #v(0.2cm)
-    #text(10pt)[
-      *Activos:* Bases de datos, credenciales, código fuente, registros de auditoría.
-      
-      *Clasificación:* Pública, Interna, Confidencial, Restringida.
-      
-      *Requisitos CIA + Trazabilidad:*
-      - *C:* Confidencialidad --- solo autorizados acceden
-      - *I:* Integridad --- datos no modificados sin autorización
-      - *D:* Disponibilidad --- servicio operativo cuando se necesita
-      - *T:* Trazabilidad --- acciones registradas y auditables
+#align(center + horizon)[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 0.8cm,
+  )[
+    #block(width: 100%, inset: 0.8em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
+      #text(13pt, weight: "bold", fill: rgb("#1a56db"))[Fase 1 --- Requisitos de Seguridad]
+      #v(0.2cm)
+      #text(10pt)[
+        *Activos:* Bases de datos, credenciales, código fuente, registros.
+        
+        *Clasificación:* Pública, Interna, Confidencial, Restringida.
+        
+        *Requisitos CIA + Trazabilidad:*
+        - *C:* Confidencialidad --- solo autorizados acceden
+        - *I:* Integridad --- datos no modificados sin autorización
+        - *D:* Disponibilidad --- servicio operativo
+        - *T:* Trazabilidad --- acciones auditables
+      ]
     ]
-  ]
-][
-  #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
-    #text(13pt, weight: "bold", fill: rgb("#166534"))[Fase 2 --- Diseño Seguro]
-    #v(0.2cm)
-    #text(10pt)[
-      *Threat Modeling (STRIDE):* Metodología para identificar amenazas en cada componente del sistema.
-      
-      *Diagrama de Flujo de Datos (DFD):*
-      - Procesos que transforman datos
-      - Flujos entre componentes
-      - Almacenes de datos
-      - Entidades externas
-      
-      *Límites de confianza:* Cada frontera entre capas (externo → aplicación → servicios → almacenamiento) requiere controles adicionales.
+  ][
+    #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+      #text(13pt, weight: "bold", fill: rgb("#166534"))[Fase 2 --- Diseño Seguro]
+      #v(0.2cm)
+      #text(10pt)[
+        *Threat Modeling (STRIDE):* Identificar amenazas en cada componente.
+        
+        *Diagrama de Flujo de Datos:*
+        - Procesos que transforman datos
+        - Flujos entre componentes
+        - Almacenes de datos
+        - Entidades externas
+        
+        *Límites de confianza:* Cada frontera requiere controles adicionales.
+      ]
     ]
   ]
 ]
 
 == Fases del SSDLC: Desarrollo, Pruebas y Despliegue
 
-#grid(
-  columns: (1fr, 1fr, 1fr),
-  column-gutter: 0.6cm,
-)[
-  #block(width: 100%, inset: 0.6em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
-    #text(12pt, weight: "bold", fill: rgb("#166534"))[Fase 3 --- Desarrollo (8.28)]
-    #v(0.1cm)
-    #text(10pt)[Se aplica codificación siguiendo los 7 principios de seguridad. Se realizan revisiones de código por pares. Se usan herramientas de análisis estático (SAST) integradas en el IDE.]
-  ]
-][
-  #block(width: 100%, inset: 0.6em, fill: rgb("#fef3c7"), radius: 8pt, stroke: 1pt + rgb("#fde68a"))[
-    #text(12pt, weight: "bold", fill: rgb("#92400e"))[Fase 4 --- Pruebas (8.29)]
-    #v(0.1cm)
-    #text(10pt)[Se ejecutan pruebas SAST y DAST. Se realizan penetration tests. Se definen criterios de aceptación: 0 vuln. críticas, 0 altas, cobertura SAST ≥ 80%. Si no se cumplen, no se despliega.]
-  ]
-][
-  #block(width: 100%, inset: 0.6em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
-    #text(12pt, weight: "bold", fill: rgb("#1a56db"))[Fase 5 --- Despliegue]
-    #v(0.1cm)
-    #text(10pt)[Hardening: imágenes mínimas, usuarios no root, puertos restringidos. Secretos con variables de entorno. Canalización CI/CD con Security Gate.]
+#align(center + horizon)[
+  #grid(
+    columns: (1fr, 1fr, 1fr),
+    column-gutter: 0.6cm,
+  )[
+    #block(width: 100%, inset: 0.6em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+      #text(12pt, weight: "bold", fill: rgb("#166534"))[Fase 3 --- Desarrollo (8.28)]
+      #v(0.1cm)
+      #text(10pt)[Se aplica codificación siguiendo los 7 principios de seguridad. Se realizan revisiones de código por pares. Se usan herramientas de análisis estático (SAST) integradas en el IDE.]
+    ]
+  ][
+    #block(width: 100%, inset: 0.6em, fill: rgb("#fef3c7"), radius: 8pt, stroke: 1pt + rgb("#fde68a"))[
+      #text(12pt, weight: "bold", fill: rgb("#92400e"))[Fase 4 --- Pruebas (8.29)]
+      #v(0.1cm)
+      #text(10pt)[Se ejecutan pruebas SAST y DAST. Se realizan penetration tests. Se definen criterios de aceptación: 0 vuln. críticas, 0 altas, cobertura SAST ≥ 80%. Si no se cumplen, no se despliega.]
+    ]
+  ][
+    #block(width: 100%, inset: 0.6em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
+      #text(12pt, weight: "bold", fill: rgb("#1a56db"))[Fase 5 --- Despliegue]
+      #v(0.1cm)
+      #text(10pt)[Hardening: imágenes mínimas, usuarios no root, puertos restringidos. Secretos con variables de entorno. Canalización CI/CD con Security Gate.]
+    ]
   ]
 ]
 
@@ -317,40 +324,38 @@ El control 8.28 está directamente relacionado con la prevención de las vulnera
 
 == Tipos de Pruebas de Seguridad
 
-El control 8.29 exige que las pruebas de seguridad formen parte del proceso normal de pruebas del sistema. Los hallazgos deben registrarse, evaluarse, corregirse y volver a verificarse. Los entornos de pruebas deben mantenerse protegidos y segregados.
+#align(center + horizon)[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 0.8cm,
+  )[
+    #block(width: 100%, inset: 0.6em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
+      *SAST --- Análisis Estático*
+      #v(0.1cm)
+      #text(10pt)[Analiza código sin ejecutarlo. Escáner busca patrones de vulnerabilidades. Detecta fallos temprano. Se integra en CI/CD y en el IDE.]
+      #v(0.1cm)
+      #text(9pt, fill: luma(100))[ESLint, Semgrep, SonarQube, Bandit]
+    ]
 
-#v(0.2cm)
+    #block(width: 100%, inset: 0.6em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+      *DAST --- Análisis Dinámico*
+      #v(0.1cm)
+      #text(10pt)[Prueba la app ejecutándose. Scanner envía ataques simulados. Cubre superficie de ataque expuesta.]
+      #v(0.1cm)
+      #text(9pt, fill: luma(100))[OWASP ZAP, Burp Suite]
+    ]
+  ][
+    #block(width: 100%, inset: 0.6em, fill: rgb("#fef3c7"), radius: 8pt, stroke: 1pt + rgb("#fde68a"))[
+      *Code Review*
+      #v(0.1cm)
+      #text(10pt)[Revisión humana. Encuentra errores de lógica, decisiones de diseño inseguras y patrones que el escáner no reconoce. Obligatoria antes de cada merge.]
+    ]
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 0.8cm,
-)[
-  #block(width: 100%, inset: 0.6em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
-    *SAST --- Análisis Estático*
-    #v(0.1cm)
-    #text(10pt)[Analiza el código fuente sin ejecutarlo. Un escáner recorre el código buscando patrones conocidos de vulnerabilidades como SQL Injection, hardcoded secrets y XSS. Detecta fallos temprano, antes de compilar o desplegar. Se integra en el pipeline de CI/CD y en el IDE.]
-    #v(0.1cm)
-    #text(9pt, fill: luma(100))[Herramientas: ESLint + plugins de seguridad, Semgrep, SonarQube, Bandit]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
-    *DAST --- Análisis Dinámico*
-    #v(0.1cm)
-    #text(10pt)[Prueba la aplicación mientras está ejecutándose. Un scanner envía ataques simulados contra la app en funcionamiento y reporta vulnerabilidades como XSS reflejado, SQL Injection y configuraciones débiles. Cubre la superficie de ataque expuesta.]
-    #v(0.1cm)
-    #text(9pt, fill: luma(100))[Herramientas: OWASP ZAP, Burp Suite]
-  ]
-][
-  #block(width: 100%, inset: 0.6em, fill: rgb("#fef3c7"), radius: 8pt, stroke: 1pt + rgb("#fde68a"))[
-    *Code Review*
-    #v(0.1cm)
-    #text(10pt)[Revisión humana del código. Es fundamental porque hay problemas que ninguna herramienta detecta: errores de lógica de negocio, decisiones de diseño inseguras y patrones que el escáner no reconoce. Las revisiones deben ser obligatorias antes de cada merge.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
-    *Penetration Testing*
-    #v(0.1cm)
-    #text(10pt)[Un especialista en seguridad intenta comprometer el sistema de forma controlada. A diferencia del DAST automatizado, demuestra impacto real explotando vulnerabilidades. Es la prueba más cercana a un ataque real y permite validar si los controles implementados son efectivos.]
+    #block(width: 100%, inset: 0.6em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
+      *Penetration Testing*
+      #v(0.1cm)
+      #text(10pt)[Especialista compromete el sistema de forma controlada. Demuestra impacto real. Prueba más cercana a un ataque real.]
+    ]
   ]
 ]
 
@@ -386,38 +391,34 @@ La materialización de los controles 8.25, 8.28 y 8.29 se concreta en un pipelin
 
 == Acceptance Testing
 
-El acceptance testing es la verificación final antes de la producción. Define criterios claros y objetivos que el software debe cumplir. Si no se cumplen, no se despliega. Este es el principio fundamental del control 8.29.
-
-#v(0.2cm)
-
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 1cm,
-)[
-  #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
-    #text(13pt, weight: "bold")[Criterios de aceptación:]
-    #v(0.2cm)
-    #text(11pt)[
-      - *0* vulnerabilidades críticas
-      - *0* vulnerabilidades altas
-      - Cobertura SAST ≥ 80%
-      - Dependencias sin CVEs críticos
-      - Pruebas ejecutadas y aprobadas
-      - Configuración endurecida
+#align(center + horizon)[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 1cm,
+  )[
+    #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+      #text(13pt, weight: "bold")[Criterios de aceptación:]
+      #v(0.2cm)
+      #text(11pt)[
+        - *0* vulnerabilidades críticas
+        - *0* vulnerabilidades altas
+        - Cobertura SAST ≥ 80%
+        - Dependencias sin CVEs críticos
+        - Pruebas ejecutadas y aprobadas
+        - Configuración endurecida
+      ]
     ]
-  ]
-][
-  #block(width: 100%, inset: 0.8em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
-    #text(13pt, weight: "bold", fill: rgb("#991b1b"))[Si no cumple, no se despliega.]
-    #v(0.2cm)
-    #text(11pt)[
-      Los hallazgos identificados durante las pruebas deben:
-      + *Registrarse* en un sistema de seguimiento
-      + *Evaluarse* según su severidad y impacto
-      + *Corregirse* antes de avanzar al siguiente paso
-      + *Re-verificarse* tras la corrección
-      
-      Los entornos de pruebas deben estar protegidos y segregados de producción.
+  ][
+    #block(width: 100%, inset: 0.8em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
+      #text(13pt, weight: "bold", fill: rgb("#991b1b"))[Si no cumple, no se despliega.]
+      #v(0.2cm)
+      #text(11pt)[
+        Los hallazgos deben:
+        + *Registrarse* en seguimiento
+        + *Evaluarse* por severidad
+        + *Corregirse* antes de avanzar
+        + *Re-verificarse* tras corrección
+      ]
     ]
   ]
 ]
