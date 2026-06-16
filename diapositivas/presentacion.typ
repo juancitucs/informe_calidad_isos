@@ -206,7 +206,7 @@
         
         *Clasificación:* Pública, Interna, Confidencial, Restringida.
         
-        *Requisitos CIA + Trazabilidad:*
+        #text(fill: c-blanco)[*Requisitos CIA + Trazabilidad:*]
         - *Confidencialidad:* solo autorizados acceden
         - *Integridad:* datos no modificados sin autorización
         - *Disponibilidad:* servicio operativo
@@ -220,7 +220,7 @@
       #text(10pt, fill: rgb("#d1fae5"))[
         *Threat Modeling (STRIDE):* Identificar amenazas en cada componente.
         
-        *Diagrama de Flujo de Datos:*
+        #text(fill: c-blanco)[*Diagrama de Flujo de Datos:*]
         - Procesos que transforman datos
         - Flujos entre componentes
         - Almacenes de datos
@@ -374,14 +374,14 @@
     column-gutter: 0.6cm,
   )[
     #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-      *SAST --- Análisis Estático*
+      #text(fill: c-blanco)[*SAST --- Análisis Estático*]
       #v(0.1cm)
       #text(10pt, fill: rgb("#cbd5e1"))[Analiza código sin ejecutarlo. Escáner busca patrones de vulnerabilidades. Detecta fallos temprano. Se integra en CI/CD y en el IDE.]
       #v(0.1cm)
       #text(9pt, fill: rgb("#94a3b8"))[ESLint, Semgrep, SonarQube, Bandit]
     ]
     #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-      *DAST --- Análisis Dinámico*
+      #text(fill: c-blanco)[*DAST --- Análisis Dinámico*]
       #v(0.1cm)
       #text(10pt, fill: rgb("#d1fae5"))[Prueba la app ejecutándose. Scanner envía ataques simulados. Cubre superficie de ataque expuesta.]
       #v(0.1cm)
@@ -389,12 +389,12 @@
     ]
   ][
     #block(width: 100%, inset: 0.6em, fill: c-amarillo-osc, radius: 8pt)[
-      *Code Review*
+      #text(fill: c-blanco)[*Code Review*]
       #v(0.1cm)
       #text(10pt, fill: rgb("#fef3c7"))[Revisión humana. Encuentra errores de lógica, decisiones de diseño inseguras y patrones que el escáner no reconoce. Obligatoria antes de cada merge.]
     ]
     #block(width: 100%, inset: 0.6em, fill: c-rojo-osc, radius: 8pt)[
-      *Penetration Testing*
+      #text(fill: c-blanco)[*Penetration Testing*]
       #v(0.1cm)
       #text(10pt, fill: rgb("#fecaca"))[Especialista compromete el sistema de forma controlada. Demuestra impacto real. Prueba más cercana a un ataque real.]
     ]
@@ -580,7 +580,7 @@
     column-gutter: 0.8cm,
   )[
     #block(width: 100%, inset: 0.6em, fill: c-verde-osc, radius: 8pt)[
-      *Evidencias de 8.25:*
+      #text(fill: c-blanco)[*Evidencias de 8.25:*]
       #text(10pt, fill: rgb("#d1fae5"))[
         - Política de Secure SDLC documentada
         - Capacitación del equipo en seguridad
@@ -591,7 +591,7 @@
     ]
   ][
     #block(width: 100%, inset: 0.6em, fill: c-azul-osc, radius: 8pt)[
-      *Evidencias de 8.28 y 8.29:*
+      #text(fill: c-blanco)[*Evidencias de 8.28 y 8.29:*]
       #text(10pt, fill: rgb("#cbd5e1"))[
         - Principios de codificación aprobados
         - Revisiones de código con hallazgos
