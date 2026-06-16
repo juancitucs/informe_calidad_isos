@@ -208,29 +208,92 @@
   ]
 ]
 
-== Fases 3-5
+== Fase 3: Desarrollo Seguro (8.28)
 
-#align(center + horizon)[
-  #block(width: 90%, inset: 0.8em, fill: card-darker, radius: 4pt)[
-    #grid(columns: (1fr, 1fr, 1fr), column-gutter: 0.6cm)[
-      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + cool))[
-        #text(11pt, weight: "bold", fill: cool)[Fase 3 --- Desarrollo (8.28)]
-        #v(0.1cm)
-        #text(9pt, fill: muted)[Codificación con 7 principios. Revisiones por pares. SAST en IDE.]
-      ]
-    ][
-      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + warm))[
-        #text(11pt, weight: "bold", fill: warm)[Fase 4 --- Pruebas (8.29)]
-        #v(0.1cm)
-        #text(9pt, fill: muted)[SAST, DAST, pentests. 0 vuln. críticas, SAST ≥ 80%.]
-      ]
-    ][
-      #block(width: 100%, inset: 0.8em, fill: card-dark, radius: 4pt, stroke: (top: 3pt + accent))[
-        #text(11pt, weight: "bold", fill: accent)[Fase 5 --- Despliegue]
-        #v(0.1cm)
-        #text(9pt, fill: muted)[Hardening, secretos, CI/CD con Security Gate.]
-      ]
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + cool))[
+    #text(12pt, weight: "bold", fill: cool)[Control 8.28 --- Secure Coding]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      Los desarrolladores aplican los *7 principios de codificación segura* en cada línea de código. Se realizan revisiones de código por pares antes de cada merge. Se integran herramientas SAST en el IDE para detectar fallos mientras se programa.
     ]
+    #v(0.1cm)
+    #text(9pt, fill: muted)[Validación de entradas, sanitización, mínimo privilegio, manejo seguro de secretos, errores seguros.]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #v(0.2cm)
+    #text(10pt, fill: light)[- Código fuente con principios de seguridad aplicados
+      - Revisiones de código documentadas con hallazgos
+      - Configuración de SAST en el IDE y en CI/CD
+      - Dependencias actualizadas y escaneadas
+      - Secretos excluidos del repositorio (.env)]
+    #v(0.1cm)
+    #text(9pt, fill: muted)[El resultado es código con menor probabilidad de contener vulnerabilidades explotables.]
+  ]
+]
+
+== Fase 4: Pruebas de Seguridad (8.29)
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + warm))[
+    #text(12pt, weight: "bold", fill: warm)[Control 8.29 --- Security Testing]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      Las pruebas de seguridad forman parte del proceso normal de pruebas. Los hallazgos se *registran*, *evalúan*, *corrigen* y *re-verifican*. Se definen criterios de aceptación claros: 0 vulnerabilidades críticas, 0 altas, cobertura SAST ≥ 80%, dependencias sin CVEs críticos.
+    ]
+    #v(0.1cm)
+    #text(9pt, fill: muted)[SAST, DAST, code review, vulnerability assessment, penetration testing.]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #v(0.2cm)
+    #text(10pt, fill: light)[- Reportes de SAST y DAST con hallazgos
+      - Registros de escaneo de dependencias
+      - Resultados de penetration testing
+      - Criterios de aceptación documentados y aprobados
+      - Evidencia de que el software no se despliega si no cumple]
+    #v(0.1cm)
+    #text(9pt, fill: muted)[Si no se cumplen los criterios, el pipeline se detiene y no se produce despliegue.]
+  ]
+]
+
+== Fase 5: Despliegue Seguro
+
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent2))[
+    #text(12pt, weight: "bold", fill: rgb("#93c5fd"))[Despliegue dentro del control 8.25]
+    #v(0.2cm)
+    #text(10pt, fill: light)[
+      *Hardening:* Reducir la superficie de ataque. Imágenes mínimas (node:alpine), usuarios no root, puertos restringidos, servicios innecesarios eliminados.
+      #v(0.1cm)
+      *Gestión de secretos:* Variables de entorno en archivos .env excluidos del repositorio. Gestores centralizados (Vault, AWS Secrets Manager). Nunca secretos en código fuente.
+      #v(0.1cm)
+      *Seguridad CI/CD:* Control de acceso a repositorios, revisiones obligatorias, segregación de entornos (dev/test/prod), Security Gate.
+    ]
+  ]
+][
+  #block(width: 100%, inset: 1em, fill: card-dark, radius: 4pt, stroke: (left: 3pt + accent))[
+    #text(12pt, weight: "bold", fill: accent)[¿Qué se produce en esta fase?]
+    #v(0.2cm)
+    #text(10pt, fill: light)[- Imágenes Docker endurecidas y verificadas
+      - Variables de entorno configuradas correctamente
+      - Pipeline CI/CD con Security Gate activo
+      - Entornos de dev, test y producción segregados
+      - Registros de despliegue y trazabilidad]
+    #v(0.1cm)
+    #text(9pt, fill: muted)[El despliegue seguro es la verificación final antes de que el software llegue a los usuarios.]
   ]
 ]
 
