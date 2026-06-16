@@ -7,18 +7,7 @@ El control 8.29 de ISO/IEC 27001:2022 (Security Testing in Development and Accep
 
 \subsubsection{SAST --- Static Application Security Testing}
 
-El análisis estático de seguridad analiza el código fuente \textit{sin ejecutarlo}. Detecta patrones conocidos de vulnerabilidades directamente en el código.
-
-\begin{center}
-\small
-\begin{tabular}{c}
-\textbf{Código fuente} \\[2pt]
-$\downarrow$ \\[2pt]
-\textbf{Escáner estático} \\[2pt]
-$\downarrow$ \\[2pt]
-\textbf{Hallazgos de seguridad}
-\end{tabular}
-\end{center}
+El análisis estático de seguridad analiza el código fuente \textit{sin ejecutarlo}. Un escáner recorre el código buscando patrones conocidos de vulnerabilidades y reporta hallazgos de seguridad.
 
 \textbf{Qué busca:}
 \begin{itemize}
@@ -41,18 +30,7 @@ SAST detecta fallos temprano, antes de compilar o desplegar. Se integra en el pi
 
 \subsubsection{DAST --- Dynamic Application Security Testing}
 
-El análisis dinámico prueba la aplicación \textit{mientras está ejecutándose}. Simula ataques reales contra la aplicación en funcionamiento.
-
-\begin{center}
-\small
-\begin{tabular}{c}
-\textbf{Aplicación en ejecución} \\[2pt]
-$\downarrow$ \\[2pt]
-\textbf{Scanner dinámico} \\[2pt]
-$\downarrow$ \\[2pt]
-\textbf{Ataques simulados}
-\end{tabular}
-\end{center}
+El análisis dinámico prueba la aplicación \textit{mientras está ejecutándose}. Un scanner envía ataques simulados contra la aplicación en funcionamiento y reporta vulnerabilidades encontradas.
 
 \textbf{Qué busca:}
 \begin{itemize}
@@ -177,12 +155,7 @@ Git Push
   -> Production
 \end{lstlisting}
 
-Este pipeline es la materialización práctica de:
-\begin{itemize}
-    \item \textbf{8.25} $\rightarrow$ proceso seguro de desarrollo.
-    \item \textbf{8.28} $\rightarrow$ código seguro.
-    \item \textbf{8.29} $\rightarrow$ validación de seguridad.
-\end{itemize}
+Este pipeline integra los tres controles: el 8.25 cubre el proceso seguro de desarrollo, el 8.28 el código seguro y el 8.29 la validación de seguridad.
 
 \subsection{Qué busca un auditor en 8.29}
 

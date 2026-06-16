@@ -99,12 +99,38 @@ Elevation of Priv. & Acceso a rutas admin & Middleware por roles \\
 La arquitectura de Workcodile-dev presenta los siguientes flujos principales de datos:
 
 \begin{enumerate}
-    \item \textbf{Flujo de autenticación:} Usuario $\rightarrow$ Frontend (React) $\rightarrow$ Backend (Express) $\rightarrow$ MongoDB $\rightarrow$ JWT token.
-    \item \textbf{Flujo de publicaciones:} Usuario $\rightarrow$ Frontend $\rightarrow$ Backend $\rightarrow$ MinIO (archivo) + MongoDB (metadatos).
-    \item \textbf{Flujo de correo:} Backend $\rightarrow$ Nodemailer $\rightarrow$ Gmail SMTP.
+    \item \textbf{Flujo de autenticación:} El usuario envía credenciales desde el Frontend (React) al Backend (Express), que valida contra MongoDB y retorna un JWT.
+    \item \textbf{Flujo de publicaciones:} El Frontend envía el contenido al Backend, que almacena el archivo en MinIO y los metadatos en MongoDB.
+    \item \textbf{Flujo de correo:} El Backend envía correos a través de Nodemailer usando Gmail SMTP.
 \end{enumerate}
 
 Cada frontera entre componentes representa un límite de confianza que requiere controles adicionales de validación y sanitización.
+
+\subsubsection{Hallazgos de seguridad en la configuración}
+
+Un análisis del código fuente de Workcodile-dev reveló problemas reales de seguridad en la configuración del proyecto:
+
+\begin{table}[h]
+\centering
+\small
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|p{4.5cm}|p{4.5cm}|}
+\hline
+\textbf{Hallazgo} & \textbf{Ubicación} & \textbf{Riesgo} \\
+\hline
+JWT\_SECRET hardcodeado & docker-compose.yml:67 & Cualquiera con acceso al repo puede firmar tokens válidos \\
+\hline
+Credenciales MinIO por defecto & docker-compose.yml:23-24 & Acceso no autorizado al almacenamiento de archivos \\
+\hline
+MongoDB puerto expuesto & docker-compose.yml:7 & Acceso directo a la base de datos desde el host \\
+\hline
+\end{tabular}%
+}
+\caption{Hallazgos de seguridad en Workcodile-dev}
+\label{tab:hallazgos}
+\end{table}
+
+Estos hallazgos demuestran por qué el control 8.25 es necesario: sin un proceso formal de revisión de configuración, estos problemas pasan desapercibidos.
 
 \subsection{Aplicación de Secure Coding (8.28)}
 

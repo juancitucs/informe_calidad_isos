@@ -5,18 +5,7 @@ El control 8.25 de ISO/IEC 27001:2022 establece que la organización debe establ
 
 \subsection{Qué intenta resolver}
 
-En el modelo tradicional de desarrollo de software, la seguridad solía revisarse al final del proyecto:
-
-\begin{center}
-\small
-\begin{tabular}{c}
-\textbf{Análisis} $\rightarrow$ \textbf{Diseño} $\rightarrow$ \textbf{Desarrollo} $\rightarrow$ \textbf{Testing funcional} $\rightarrow$ \textbf{Producción} \\[4pt]
-$\downarrow$ \\[2pt]
-\textit{``Ahora revisemos seguridad''}
-\end{tabular}
-\end{center}
-
-Este enfoque provoca que los problemas de seguridad se detecten tarde, cuando ya existen más componentes afectados, más usuarios impactados y un costo de corrección mucho mayor. Las consecuencias típicas incluyen:
+En el modelo tradicional de desarrollo de software, la seguridad solía revisarse al final del proyecto, después de que el código ya estaba construido. Este enfoque provoca que los problemas de seguridad se detecten tarde, cuando ya existen más componentes afectados, más usuarios impactados y un costo de corrección mucho mayor. Las consecuencias típicas incluyen:
 
 \begin{itemize}
     \item Vulnerabilidades que aparecen en producción.
@@ -158,18 +147,22 @@ Se identifican los componentes del sistema:
 
 Los límites de confianza permiten distinguir qué componentes requieren controles adicionales:
 
-\begin{center}
+\begin{table}[h]
+\centering
 \small
-\begin{tabular}{c}
-\textbf{Entorno externo (internet)} \\[3pt]
-$\downarrow$ \textit{Firewall, WAF, autenticación} \\[3pt]
-\textbf{Aplicación (servidor web)} \\[3pt]
-$\downarrow$ \textit{Validación, autorización} \\[3pt]
-\textbf{Servicios internos (lógica de negocio)} \\[3pt]
-$\downarrow$ \textit{Cifrado, acceso restringido} \\[3pt]
-\textbf{Almacenamiento (base de datos)}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Capa} & \textbf{Controles} & \textbf{Ejemplo en Workcodile} \\
+\hline
+Entorno externo & Firewall, WAF, autenticación & Nginx proxy, CORS \\
+Aplicación & Validación, autorización & Express middleware, JWT \\
+Servicios internos & Cifrado, acceso restringido & Mongoose ODM, permisos MinIO \\
+Almacenamiento & Cifrado en reposo, backups & MongoDB, volúmenes Docker \\
+\hline
 \end{tabular}
-\end{center}
+\caption{Límites de confianza y controles asociados}
+\label{tab:limites-confianza}
+\end{table}
 
 \subsubsection{Controles de diseño}
 
