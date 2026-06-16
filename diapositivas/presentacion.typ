@@ -132,24 +132,26 @@ El siguiente diagrama muestra las seis fases del SSDLC y cómo el control 8.25 l
 
 #v(0.2cm)
 
-#diagram(
-  spacing: 1.2em,
-  node-stroke: 1.5pt,
-  node-inset: 0.6em,
-  edge-stroke: 1.5pt,
-  node-fill: rgb("#eff6ff"),
-  node((0, 0), [*Requisitos*], shape: "circle", radius: 1.8em),
-  edge((0, 0), (1, 0), "->"),
-  node((1, 0), [*Diseño*], shape: "circle", radius: 1.8em),
-  edge((1, 0), (2, 0), "->"),
-  node((2, 0), [*Desarrollo*\ #text(9pt)[8.28]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
-  edge((2, 0), (3, 0), "->"),
-  node((3, 0), [*Pruebas*\ #text(9pt)[8.29]], shape: "circle", radius: 1.8em, fill: rgb("#fef3c7")),
-  edge((3, 0), (4, 0), "->"),
-  node((4, 0), [*Despliegue*], shape: "circle", radius: 1.8em),
-  edge((4, 0), (5, 0), "->"),
-  node((5, 0), [*Mantenimiento*], shape: "circle", radius: 1.8em),
-)
+#align(center)[
+  #diagram(
+    spacing: (3em, 2em),
+    node-stroke: 1.5pt,
+    node-inset: 0.8em,
+    edge-stroke: 1.5pt,
+    node-fill: rgb("#eff6ff"),
+    node((0, 0), [#text(11pt, weight: "bold")[Requisitos]], shape: "circle", radius: 2.2em),
+    edge((0, 0), (1, 0), "->"),
+    node((1, 0), [#text(11pt, weight: "bold")[Diseño]], shape: "circle", radius: 2.2em),
+    edge((1, 0), (2, 0), "->"),
+    node((2, 0), [#text(11pt, weight: "bold")[Desarrollo] \ #text(9pt)[8.28]], shape: "circle", radius: 2.2em, fill: rgb("#f0fdf4")),
+    edge((2, 0), (3, 0), "->"),
+    node((3, 0), [#text(11pt, weight: "bold")[Pruebas] \ #text(9pt)[8.29]], shape: "circle", radius: 2.2em, fill: rgb("#fef3c7")),
+    edge((3, 0), (4, 0), "->"),
+    node((4, 0), [#text(11pt, weight: "bold")[Despliegue]], shape: "circle", radius: 2.2em),
+    edge((4, 0), (5, 0), "->"),
+    node((5, 0), [#text(11pt, weight: "bold")[Mant.]], shape: "circle", radius: 2.2em),
+  )
+]
 
 #v(0.2cm)
 
@@ -310,25 +312,27 @@ La materialización de los controles 8.25, 8.28 y 8.29 se concreta en un pipelin
 
 #v(0.2cm)
 
-#diagram(
-  spacing: 1em,
-  node-stroke: 1.5pt,
-  node-inset: 0.5em,
-  edge-stroke: 1.5pt,
-  node((0, 0), [*Git*\ *Push*], shape: "circle", radius: 1.6em, fill: rgb("#eff6ff")),
-  edge((0, 0), (1, 0), "->"),
-  node((1, 0), [*Build*], shape: "circle", radius: 1.6em, fill: rgb("#eff6ff")),
-  edge((1, 0), (2, 0), "->"),
-  node((2, 0), [*SAST*], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
-  edge((2, 0), (3, 0), "->"),
-  node((3, 0), [*DAST*], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
-  edge((3, 0), (4, 0), "->"),
-  node((4, 0), [*Security*\ *Gate*], shape: "circle", radius: 1.6em, fill: rgb("#fef2f2")),
-  edge((4, 0), (5, 0), "->"),
-  node((5, 0), [*Staging*], shape: "circle", radius: 1.6em, fill: rgb("#fef3c7")),
-  edge((5, 0), (6, 0), "->"),
-  node((6, 0), [*Production*], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
-)
+#align(center)[
+  #diagram(
+    spacing: (2.5em, 1.5em),
+    node-stroke: 1.5pt,
+    node-inset: 0.6em,
+    edge-stroke: 1.5pt,
+    node((0, 0), [#text(10pt, weight: "bold")[Git Push]], shape: "circle", radius: 1.8em, fill: rgb("#eff6ff")),
+    edge((0, 0), (1, 0), "->"),
+    node((1, 0), [#text(10pt, weight: "bold")[Build]], shape: "circle", radius: 1.8em, fill: rgb("#eff6ff")),
+    edge((1, 0), (2, 0), "->"),
+    node((2, 0), [#text(10pt, weight: "bold")[SAST]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
+    edge((2, 0), (3, 0), "->"),
+    node((3, 0), [#text(10pt, weight: "bold")[DAST]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
+    edge((3, 0), (4, 0), "->"),
+    node((4, 0), [#text(10pt, weight: "bold")[Security] \ #text(9pt)[Gate]], shape: "circle", radius: 1.8em, fill: rgb("#fef2f2")),
+    edge((4, 0), (5, 0), "->"),
+    node((5, 0), [#text(10pt, weight: "bold")[Staging]], shape: "circle", radius: 1.8em, fill: rgb("#fef3c7")),
+    edge((5, 0), (6, 0), "->"),
+    node((6, 0), [#text(10pt, weight: "bold")[Production]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
+  )
+]
 
 #v(0.2cm)
 
