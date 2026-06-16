@@ -1,6 +1,8 @@
 #import "@preview/touying:0.6.1": *
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, node, edge
 
+#let fletcher-diagram = touying-reducer.with(reduce: fletcher.diagram, cover: fletcher.hide)
+
 #set text(font: "Fira Sans", size: 14pt)
 #show raw: set text(font: "Fira Code", size: 12pt)
 
@@ -107,7 +109,7 @@ El control *8.25* actúa como paraguas que establece las reglas generales. El *8
 
 Un *Secure SDLC* es un ciclo de vida de desarrollo de software con seguridad integrada en cada fase. El concepto clave es *Shift Left*: mover las actividades de seguridad hacia las fases iniciales del desarrollo, donde es más barato corregir problemas.
 
-#v(0.3cm)
+#v(0.2cm)
 
 #grid(
   columns: (1fr, 1fr),
@@ -116,13 +118,25 @@ Un *Secure SDLC* es un ciclo de vida de desarrollo de software con seguridad int
   #block(width: 100%, inset: 0.8em, fill: rgb("#fef2f2"), radius: 8pt, stroke: 1pt + rgb("#fecaca"))[
     #text(13pt, weight: "bold", fill: rgb("#991b1b"))[Modelo tradicional]
     #v(0.2cm)
-    #text(11pt)[En el enfoque tradicional, la seguridad se revisaba al final del proyecto, después de que el código ya estaba construido. Esto provocaba que las vulnerabilidades se detectaran tarde, con un costo de corrección mucho mayor y más componentes afectados.]
+    #text(10pt)[
+      - La seguridad se revisaba *al final* del proyecto
+      - Vulnerabilidades detectadas tarde
+      - Costo de corrección alto
+      - Más componentes afectados
+      - Usuarios impactados
+    ]
   ]
 ][
   #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
     #text(13pt, weight: "bold", fill: rgb("#166534"))[SSDLC --- Shift Left]
     #v(0.2cm)
-    #text(11pt)[Con el SSDLC, la seguridad está presente desde la fase de *Requisitos*. Cada fase del ciclo de vida incluye actividades de seguridad: threat modeling en diseño, codificación segura en desarrollo, pruebas automáticas en CI/CD y hardening en despliegue.]
+    #text(10pt)[
+      - Seguridad desde *Requisitos*, no al final
+      - Threat modeling en diseño
+      - Codificación segura en desarrollo
+      - Pruebas automáticas en CI/CD
+      - Hardening en despliegue
+    ]
   ]
 ]
 
@@ -132,26 +146,24 @@ El siguiente diagrama muestra las seis fases del SSDLC y cómo el control 8.25 l
 
 #v(0.2cm)
 
-#align(center)[
-  #diagram(
-    spacing: (3em, 2em),
-    node-stroke: 1.5pt,
-    node-inset: 0.8em,
-    edge-stroke: 1.5pt,
-    node-fill: rgb("#eff6ff"),
-    node((0, 0), [#text(11pt, weight: "bold")[Requisitos]], shape: "circle", radius: 2.2em),
-    edge((0, 0), (1, 0), "->"),
-    node((1, 0), [#text(11pt, weight: "bold")[Diseño]], shape: "circle", radius: 2.2em),
-    edge((1, 0), (2, 0), "->"),
-    node((2, 0), [#text(11pt, weight: "bold")[Desarrollo] \ #text(9pt)[8.28]], shape: "circle", radius: 2.2em, fill: rgb("#f0fdf4")),
-    edge((2, 0), (3, 0), "->"),
-    node((3, 0), [#text(11pt, weight: "bold")[Pruebas] \ #text(9pt)[8.29]], shape: "circle", radius: 2.2em, fill: rgb("#fef3c7")),
-    edge((3, 0), (4, 0), "->"),
-    node((4, 0), [#text(11pt, weight: "bold")[Despliegue]], shape: "circle", radius: 2.2em),
-    edge((4, 0), (5, 0), "->"),
-    node((5, 0), [#text(11pt, weight: "bold")[Mant.]], shape: "circle", radius: 2.2em),
-  )
-]
+#fletcher-diagram(
+  spacing: (2.5em, 1.5em),
+  node-stroke: 1.5pt,
+  node-inset: 0.8em,
+  edge-stroke: 1.5pt,
+  node-fill: rgb("#eff6ff"),
+  node((0, 0), [#text(11pt, weight: "bold")[Requisitos]], shape: "circle", radius: 2em),
+  edge((0, 0), (1, 0), "->"),
+  node((1, 0), [#text(11pt, weight: "bold")[Diseño]], shape: "circle", radius: 2em),
+  edge((1, 0), (2, 0), "->"),
+  node((2, 0), [#text(11pt, weight: "bold")[Desarrollo] \ #text(9pt)[8.28]], shape: "circle", radius: 2em, fill: rgb("#f0fdf4")),
+  edge((2, 0), (3, 0), "->"),
+  node((3, 0), [#text(11pt, weight: "bold")[Pruebas] \ #text(9pt)[8.29]], shape: "circle", radius: 2em, fill: rgb("#fef3c7")),
+  edge((3, 0), (4, 0), "->"),
+  node((4, 0), [#text(11pt, weight: "bold")[Despliegue]], shape: "circle", radius: 2em),
+  edge((4, 0), (5, 0), "->"),
+  node((5, 0), [#text(11pt, weight: "bold")[Mant.]], shape: "circle", radius: 2em),
+)
 
 #v(0.2cm)
 
@@ -159,23 +171,67 @@ El siguiente diagrama muestra las seis fases del SSDLC y cómo el control 8.25 l
 
 == Fases del SSDLC: Requisitos y Diseño
 
-*Fase 1 --- Requisitos de Seguridad:* Se identifican los activos de información que requieren protección (bases de datos, credenciales, código fuente, registros de auditoría). Se clasifican según su sensibilidad (Pública, Interna, Confidencial, Restringida). Se definen los requisitos CIA (Confidencialidad, Integridad, Disponibilidad) más Trazabilidad.
-
-#v(0.2cm)
-
-*Fase 2 --- Diseño Seguro:* Se realiza threat modeling usando la metodología *STRIDE* (Spoofing, Tampering, Repudiation, Information Disclosure, DoS, Escalada de privilegios). Se elaboran diagramas de flujo de datos (DFD) para identificar procesos, flujos, almacenes y entidades externas. Se definen los límites de confianza entre capas: entorno externo → aplicación → servicios internos → almacenamiento.
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 0.8cm,
+)[
+  #block(width: 100%, inset: 0.8em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
+    #text(13pt, weight: "bold", fill: rgb("#1a56db"))[Fase 1 --- Requisitos de Seguridad]
+    #v(0.2cm)
+    #text(10pt)[
+      *Activos:* Bases de datos, credenciales, código fuente, registros de auditoría.
+      
+      *Clasificación:* Pública, Interna, Confidencial, Restringida.
+      
+      *Requisitos CIA + Trazabilidad:*
+      - *C:* Confidencialidad --- solo autorizados acceden
+      - *I:* Integridad --- datos no modificados sin autorización
+      - *D:* Disponibilidad --- servicio operativo cuando se necesita
+      - *T:* Trazabilidad --- acciones registradas y auditables
+    ]
+  ]
+][
+  #block(width: 100%, inset: 0.8em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+    #text(13pt, weight: "bold", fill: rgb("#166534"))[Fase 2 --- Diseño Seguro]
+    #v(0.2cm)
+    #text(10pt)[
+      *Threat Modeling (STRIDE):* Metodología para identificar amenazas en cada componente del sistema.
+      
+      *Diagrama de Flujo de Datos (DFD):*
+      - Procesos que transforman datos
+      - Flujos entre componentes
+      - Almacenes de datos
+      - Entidades externas
+      
+      *Límites de confianza:* Cada frontera entre capas (externo → aplicación → servicios → almacenamiento) requiere controles adicionales.
+    ]
+  ]
+]
 
 == Fases del SSDLC: Desarrollo, Pruebas y Despliegue
 
-*Fase 3 --- Desarrollo (8.28):* Se aplica codificación siguiendo los 7 principios de seguridad. Se realizan revisiones de código por pares. Se usan herramientas de análisis estático (SAST) integradas en el IDE.
-
-#v(0.2cm)
-
-*Fase 4 --- Pruebas (8.29):* Se ejecutan pruebas SAST y DAST. Se realizan penetration tests. Se definen criterios de aceptación: 0 vulnerabilidades críticas, 0 altas, cobertura SAST ≥ 80%, dependencias sin CVEs críticos. Si no se cumplen, no se despliega.
-
-#v(0.2cm)
-
-*Fase 5 --- Despliegue:* Se aplica hardening (imágenes mínimas, usuarios no root, puertos restringidos). Se gestiona secretos con variables de entorno y gestores centralizados. Se asegura la canalización CI/CD con Security Gate.
+#grid(
+  columns: (1fr, 1fr, 1fr),
+  column-gutter: 0.6cm,
+)[
+  #block(width: 100%, inset: 0.6em, fill: rgb("#f0fdf4"), radius: 8pt, stroke: 1pt + rgb("#bbf7d0"))[
+    #text(12pt, weight: "bold", fill: rgb("#166534"))[Fase 3 --- Desarrollo (8.28)]
+    #v(0.1cm)
+    #text(10pt)[Se aplica codificación siguiendo los 7 principios de seguridad. Se realizan revisiones de código por pares. Se usan herramientas de análisis estático (SAST) integradas en el IDE.]
+  ]
+][
+  #block(width: 100%, inset: 0.6em, fill: rgb("#fef3c7"), radius: 8pt, stroke: 1pt + rgb("#fde68a"))[
+    #text(12pt, weight: "bold", fill: rgb("#92400e"))[Fase 4 --- Pruebas (8.29)]
+    #v(0.1cm)
+    #text(10pt)[Se ejecutan pruebas SAST y DAST. Se realizan penetration tests. Se definen criterios de aceptación: 0 vuln. críticas, 0 altas, cobertura SAST ≥ 80%. Si no se cumplen, no se despliega.]
+  ]
+][
+  #block(width: 100%, inset: 0.6em, fill: rgb("#eff6ff"), radius: 8pt, stroke: 1pt + rgb("#bfdbfe"))[
+    #text(12pt, weight: "bold", fill: rgb("#1a56db"))[Fase 5 --- Despliegue]
+    #v(0.1cm)
+    #text(10pt)[Hardening: imágenes mínimas, usuarios no root, puertos restringidos. Secretos con variables de entorno. Canalización CI/CD con Security Gate.]
+  ]
+]
 
 == STRIDE para Threat Modeling
 
@@ -201,49 +257,41 @@ La metodología *STRIDE* permite identificar sistemáticamente las amenazas en c
 
 == 7 Principios de Codificación Segura
 
-El control 8.28 establece que la organización debe definir principios de codificación segura aprobados. Estos principios deben aplicarse a todo el código: desarrollo interno, externo, bibliotecas y dependencias. El objetivo es reducir la superficie de ataque desde la fase de implementación.
+El control 8.28 establece principios de codificación segura aprobados. Estos principios deben aplicarse a todo el código: desarrollo interno, externo, bibliotecas y dependencias.
 
-#v(0.2cm)
+#v(0.1cm)
 
-#grid(
-  columns: (1fr, 1fr),
-  column-gutter: 0.8cm,
-)[
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *1. Nunca confiar en la entrada*
-    #text(10pt)[ Toda entrada del usuario, de una API o de otro sistema se considera no confiable hasta que se valide. Ejemplo: consultas parametrizadas en vez de concatenación de strings.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *2. Validar siempre*
-    #text(10pt)[ Verificar tipo, longitud, formato, rango y conjunto permitido de valores antes de procesar cualquier dato. Ejemplo: express-validator para validar emails y contraseñas.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *3. Sanitizar cuando corresponda*
-    #text(10pt)[ Preparar datos para su uso seguro en un contexto específico. Prevenir XSS escapeando HTML. En React, no usar dangerouslySetInnerHTML sin sanitizar.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *4. Principio de mínimo privilegio*
-    #text(10pt)[ Usar únicamente los permisos necesarios para operar. MongoDB con usuario solo para la BD de la app, Docker con usuarios no root, puertos mínimos.]
-  ]
-][
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *5. Gestión de secretos*
-    #text(10pt)[ Nunca almacenar secretos en código fuente. Usar archivos .env excluidos del control de versiones y gestores de secretos como HashiCorp Vault o AWS Secrets Manager.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *6. Manejo seguro de errores*
-    #text(10pt)[ No exponer stack traces o detalles del sistema al usuario. Mostrar mensajes genéricos y registrar detalles internamente en logs seguros.]
-  ]
-
-  #block(width: 100%, inset: 0.6em, fill: rgb("#ffffffaa"), radius: 6pt, stroke: 1pt + rgb("#e5e7eb"))[
-    *7. Dependencias seguras*
-    #text(10pt)[ Escanear dependencias periódicamente (npm audit, pip-audit). Actualizar paquetes con vulnerabilidades. Eliminar dependencias abandonadas. Definir política de actualización.]
-  ]
-]
+#{
+  let colors = (
+    rgb("#eff6ff"), rgb("#f0fdf4"), rgb("#fef3c7"), rgb("#fce7f3"),
+    rgb("#f3e8ff"), rgb("#fef2f2"), rgb("#ecfdf5"),
+  )
+  let labels = (
+    "1. Nunca confiar en la entrada",
+    "2. Validar siempre",
+    "3. Sanitizar",
+    "4. Mínimo privilegio",
+    "5. Secretos",
+    "6. Errores seguros",
+    "7. Dependencias",
+  )
+  let descs = (
+    [Toda entrada es no confiable hasta que se valide. Consultas parametrizadas.],
+    [Verificar tipo, longitud, formato, rango antes de procesar.],
+    [Preparar datos para uso seguro. Escape HTML para prevenir XSS.],
+    [Solo permisos necesarios. MongoDB usuario solo para la BD.],
+    [Nunca hardcodear. Usar .env y gestores de secretos.],
+    [No exponer stack traces. Mensajes genéricos, logs internos.],
+    [Escanear, actualizar, eliminar abandonadas.],
+  )
+  for i in range(7) {
+    block(width: 100%, inset: 0.5em, fill: colors.at(i), radius: 6pt, stroke: 0.5pt + luma(200))[
+      #text(11pt, weight: "bold")[#labels.at(i)]
+      #text(9pt)[ #descs.at(i)]
+    ]
+    v(0.1cm)
+  }
+}
 
 == OWASP Top 10 y el control 8.28
 
@@ -312,27 +360,25 @@ La materialización de los controles 8.25, 8.28 y 8.29 se concreta en un pipelin
 
 #v(0.2cm)
 
-#align(center)[
-  #diagram(
-    spacing: (2.5em, 1.5em),
-    node-stroke: 1.5pt,
-    node-inset: 0.6em,
-    edge-stroke: 1.5pt,
-    node((0, 0), [#text(10pt, weight: "bold")[Git Push]], shape: "circle", radius: 1.8em, fill: rgb("#eff6ff")),
-    edge((0, 0), (1, 0), "->"),
-    node((1, 0), [#text(10pt, weight: "bold")[Build]], shape: "circle", radius: 1.8em, fill: rgb("#eff6ff")),
-    edge((1, 0), (2, 0), "->"),
-    node((2, 0), [#text(10pt, weight: "bold")[SAST]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
-    edge((2, 0), (3, 0), "->"),
-    node((3, 0), [#text(10pt, weight: "bold")[DAST]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
-    edge((3, 0), (4, 0), "->"),
-    node((4, 0), [#text(10pt, weight: "bold")[Security] \ #text(9pt)[Gate]], shape: "circle", radius: 1.8em, fill: rgb("#fef2f2")),
-    edge((4, 0), (5, 0), "->"),
-    node((5, 0), [#text(10pt, weight: "bold")[Staging]], shape: "circle", radius: 1.8em, fill: rgb("#fef3c7")),
-    edge((5, 0), (6, 0), "->"),
-    node((6, 0), [#text(10pt, weight: "bold")[Production]], shape: "circle", radius: 1.8em, fill: rgb("#f0fdf4")),
-  )
-]
+#fletcher-diagram(
+  spacing: (2em, 1.2em),
+  node-stroke: 1.5pt,
+  node-inset: 0.5em,
+  edge-stroke: 1.5pt,
+  node((0, 0), [#text(9pt, weight: "bold")[Git Push]], shape: "circle", radius: 1.6em, fill: rgb("#eff6ff")),
+  edge((0, 0), (1, 0), "->"),
+  node((1, 0), [#text(9pt, weight: "bold")[Build]], shape: "circle", radius: 1.6em, fill: rgb("#eff6ff")),
+  edge((1, 0), (2, 0), "->"),
+  node((2, 0), [#text(9pt, weight: "bold")[SAST]], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
+  edge((2, 0), (3, 0), "->"),
+  node((3, 0), [#text(9pt, weight: "bold")[DAST]], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
+  edge((3, 0), (4, 0), "->"),
+  node((4, 0), [#text(9pt, weight: "bold")[Security] \ #text(8pt)[Gate]], shape: "circle", radius: 1.6em, fill: rgb("#fef2f2")),
+  edge((4, 0), (5, 0), "->"),
+  node((5, 0), [#text(9pt, weight: "bold")[Staging]], shape: "circle", radius: 1.6em, fill: rgb("#fef3c7")),
+  edge((5, 0), (6, 0), "->"),
+  node((6, 0), [#text(9pt, weight: "bold")[Production]], shape: "circle", radius: 1.6em, fill: rgb("#f0fdf4")),
+)
 
 #v(0.2cm)
 
