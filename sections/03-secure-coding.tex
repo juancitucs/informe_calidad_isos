@@ -77,7 +77,7 @@ app.post('/api/register', [
 
 \subsubsection{3. Sanitizar cuando corresponda}
 
-Sanitizar significa preparar los datos para su uso seguro. Un input como \texttt{<script>alert(1)</script>} puede producir Stored XSS si se almacena sin control.
+Sanitizar significa preparar los datos para su uso seguro. Un input como \url{<script>alert(1)</script>} puede producir Stored XSS si se almacena sin control.
 
 En frameworks modernos como React, la salida se escapa automáticamente. Sin embargo, hay funciones que deben evitarse:
 
